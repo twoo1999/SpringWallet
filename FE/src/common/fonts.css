@@ -1,0 +1,66 @@
+.Regular12 {
+    font-size: 12px;
+    height: 16px;
+}
+.Regular14 {
+    font-size: 14px;
+    height: 20px;
+}
+.Regular16 {
+    font-size: 16px;
+    height: 24px;
+}
+
+.Medium12{
+    font-size: 12px;
+    height: 16px;
+}
+.Medium14{
+    font-size: 14px;
+    height: 20px;
+}
+.Medium16{
+    font-size: 16px;
+    height: 24px;
+}
+.SemiBold20{
+    font-size: 20px;
+    height: 28px;
+}
+.SemiBold16{
+    font-size: 16px;
+    height: 24px;
+}
+
+
+.Bold24{
+    font-size: 24px;
+    height: 28px;
+    font-weight: bold;
+}
+
+.Bold16{
+    font-size: 16px;
+    height: 24px;
+    font-weight: bold;
+}
+
+
+.ExtraBold22{
+    font-size: 22px;
+    height: 32px;
+    font-weight: bolder;
+}
+
+.ExtraBold18{
+    font-size: 18px;
+    height: 24px;
+}
+
+
+
+
+
+
+
+
