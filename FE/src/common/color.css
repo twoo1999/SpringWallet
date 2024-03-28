@@ -1,0 +1,48 @@
+. PrimaryColor{
+    color: #299D91;
+}
+
+.SecondaryColor{
+    color: #525256;
+}
+
+.DefaultBlack{
+    color: #191919;
+}
+
+.Gray01{
+    color: #666666;
+}
+
+.Gray02{
+    color: #878787;
+}
+
+.Gray03 {
+    color: #9F9F9F;
+}
+
+.Gray04{
+    color: #D1D1D1;
+}
+
+.Gray05{
+    color: #E8E8E8;
+}
+
+.Gray06{
+    color: #F3F3F3;
+}
+
+
+.MainBG{
+    background-color: #F4F5F7;
+}
+
+.Black{
+    color: black;
+}
+
+.White{
+    color: white;
+}
