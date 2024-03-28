@@ -1,7 +1,9 @@
 import './App.css';
+import './common/color.css'
 import {NavBar} from "./components/Nav/NavBar";
 import styled from "styled-components";
 import {Header} from "./components/header/Header";
+import {Record} from "./components/record/Record";
 
 const Wrapper = styled.div`
     display: flex;
@@ -14,10 +16,11 @@ const MainWrapper = styled.div`
 
 function App() {
     return (
-        <Wrapper>
+        <Wrapper className="MainBG">
             <NavBar></NavBar>
             <MainWrapper>
                 <Header></Header>
+                <Record></Record>
             </MainWrapper>
 
         </Wrapper>
