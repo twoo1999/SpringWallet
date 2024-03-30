@@ -1,42 +1,8 @@
 import styled from "styled-components";
 import '../../common/color.css';
 import '../../common/fonts.css';
-// const Wrapper = styled.div`
-//     position: absolute;
-//     transform: translateY(44px);
-//     color: black;
-//     background-color: #D1D1D1;
-//     display: flex;
-//     flex-direction: column;
-//     width: 120px;
-//     box-sizing: border-box;
-//     padding: 16px 18px;
-//     overflow-y: scroll;
-//     height: 150px;
-//     border-top-left-radius: 16px;
-//     &::-webkit-scrollbar{
-//         width: 5px;
-//         border-radius: 16px;
-//     }
-//     &::-webkit-scrollbar-thumb {
-//         border-radius: 16px;
-//         background-color: black;
-//     }
-// `;
-//
-// const CategorySpan = styled.div`
-//     padding: 8px 0px;
-// `;
-//
-// const DirectInputSpan = styled.div`
-//     color: black;
-//     width: 120px;
-//     padding: 8px 0px;
-//     background-color: #D1D1D1;
-//     position: absolute;
-//     transform: translateY(194px);
-//     border-bottom-left-radius: 16px ;
-// `;
+import {useState} from "react";
+import {DirectInputModal} from "./DirectInputModal";
 
 const Wrapper = styled.div`
     position: absolute;
@@ -72,18 +38,23 @@ const CategorySelector = styled.div`
 const DirectSelector = styled.div`
     padding: 16px 0px;
 `;
+
+
 function Dropdown({onSelect, items}) {
+    const [view, setView] = useState(false);
     const list = [];
     items.forEach(item=>{
         list.push(<span onClick={()=>onSelect(item)}>{item}</span>)
     })
+
     return (
         <Wrapper>
             <CategorySelector>
                 {list}
             </CategorySelector>
             <DirectSelector>
-                <span>직접입력</span>
+                <span onClick={()=>setView(!view)}>직접입력</span>
+                {view && <DirectInputModal onSelect={(item)=>onSelect(item)}></DirectInputModal>}
             </DirectSelector>
         </Wrapper>
 
