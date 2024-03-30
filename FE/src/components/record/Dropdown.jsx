@@ -72,15 +72,15 @@ const CategorySelector = styled.div`
 const DirectSelector = styled.div`
     padding: 16px 0px;
 `;
-function Dropdown() {
-
+function Dropdown({onSelect, items}) {
+    const list = [];
+    items.forEach(item=>{
+        list.push(<span onClick={()=>onSelect(item)}>{item}</span>)
+    })
     return (
         <Wrapper>
             <CategorySelector>
-                <span>카드값</span>
-                <span>식비</span>
-                <span>교통비</span>
-                <span>취미</span>
+                {list}
             </CategorySelector>
             <DirectSelector>
                 <span>직접입력</span>
