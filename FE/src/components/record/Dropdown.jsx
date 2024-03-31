@@ -40,7 +40,10 @@ const DirectSelector = styled.div`
 `;
 
 
-function Dropdown({onSelect, items}) {
+function Dropdown({onSelect, sign, num, items}) {
+
+    // const items = num === 2 ? (sign ? ["월급", "용돈"] : ["카드값", "식비", "교통비", "취미"]) : ["카드", "현금"];
+
     const [view, setView] = useState(false);
     const list = [];
     items.forEach(item=>{
