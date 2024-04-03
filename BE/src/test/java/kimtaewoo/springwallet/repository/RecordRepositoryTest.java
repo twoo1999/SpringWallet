@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest
-@Transactional
+@Transactional // 롤백
 public class RecordRepositoryTest {
 
     @Autowired
