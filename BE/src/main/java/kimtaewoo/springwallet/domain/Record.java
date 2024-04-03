@@ -12,7 +12,7 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+    private Long user_id;
     private String category;
     private String item;
     private LocalDate timestamp;
@@ -28,12 +28,12 @@ public class Record {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
     public String getCategory() {
@@ -49,15 +49,14 @@ public class Record {
     }
 
     public void setItem(String item) {
-
         this.item = item;
     }
 
-    public LocalDate getTransactionDate() {
+    public LocalDate getTimestamp() {
         return timestamp;
     }
 
-    public void setTransactionDate(LocalDate timestamp) {
+    public void setTimestamp(LocalDate timestamp) {
         this.timestamp = timestamp;
     }
 

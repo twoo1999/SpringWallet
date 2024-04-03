@@ -2,10 +2,12 @@ package kimtaewoo.springwallet.repository;
 
 import jakarta.persistence.EntityManager;
 import kimtaewoo.springwallet.domain.Record;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class JpaRecordRepository implements RecordRepository {
 
 
