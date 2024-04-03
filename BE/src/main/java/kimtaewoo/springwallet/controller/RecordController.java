@@ -3,6 +3,8 @@ package kimtaewoo.springwallet.controller;
 
 import kimtaewoo.springwallet.Service.RecordService;
 import kimtaewoo.springwallet.domain.Record;
+import kimtaewoo.springwallet.dto.CreateRecordReqDto;
+import kimtaewoo.springwallet.dto.CreateRecordResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +22,10 @@ public class RecordController {
 
     @PostMapping("record")
     @ResponseBody
-    public int join(@RequestBody Record record) {
-        recordService.join(record);
-        return 1;
+    public CreateRecordResDto join(@RequestBody Record record) {
+        CreateRecordResDto re = new CreateRecordResDto();
+        Long id = recordService.join(record);
+        re.setId(id);
+        return re;
     }
 }
