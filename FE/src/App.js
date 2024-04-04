@@ -4,6 +4,8 @@ import {NavBar} from "./components/Nav/NavBar";
 import styled from "styled-components";
 import {Header} from "./components/header/Header";
 import {Record} from "./components/record/Record";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Login} from "./components/login/Login";
 
 const Wrapper = styled.div`
     display: flex;
@@ -16,14 +18,19 @@ const MainWrapper = styled.div`
 
 function App() {
     return (
-        <Wrapper className="MainBG">
-            <NavBar></NavBar>
-            <MainWrapper>
-                <Header></Header>
-                <Record></Record>
-            </MainWrapper>
+        <BrowserRouter>
+            <Wrapper className="MainBG">
+                <NavBar></NavBar>
+                <MainWrapper>
+                    <Header></Header>
+                    <Routes>
+                        <Route path="/record/*" element={<Record></Record>}></Route>
+                        <Route path="/login" element={<Login></Login>}></Route>
+                    </Routes>
+                </MainWrapper>
+            </Wrapper>
+        </BrowserRouter>
 
-        </Wrapper>
     );
 }
 
