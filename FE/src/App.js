@@ -6,6 +6,7 @@ import {Header} from "./components/header/Header";
 import {Record} from "./components/record/Record";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "./components/login/Login";
+import {Loading} from "./components/login/loading";
 
 const Wrapper = styled.div`
     display: flex;
@@ -26,6 +27,7 @@ function App() {
                     <Routes>
                         <Route path="/record/*" element={<Record></Record>}></Route>
                         <Route path="/login" element={<Login></Login>}></Route>
+                        <Route path="/loading" element={<Loading/>}></Route>
                     </Routes>
                 </MainWrapper>
             </Wrapper>
