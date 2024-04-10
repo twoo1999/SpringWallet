@@ -42,8 +42,9 @@ public class OauthService {
         this.memberRepository = memberRepository;
     }
 
-    public void login(String code) throws JsonProcessingException {
-        String response = this.getAccessToken(code);
+    public String[] login(String code) throws JsonProcessingException {
+        String response = this.getAccessTokenFromGoogle(code);
+
         GoogleOauthAccessToken at = this.getToken(response);
         String idToken = at.getId_token();
         String encodedPayload = idToken.split("\\.")[1];
@@ -58,10 +59,12 @@ public class OauthService {
             Member m = memberRepository.save(newMember);
         }
 
-        String accessToken = getAccessToken(email, name);
-        String refreshToken = getRefreshToken();
+        String accessToken = this.getAccessToken(email, name);
+        String refreshToken = this.getRefreshToken();
         System.out.println("acc " + accessToken);
         System.out.println("re " + refreshToken);
+        String[] tokens = {accessToken, refreshToken};
+        return tokens;
     }
 
     public String getAccessToken(String email, String name){
@@ -84,24 +87,34 @@ public class OauthService {
 
         return token;
     }
-    public String getAccessToken(String code) {
+    public String getAccessTokenFromGoogle(String code) {
+        try {
+            RestTemplate rt = new RestTemplate();
 
-        RestTemplate rt = new RestTemplate();
+            Map<String, String> params = new HashMap<>();
 
-        Map<String, String> params = new HashMap<>();
+            params.put("code", code);
+            params.put("client_id", GOOGLE_CLIENT_ID);
+            params.put("client_secret", GOOGLE_CLIENT_SECRET);
+            params.put("redirect_uri", REDIREC_URL);
+            params.put("grant_type", "authorization_code");
 
-        params.put("code", code);
-        params.put("client_id", GOOGLE_CLIENT_ID);
-        params.put("client_secret", GOOGLE_CLIENT_SECRET);
-        params.put("redirect_uri", REDIREC_URL);
-        params.put("grant_type", "authorization_code");
-
-        ResponseEntity<String> responseEntity = rt.postForEntity(GOOGLE_TOKEN_URL, params, String.class);
-
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            return responseEntity.getBody();
+            System.out.println(GOOGLE_CLIENT_ID);
+            System.out.println(GOOGLE_CLIENT_SECRET);
+            System.out.println(REDIREC_URL);
+            System.out.println(code);
+            ResponseEntity<String> responseEntity = rt.postForEntity(GOOGLE_TOKEN_URL, params, String.class);
+            System.out.println("3");
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                return responseEntity.getBody();
+            }
+            return null;
+        } catch (Exception e) {
+            System.out.println("!!!");
+            System.out.println(e);
         }
         return null;
+
     }
 
     public String decodePayload(String encodedPayload){
@@ -116,6 +129,8 @@ public class OauthService {
 
     public GoogleOauthAccessToken getToken(String jsonString) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
+        System.out.println("DAWDAWDAWD");
+        System.out.println(jsonString);
         return om.readValue(jsonString, GoogleOauthAccessToken.class);
     }
 
