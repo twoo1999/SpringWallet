@@ -110,7 +110,6 @@ public class OauthService {
             }
             return null;
         } catch (Exception e) {
-            System.out.println("!!!");
             System.out.println(e);
         }
         return null;
@@ -126,6 +125,7 @@ public class OauthService {
         ObjectMapper om = new ObjectMapper();
         return om.readValue(jsonString, GoogleOauthUserInfo.class);
     }
+
 
     public GoogleOauthAccessToken getToken(String jsonString) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();

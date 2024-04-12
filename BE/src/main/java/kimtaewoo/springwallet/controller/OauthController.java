@@ -31,7 +31,7 @@ public class OauthController {
                 .path("/")
                 .httpOnly(true)
                 .secure(true)
-                .maxAge(60*60)
+                .maxAge(60*60*24)
                 .build();
         ResponseCookie ref = ResponseCookie.from("RefreshToken", tokens[1])
                 .path("/")
