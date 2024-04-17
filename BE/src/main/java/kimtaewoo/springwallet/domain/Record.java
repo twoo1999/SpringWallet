@@ -12,11 +12,11 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long user_id;
+    private String email;
     private String category;
     private String item;
     private LocalDate timestamp;
-    private String payment;
+    private String method;
     private int amount;
     private String memo;
 
@@ -28,12 +28,12 @@ public class Record {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCategory() {
@@ -60,12 +60,12 @@ public class Record {
         this.timestamp = timestamp;
     }
 
-    public String getPayment() {
-        return payment;
+    public String getMethod() {
+        return method;
     }
 
-    public void setPayment(String payment) {
-        this.payment = payment;
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public int getAmount() {
