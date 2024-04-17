@@ -1,40 +1,16 @@
-package kimtaewoo.springwallet.domain;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package kimtaewoo.springwallet.dto;
 
 import java.time.LocalDate;
 
-@Entity
-public class Record {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String email;
-    private String category;
+
+public class CreateRecordReqDto {
     private String item;
-    private LocalDate timestamp;
-    private String method;
     private int amount;
+    private String category;
+    private String method;
+    private LocalDate timestamp;
+
     private String memo;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getCategory() {
         return category;
@@ -84,4 +60,3 @@ public class Record {
         this.memo = memo;
     }
 }
-
