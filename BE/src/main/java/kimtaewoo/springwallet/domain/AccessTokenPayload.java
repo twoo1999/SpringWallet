@@ -4,10 +4,14 @@ package kimtaewoo.springwallet.domain;
 public class AccessTokenPayload {
     private String email;
     private String name;
+    private int iat;
 
-    public AccessTokenPayload(String email, String name) {
+    public AccessTokenPayload(){}
+
+    public AccessTokenPayload(String email, String name, int iat) {
         this.email = email;
         this.name = name;
+        this.iat = iat;
     }
 
     public String getEmail() {
@@ -24,5 +28,13 @@ public class AccessTokenPayload {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getIat() {
+        return iat;
+    }
+
+    public void setIat(int iat) {
+        this.iat = iat;
     }
 }
