@@ -2,12 +2,14 @@ package kimtaewoo.springwallet.dto;
 
 import java.time.LocalDate;
 
+
 public class CreateRecordReqDto {
-    private String category;
     private String item;
-    private LocalDate timestamp;
-    private String payment;
     private int amount;
+    private String category;
+    private String method;
+    private LocalDate timestamp;
+
     private String memo;
 
     public String getCategory() {
@@ -34,12 +36,12 @@ public class CreateRecordReqDto {
         this.timestamp = timestamp;
     }
 
-    public String getPayment() {
-        return payment;
+    public String getMethod() {
+        return method;
     }
 
-    public void setPayment(String payment) {
-        this.payment = payment;
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public int getAmount() {

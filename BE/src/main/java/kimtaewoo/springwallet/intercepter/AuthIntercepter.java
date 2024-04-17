@@ -24,6 +24,10 @@ public class AuthIntercepter implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception{
+        if (req.getMethod().equals("OPTIONS")) {
+            return true;
+        }
+
         Cookie[] cookies = req.getCookies();
         if (cookies == null) {
             ErrorResponseEntity er = new ErrorResponseEntity(HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST.name() ,"AUTH-001", "유효하지 않는 토큰입니다.");

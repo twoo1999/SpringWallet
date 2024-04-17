@@ -3,8 +3,6 @@ package kimtaewoo.springwallet.resolver;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
-import kimtaewoo.springwallet.domain.AuthUser;
-import kimtaewoo.springwallet.domain.GoogleOauthUserInfo;
 import kimtaewoo.springwallet.util.AuthUtil;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -40,8 +38,8 @@ public class AuthUserResolver implements HandlerMethodArgumentResolver {
         String token = authUtil.getCookie(cookies, "AccessToken");
         String encodedPayload = token.split("\\.")[1];
         String decodedPayload = authUtil.decodePayload(encodedPayload);
-        AccessTokenPayload acp = authUtil.getAccessTokenPayload(decodedPayload);
+        AccessTokenPayload atp = authUtil.getAccessTokenPayload(decodedPayload);
 
-       return acp;
+       return atp;
     }
 }
