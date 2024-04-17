@@ -9,6 +9,7 @@ import {AmountInput} from "./AmoutInput";
 import {SelctInput} from "./SelctInput";
 import {DateInput} from "./DateInput";
 import {useEffect, useState} from "react";
+import axios from "axios";
 
 const Wrapper = styled.div`
     display: flex;
@@ -27,39 +28,91 @@ const RecordTable = styled.div`
     padding : 30px 64px; 
     align-items: center;
 `;
+const MemoInput = styled.input`
+    display: none;
+`;
 
-/* TODzo
-*
-*
- */
 export function Record(){
     const inputBlock = [];
     const [categories, setCategories] = useState();
     const [sign, setSign] = useState(true);
+    const [input, setInput] = useState({
+        item: "",
+        amount: "",
+        category: "",
+        method: "",
+        timestamp:new Date().toISOString().split('T')[0]
+    });
+    const [able, setAble] = useState(true);
     useEffect(() => {
-        console.log(sign)
         if (sign) {
             setCategories(["월급", "용돈", "행운(득)"]);
         } else {
             setCategories(["식비", "교통비", "취미", "카드값"])
         }
 
+
     }, [sign]);
+
+    useEffect(() => {
+        const flag = !Object.values(input).every(val => val.length > 0);
+        setAble(flag);
+      }, [input]);
+
+
     for(let i = 0; i < 5; i++){
         inputBlock.push(<InputBlock num={i}></InputBlock>)
     }
+
+    const onChangeValue = (e)=>{
+        setInput((prevState) => {
+            return {...prevState, [e.target.id]: e.target.value}
+        });
+    }
+    const onChangeValueReadonly = (key, value)=>{
+        if(value){
+            setInput((prevState) => {
+                return {...prevState, [key]: value}
+            });
+        }
+
+    }
+
     return (
         <Wrapper>
             <span className="Header22 Gray01">Record</span>
-            <RecordTable className="White">
-                <ItemInput></ItemInput>
-                <AmountInput sign={sign} onChangeSign={()=>setSign(!sign)}></AmountInput>
-                <SelctInput type="Category" items={categories}></SelctInput>
-                <SelctInput type="Payment Method" items={["카드", "현금"]}></SelctInput>
-                <DateInput></DateInput>
-                <Memo></Memo>
-                <Report></Report>
-            </RecordTable>
+            <form action="http://localhost:8080/record" method="post">
+                <RecordTable className="White">
+                    <ItemInput onChangeValue={onChangeValue}></ItemInput>
+                    <AmountInput onChangeValueReadonly={onChangeValueReadonly} sign={sign} onChangeSign={()=>setSign(!sign)}></AmountInput>
+                    <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="category" items={categories}></SelctInput>
+                    <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="method" items={["카드", "현금"]}></SelctInput>
+                    <DateInput onChangeValue={onChangeValue}></DateInput>
+                    <Memo></Memo>
+                    <MemoInput id="momo" name="memo" value={null}></MemoInput>
+                    <button disabled={able} onClick={(e)=>{
+                        e.preventDefault();
+                        const amount = Number(input.amount);
+                        axios({
+                            method: "POST",
+                            url: "http://localhost:8080/record",
+                            data: JSON.stringify({...input, amount: sign ? amount : -1*amount }),
+                            withCredentials:true,
+                            headers:{
+                                "Content-Type": "application/json"
+                            }
+
+                        }).then((res, err)=>{
+                            console.log(res);
+                        })
+
+
+                    }}><Report></Report></button>
+
+
+                </RecordTable>
+            </form>
+
         </Wrapper>
     )
 }
