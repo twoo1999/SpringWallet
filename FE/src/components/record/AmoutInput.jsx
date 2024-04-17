@@ -17,12 +17,6 @@ const AmountDiv = styled.div`
     gap:10px;
 `;
 
-const AmountSpan = styled.input`
-    //width: 100%;
-    //text-align: end;
-    //border: none;
-    display: none;
-`;
 const AmountP = styled.input`
     width: 100%;
     text-align: end;
@@ -30,13 +24,12 @@ const AmountP = styled.input`
 `;
 
 
-export function AmountInput({sign, onChangeSign, onChangeValue}){
+export function AmountInput({sign, onChangeSign, onChangeValueReadonly}){
     // const [sign, setSign] = useState(true);
     const [val, setVal] = useState(0);
     const changeHandler = (e)=>{
-        onChangeValue(e);
+        onChangeValueReadonly("amount", e.target.value);
         setVal(e.target.value);
-        console.log(val);
     }
     return (
         <Wrapper>
@@ -47,7 +40,6 @@ export function AmountInput({sign, onChangeSign, onChangeValue}){
                 }}></Plus> : <Minus onClick={() => {
                     onChangeSign(!sign);
                 }}></Minus>}
-                <AmountSpan id="amount" name="amount" type="number" className="Bold16 Black" placeholder='0' value={sign? val : -1*val}></AmountSpan>
                 <AmountP id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' value={val} onChange={changeHandler}></AmountP>
             </AmountDiv>
         </Wrapper>
