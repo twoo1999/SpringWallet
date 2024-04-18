@@ -10,6 +10,7 @@ import {SelctInput} from "./SelctInput";
 import {DateInput} from "./DateInput";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {MemoModal} from "./Memo";
 
 const Wrapper = styled.div`
     display: flex;
@@ -32,6 +33,15 @@ const MemoInput = styled.input`
     display: none;
 `;
 
+const ModalBack = styled.div`
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        
+    `;
 export function Record(){
     const inputBlock = [];
     const [categories, setCategories] = useState();
@@ -44,6 +54,7 @@ export function Record(){
         timestamp:new Date().toISOString().split('T')[0]
     });
     const [able, setAble] = useState(true);
+    const [memoView, setMemoView] = useState(true);
     useEffect(() => {
         if (sign) {
             setCategories(["월급", "용돈", "행운(득)"]);
@@ -78,6 +89,18 @@ export function Record(){
 
     }
 
+    const modalBackClickHandler = ()=>{
+        console.log("부모")
+        setMemoView(!memoView);
+    }
+
+    const stop = (e)=>{
+        console.log("자식")
+        e.stopPropagation();
+    }
+
+
+
     return (
         <Wrapper>
             <span className="Header22 Gray01">Record</span>
@@ -88,7 +111,7 @@ export function Record(){
                     <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="category" items={categories}></SelctInput>
                     <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="method" items={["카드", "현금"]}></SelctInput>
                     <DateInput onChangeValue={onChangeValue}></DateInput>
-                    <Memo></Memo>
+                    <Memo onClick={()=>{setMemoView(!memoView)}}></Memo>
                     <MemoInput id="momo" name="memo" value={null}></MemoInput>
                     <button disabled={able} onClick={(e)=>{
                         e.preventDefault();
@@ -105,13 +128,17 @@ export function Record(){
                         }).then((res, err)=>{
                             console.log(res);
                         })
-
-
                     }}><Report></Report></button>
 
 
                 </RecordTable>
             </form>
+            {
+                memoView &&
+                <ModalBack onClick={modalBackClickHandler}>
+                    <MemoModal onChangeValue={onChangeValue} onChangeValueReadonly={onChangeValueReadonly} sign={sign} onClick={stop} input={input} categories={categories}></MemoModal>
+                </ModalBack>
+            }
 
         </Wrapper>
     )
