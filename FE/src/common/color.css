@@ -46,3 +46,7 @@
 .White{
     color: white;
 }
+
+:root{
+    --primary-color: #299D91;
+}
