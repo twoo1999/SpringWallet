@@ -10,8 +10,8 @@ const RecordBtn = styled.button`
     cursor: pointer;
 `;
 
-export function CustomButton({content, bgColor}){
+export function CustomButton({content, bgColor, onClickBtn}){
     return(
-        <RecordBtn bgColor={bgColor}>{content}</RecordBtn>
+        <RecordBtn onClick={onClickBtn} bgColor={bgColor}>{content}</RecordBtn>
     )
 }
