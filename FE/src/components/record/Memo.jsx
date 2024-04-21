@@ -14,32 +14,13 @@ const Wrapper = styled.div`
     flex-direction: column;
     background-color: white;
     padding: 16px;
-    height: 550px;
     justify-content: space-between;
+    gap: 16px;
     align-items: center;
     border-radius: 16px;
+    width: 700px;
 `;
 
-
-const InputBlock = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 120px;
-`;
-
-const InputBar = styled.div`
-    display: flex;
-    flex-direction: row;
-    padding: 16px;
-    width: 650px;
-    box-sizing: border-box;
-    justify-content: space-between;
-`;
-
-const BorderlessInput = styled.input`
-    border: none;
-`;
 
 const MemoInput = styled.textarea`
     width: 100%;
@@ -47,6 +28,9 @@ const MemoInput = styled.textarea`
     resize: none;
     background-color: #D1D1D1;
     border: none;
+    padding: 16px;
+    box-sizing: border-box;
+    border-radius: 16px;
 `;
 
 const BtnWrapper = styled.div`
@@ -54,25 +38,15 @@ const BtnWrapper = styled.div`
     flex-direction: row;
     gap: 80px;
 `;
-export function MemoModal({onChangeValue, onChangeValueReadonly, sign,onClick, input, categories}) {
+
+export function MemoModal({onClickCloseBtn, memoValue, onChangeValue}) {
     return (
-        <Wrapper onClick={onClick}>
-            <InputBar>
-                <ItemInput onChangeValue={onChangeValue}></ItemInput>
-                <AmountInput></AmountInput>
-                <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="category" items={categories}></SelctInput>
-                <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="method" items={["카드", "현금"]}></SelctInput>
-                <DateInput onChangeValue={onChangeValue}></DateInput>
-            </InputBar>
-            <MemoInput cols="5" ></MemoInput>
+        <Wrapper onClick={(e)=>e.stopPropagation()}>
+            <MemoInput onChange={onChangeValue} className="Regular16" name="memo" defaultValue={memoValue}></MemoInput>
             <BtnWrapper>
-                <CustomButton content="기록" bgColor="#299D91"></CustomButton>
-                <CustomButton content="닫기" bgColor="#525256"></CustomButton>
+                <CustomButton onClickBtn={onClickCloseBtn} content="기록" bgColor="#299D91"></CustomButton>
+
             </BtnWrapper>
-            
-            
-
-
         </Wrapper>
     )
 }

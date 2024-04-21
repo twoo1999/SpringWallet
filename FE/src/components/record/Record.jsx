@@ -53,8 +53,9 @@ export function Record(){
         method: "",
         timestamp:new Date().toISOString().split('T')[0]
     });
+    const [memoValue, setMemoValue] = useState("");
     const [able, setAble] = useState(true);
-    const [memoView, setMemoView] = useState(true);
+    const [memoView, setMemoView] = useState(false);
     useEffect(() => {
         if (sign) {
             setCategories(["월급", "용돈", "행운(득)"]);
@@ -89,16 +90,14 @@ export function Record(){
 
     }
 
-    const modalBackClickHandler = ()=>{
-        console.log("부모")
+    const onChangeMemoValue = (e)=>{
+        setMemoValue(e.target.value);
+    }
+
+
+    const closeMemoModalHandeler = ()=>{
         setMemoView(!memoView);
     }
-
-    const stop = (e)=>{
-        console.log("자식")
-        e.stopPropagation();
-    }
-
 
 
     return (
@@ -112,14 +111,13 @@ export function Record(){
                     <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="method" items={["카드", "현금"]}></SelctInput>
                     <DateInput onChangeValue={onChangeValue}></DateInput>
                     <Memo onClick={()=>{setMemoView(!memoView)}}></Memo>
-                    <MemoInput id="momo" name="memo" value={null}></MemoInput>
                     <button disabled={able} onClick={(e)=>{
                         e.preventDefault();
                         const amount = Number(input.amount);
                         axios({
                             method: "POST",
                             url: "http://localhost:8080/record",
-                            data: JSON.stringify({...input, amount: sign ? amount : -1*amount }),
+                            data: JSON.stringify({...input, amount: sign ? amount : -1*amount , memo: memoValue.length > 0 ? memoValue:null }),
                             withCredentials:true,
                             headers:{
                                 "Content-Type": "application/json"
@@ -135,8 +133,8 @@ export function Record(){
             </form>
             {
                 memoView &&
-                <ModalBack onClick={modalBackClickHandler}>
-                    <MemoModal onChangeValue={onChangeValue} onChangeValueReadonly={onChangeValueReadonly} sign={sign} onClick={stop} input={input} categories={categories}></MemoModal>
+                <ModalBack onClick={closeMemoModalHandeler}>
+                    <MemoModal memoValue={memoValue} onChangeValue={onChangeMemoValue} onClickCloseBtn={closeMemoModalHandeler}></MemoModal>
                 </ModalBack>
             }
 
