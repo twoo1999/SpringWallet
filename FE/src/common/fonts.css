@@ -49,11 +49,13 @@
 .ExtraBold22{
     font-size: 22px;
     line-height: 32px;
+    font-weight: bold;
 }
 
 .ExtraBold18{
     font-size: 18px;
     line-height: 24px;
+    font-weight: bold;
 }
 
 .Header22 {

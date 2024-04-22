@@ -11,6 +11,7 @@ import {DateInput} from "./DateInput";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {MemoModal} from "./Memo";
+import {RecordViewer} from "./RecordViewer";
 
 const Wrapper = styled.div`
     display: flex;
@@ -106,24 +107,33 @@ export function Record(){
             <form action="http://localhost:8080/record" method="post">
                 <RecordTable className="White">
                     <ItemInput onChangeValue={onChangeValue}></ItemInput>
-                    <AmountInput onChangeValueReadonly={onChangeValueReadonly} sign={sign} onChangeSign={()=>setSign(!sign)}></AmountInput>
-                    <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="category" items={categories}></SelctInput>
-                    <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="method" items={["카드", "현금"]}></SelctInput>
+                    <AmountInput onChangeValueReadonly={onChangeValueReadonly} sign={sign}
+                                 onChangeSign={() => setSign(!sign)}></AmountInput>
+                    <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="category"
+                                items={categories}></SelctInput>
+                    <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="method"
+                                items={["카드", "현금"]}></SelctInput>
                     <DateInput onChangeValue={onChangeValue}></DateInput>
-                    <Memo onClick={()=>{setMemoView(!memoView)}}></Memo>
-                    <button disabled={able} onClick={(e)=>{
+                    <Memo onClick={() => {
+                        setMemoView(!memoView)
+                    }}></Memo>
+                    <button disabled={able} onClick={(e) => {
                         e.preventDefault();
                         const amount = Number(input.amount);
                         axios({
                             method: "POST",
                             url: "http://localhost:8080/record",
-                            data: JSON.stringify({...input, amount: sign ? amount : -1*amount , memo: memoValue.length > 0 ? memoValue:null }),
-                            withCredentials:true,
-                            headers:{
+                            data: JSON.stringify({
+                                ...input,
+                                amount: sign ? amount : -1 * amount,
+                                memo: memoValue.length > 0 ? memoValue : null
+                            }),
+                            withCredentials: true,
+                            headers: {
                                 "Content-Type": "application/json"
                             }
 
-                        }).then((res, err)=>{
+                        }).then((res, err) => {
                             console.log(res);
                         })
                     }}><Report></Report></button>
@@ -134,9 +144,13 @@ export function Record(){
             {
                 memoView &&
                 <ModalBack onClick={closeMemoModalHandeler}>
-                    <MemoModal memoValue={memoValue} onChangeValue={onChangeMemoValue} onClickCloseBtn={closeMemoModalHandeler}></MemoModal>
+                    <MemoModal memoValue={memoValue} onChangeValue={onChangeMemoValue}
+                               onClickCloseBtn={closeMemoModalHandeler}></MemoModal>
                 </ModalBack>
             }
+
+            <span className="Header22 Gray01">Transaction</span>
+            <RecordViewer></RecordViewer>
 
         </Wrapper>
     )
