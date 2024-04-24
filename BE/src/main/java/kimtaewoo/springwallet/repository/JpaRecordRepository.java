@@ -1,6 +1,7 @@
 package kimtaewoo.springwallet.repository;
 
 import jakarta.persistence.EntityManager;
+import kimtaewoo.springwallet.domain.Member;
 import kimtaewoo.springwallet.domain.Record;
 import org.springframework.stereotype.Repository;
 
@@ -32,6 +33,13 @@ public class JpaRecordRepository implements RecordRepository {
     @Override
     public List<Record> findAll() {
         return em.createQuery("select r from Record r", Record.class).getResultList();
+    }
+
+    @Override
+    public List<Record> findByEmail(String email) {
+        return em.createQuery("select r from Record r where r.email = :email", Record.class)
+                .setParameter("email", email)
+                .getResultList();
     }
 
 }

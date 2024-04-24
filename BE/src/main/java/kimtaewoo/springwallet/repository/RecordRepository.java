@@ -12,4 +12,6 @@ public interface RecordRepository {
 
     List<Record> findAll();
 
+
+    List<Record> findByEmail(String email);
 }

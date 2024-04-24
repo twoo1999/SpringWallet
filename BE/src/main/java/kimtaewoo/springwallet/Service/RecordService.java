@@ -6,7 +6,7 @@ import kimtaewoo.springwallet.domain.Record;
 import kimtaewoo.springwallet.dto.CreateRecordReqDto;
 import kimtaewoo.springwallet.repository.RecordRepository;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import java.time.LocalDate;
 
 @Service
@@ -30,4 +30,10 @@ public class RecordService {
         Record re = recordRepository.save(newRecord);
         return re.getId();
     }
+
+    public List<Record> getRecord(AccessTokenPayload ap){
+        String email = ap.getEmail();
+        return recordRepository.findByEmail(email);
+    }
+
 }
