@@ -9,13 +9,18 @@ import {Login} from "./components/login/Login";
 import {Loading} from "./components/login/loading";
 
 const Wrapper = styled.div`
-    display: flex;
-    flex-direction: row;
+    height : 100%;
+    width: 100%;
 `;
 
 const MainWrapper = styled.div`
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 `;
+
+
 
 function App() {
     return (
@@ -23,7 +28,6 @@ function App() {
             <Wrapper className="MainBG">
                 <NavBar></NavBar>
                 <MainWrapper>
-                    <Header></Header>
                     <Routes>
                         <Route path="/record/*" element={<Record></Record>}></Route>
                         <Route path="/login" element={<Login></Login>}></Route>
