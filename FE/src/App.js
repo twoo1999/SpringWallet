@@ -7,6 +7,7 @@ import {Record} from "./components/record/Record";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "./components/login/Login";
 import {Loading} from "./components/login/loading";
+import {CookiesProvider} from "react-cookie";
 
 const Wrapper = styled.div`
     height : 100%;
@@ -20,7 +21,7 @@ const MainWrapper = styled.div`
     flex-direction: column;
     flex-grow: 1;
 `;
-const NavW = styled.div`
+const NavWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -31,19 +32,20 @@ const NavW = styled.div`
 function App() {
     return (
         <BrowserRouter>
-            <Wrapper >
-                <NavW>
-                    <NavBar></NavBar>
-                </NavW>
-
-                <MainWrapper>
-                    <Routes>
-                        <Route path="/record/*" element={<Record></Record>}></Route>
-                        <Route path="/login" element={<Login></Login>}></Route>
-                        <Route path="/loading" element={<Loading/>}></Route>
-                    </Routes>
-                </MainWrapper>
-            </Wrapper>
+            <CookiesProvider>
+                <Wrapper >
+                    <NavWrapper>
+                        <NavBar></NavBar>
+                    </NavWrapper>
+                    <MainWrapper>
+                        <Routes>
+                            <Route path="/record/*" element={<Record></Record>}></Route>
+                            <Route path="/login" element={<Login></Login>}></Route>
+                            <Route path="/loading" element={<Loading/>}></Route>
+                        </Routes>
+                    </MainWrapper>
+                </Wrapper>
+            </CookiesProvider>
         </BrowserRouter>
 
     );

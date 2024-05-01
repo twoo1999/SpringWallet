@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {RecordViewer} from "./RecordViewer";
 import {useNavigate} from "react-router-dom";
 import {InputForm} from "./InputForm";
+import {DateSelector} from "./DateSelector";
 
 
 const Wrapper = styled.div`
@@ -33,7 +34,12 @@ const ViewerWrapper = styled.div`
     flex-direction: column;
     gap: 1rem;
 `;
-
+const ViewerHeaderWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+`;
 export function Record(){
 
     return (
@@ -44,7 +50,11 @@ export function Record(){
                 <InputForm></InputForm>
             </RecordWrapper>
             <ViewerWrapper>
-                <span className="Header22 Gray01"> Transaction</span>
+                <ViewerHeaderWrapper>
+                    <span className="Header22 Gray01"> Transaction</span>
+                    <DateSelector></DateSelector>
+                </ViewerHeaderWrapper>
+
                 <RecordViewer></RecordViewer>
             </ViewerWrapper>
         </Wrapper>
