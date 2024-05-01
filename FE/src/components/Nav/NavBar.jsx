@@ -4,22 +4,15 @@ import {NavButton} from "./NavButton";
 import styled from "styled-components";
 import {UserInfo} from "./UserInfo";
 import {useState} from "react";
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 48px 28px;
-    height: 100vh;
-    width: 280px;
-    box-sizing: border-box;
-    background-color: #191919;
-    justify-content: space-between;
-    
-`;
+
 const MenuLogoWrapper = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
     gap:40px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 
@@ -28,11 +21,35 @@ const UserInfoWrapper = styled.div`
     flex-direction: column;
     gap: 40px;
 `;
-const MenuList = styled.div`
-    width: 224px;
+// const MenuList = styled.div`
+//     width: 224px;
+//     display: flex;
+//     gap: 16px;
+// `;
+const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    align-items: center;
+    //padding: 48px 28px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    background-color: #191919;
+    
+`;
+
+const LogoAndUserTab = styled.div`
+    
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    height: 20rem;
+`;
+
+const MenuList = styled.div`
+    display: flex;
+    width: 100rem;
 `;
 export function NavBar() {
     const [number, setNumber] = useState(0);
@@ -44,16 +61,22 @@ export function NavBar() {
     // const listMenu = menu.map(x=><NavButton str={x}></NavButton>);
     return (
         <Wrapper>
-            <MenuLogoWrapper>
+            <LogoAndUserTab>
                 <Logo></Logo>
-                <MenuList>
-                    {listMenu}
-                </MenuList>
-            </MenuLogoWrapper>
-            <UserInfoWrapper>
-                <NavButton bColor='#525256' num={6}></NavButton>
-                <UserInfo></UserInfo>
-            </UserInfoWrapper>
+            </LogoAndUserTab>
+            <MenuList>
+                {listMenu}
+            </MenuList>
+            {/*<MenuLogoWrapper>*/}
+            {/*    <Logo></Logo>*/}
+            {/*    /!*<MenuList>*!/*/}
+            {/*    /!*    {listMenu}*!/*/}
+            {/*    /!*</MenuList>*!/*/}
+            {/*</MenuLogoWrapper>*/}
+            {/*<UserInfoWrapper>*/}
+            {/*    <NavButton bColor='#525256' num={6}></NavButton>*/}
+            {/*    <UserInfo></UserInfo>*/}
+            {/*</UserInfoWrapper>*/}
 
         </Wrapper>
 

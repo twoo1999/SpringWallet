@@ -38,7 +38,9 @@
 .MainBG{
     background-color: #F4F5F7;
 }
-
+.GrayBG{
+    background-color: #666666;
+}
 .Black{
     color: black;
 }

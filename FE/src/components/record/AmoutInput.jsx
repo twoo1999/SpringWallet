@@ -25,7 +25,6 @@ const AmountP = styled.input`
 
 
 export function AmountInput({sign, onChangeSign, onChangeValueReadonly}){
-    // const [sign, setSign] = useState(true);
     const [val, setVal] = useState(0);
     const changeHandler = (e)=>{
         onChangeValueReadonly("amount", e.target.value);
