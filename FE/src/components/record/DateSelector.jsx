@@ -5,6 +5,7 @@ import {ReactComponent as Next} from "../../assets/Next.svg";
 import {ReactComponent as Prev} from "../../assets/Prev.svg";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
+import {DateSelectorModal} from "./DateSelectorModal";
 
 const Wrapper = styled.div`
     display: flex;
@@ -20,6 +21,7 @@ export function DateSelector(){
        month: 5,
     });
 
+    const [dateView, setDateView] = useState(false);
     useEffect(() => {
         const [year, month, day] = new Date().toISOString().split('T')[0].split("-");
         if(cookies.year == undefined && cookies.month == undefined){
@@ -52,10 +54,17 @@ export function DateSelector(){
 
     }
 
+    const onClickDate = ()=>{
+        setDateView(!dateView);
+    }
     return(
         <Wrapper>
+            {
+                dateView &&
+                <DateSelectorModal onClick={onClickDate}></DateSelectorModal>
+            }
             <Prev onClick={onClickPrevMonth}></Prev>
-            <span className="Regular16">{cookies.year}.{String(cookies.month).padStart(2, '0')}</span>
+            <span className="Regular16" onClick={onClickDate}>{cookies.year}.{String(cookies.month).padStart(2, '0')}</span>
             <Next onClick={onClickNextMonth}></Next>
         </Wrapper>
     )

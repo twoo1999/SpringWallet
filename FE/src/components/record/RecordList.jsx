@@ -55,7 +55,6 @@ export function RecordList({list}){
     const ll = list.filter(l=>{
         return (l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month);
     })
-    console.log(ll);
     const content = ll.map(l=>{
         return <RowWrapper>
             <CategoryP className="ExtraBold18">{l.category}</CategoryP>
