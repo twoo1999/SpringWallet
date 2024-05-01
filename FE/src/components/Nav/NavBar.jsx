@@ -49,6 +49,7 @@ const LogoAndUserTab = styled.div`
 
 const MenuList = styled.div`
     display: flex;
+    width: 100rem;
 `;
 export function NavBar() {
     const [number, setNumber] = useState(0);

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {useEffect, useState} from "react";
 
 const BorderlessInput = styled.input`
     border: none;
@@ -20,3 +19,4 @@ export function DateInput({onChangeValue}){
 
     );
 }
+

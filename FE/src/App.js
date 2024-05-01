@@ -18,15 +18,24 @@ const MainWrapper = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 `;
-
+const NavW = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+`;
 
 
 function App() {
     return (
         <BrowserRouter>
-            <Wrapper className="MainBG">
-                <NavBar></NavBar>
+            <Wrapper >
+                <NavW>
+                    <NavBar></NavBar>
+                </NavW>
+
                 <MainWrapper>
                     <Routes>
                         <Route path="/record/*" element={<Record></Record>}></Route>

@@ -18,6 +18,7 @@ const Wrapper = styled.div`
     gap: 12px;
     border-radius: 4px;
     padding: 12px 16px;    
+    width: 15rem;
     background: ${props=>props.bColor};
 `;
 export function NavButton(props) {

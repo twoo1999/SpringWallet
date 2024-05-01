@@ -1,8 +1,4 @@
 import styled from "styled-components";
-import {ItemInput} from "./ItemInput";
-import {AmountInput} from "./AmoutInput";
-import {SelctInput} from "./SelctInput";
-import {DateInput} from "./DateInput";
 import {CustomButton} from "./CustomButton";
 import '../../common/color.css'
 const Wrapper = styled.div`

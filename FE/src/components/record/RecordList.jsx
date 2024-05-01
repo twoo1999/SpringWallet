@@ -1,9 +1,19 @@
 import styled from "styled-components";
 import {ReactComponent as Memo} from "../../assets/memo.svg";
+import {useEffect, useState} from "react";
+import axios from "axios";
 const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+`;
+
+const RowWrapper = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
+    
     justify-content: space-between;
     padding: 16px;
     box-sizing: border-box;
@@ -39,19 +49,25 @@ const AmountP = styled.span`
     width: 160px;
     text-align: center;
 `;
-export function RecordList(){
-    return (
-        <Wrapper>
-            <CategoryP className="ExtraBold18">식비</CategoryP>
-            <ItemP className="ExtraBold18">밥</ItemP>
-            <TextP className="ExtraBold18">2023.08.05</TextP>
-            <TextP className="ExtraBold18">현금</TextP>
-            <AmountP className="ExtraBold18" color={18000 > 0 ? '#299D91' : 'red'}>+18,000</AmountP>
+export function RecordList({list}){
+    const content = list.map(l=>{
+        return <RowWrapper>
+            <CategoryP className="ExtraBold18">{l.category}</CategoryP>
+            <ItemP className="ExtraBold18">{l.item}</ItemP>
+            <TextP className="ExtraBold18">{l.timestamp[0]}.{String(l.timestamp[1]).padStart(2, '0')}.{String(l.timestamp[2]).padStart(2, '0')}</TextP>
+            <TextP className="ExtraBold18">{l.method}</TextP>
+            <AmountP className="ExtraBold18" color={l.amount > 0 ? '#299D91' : 'red'}>{l.amount>0? `+${(l.amount).toLocaleString()}` : `${(l.amount).toLocaleString()}`}</AmountP>
             <MemoButton>
                 <Memo></Memo>
             </MemoButton>
+        </RowWrapper>
+
+    })
 
 
+    return (
+        <Wrapper>
+            {content}
         </Wrapper>
     );
 }
