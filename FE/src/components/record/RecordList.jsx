@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {ReactComponent as Memo} from "../../assets/memo.svg";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {useCookies} from "react-cookie";
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -50,7 +51,12 @@ const AmountP = styled.span`
     text-align: center;
 `;
 export function RecordList({list}){
-    const content = list.map(l=>{
+    const [cookies, setCookie, removeCookie] = useCookies(["year", "month"]);
+    const ll = list.filter(l=>{
+        return (l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month);
+    })
+    console.log(ll);
+    const content = ll.map(l=>{
         return <RowWrapper>
             <CategoryP className="ExtraBold18">{l.category}</CategoryP>
             <ItemP className="ExtraBold18">{l.item}</ItemP>
