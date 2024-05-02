@@ -59,6 +59,16 @@ export function RecordViewer(){
                 amount: -4700,
                 memo: null
             });
+            l.push({
+                id: 0,
+                email: "test@email.com",
+                category: "월급",
+                item: "월급",
+                timestamp: [2024, i, 20],
+                method: "현금",
+                amount: 500000,
+                memo: null
+            });
         }
 
         setList(l);
@@ -96,7 +106,7 @@ export function RecordViewer(){
             <ListWrapper>
 
                 <RecordHeader></RecordHeader>
-                <RecordList list={list}></RecordList>
+                <RecordList selected={selected} list={list}></RecordList>
 
             </ListWrapper>
 
