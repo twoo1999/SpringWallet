@@ -64,7 +64,7 @@ export function DateSelector(){
                 <DateSelectorModal onClick={onClickDate}></DateSelectorModal>
             }
             <Prev onClick={onClickPrevMonth}></Prev>
-            <span className="Regular16" onClick={onClickDate}>{cookies.year}.{String(cookies.month).padStart(2, '0')}</span>
+            <span className="Bold16" onClick={onClickDate}>{cookies.year}.{String(cookies.month).padStart(2, '0')}</span>
             <Next onClick={onClickNextMonth}></Next>
         </Wrapper>
     )

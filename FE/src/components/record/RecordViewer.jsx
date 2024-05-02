@@ -3,8 +3,22 @@ import {RecordHeader} from "./RecordHeader";
 import {RecordList} from "./RecordList";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {DateSelector} from "./DateSelector";
+import {TypeButton} from "./TypeButton";
 
 const Wrapper = styled.div`
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap:1rem
+`;
+
+const FilteringWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+const ListWrapper = styled.div`
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -15,6 +29,11 @@ const Wrapper = styled.div`
     border: 2px solid #666666;
 `;
 
+const TypeBtns = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+`;
 export function RecordViewer(){
 
     const [list, setList] = useState([]);
@@ -47,12 +66,31 @@ export function RecordViewer(){
     useEffect(async () => {
         getData();
     }, []);
+
+    const [selected, setSelected] = useState("All");
+    const types = ["All", "Revenue", "Expenses"];
+    const btns = types.map(type=>{
+        return <TypeButton selected={selected} type={type}></TypeButton>
+    })
+
     return(
         <Wrapper>
+            <FilteringWrapper>
+                <TypeBtns>
+                    {btns}
+                </TypeBtns>
 
-            <RecordHeader></RecordHeader>
-            <RecordList list={list}></RecordList>
+                <DateSelector></DateSelector>
+            </FilteringWrapper>
+
+            <ListWrapper>
+
+                <RecordHeader></RecordHeader>
+                <RecordList list={list}></RecordList>
+
+            </ListWrapper>
 
         </Wrapper>
+
     );
 }
