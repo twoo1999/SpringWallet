@@ -66,11 +66,21 @@ export function RecordViewer(){
     useEffect(async () => {
         getData();
     }, []);
+    const onTypeBtnClick = (e)=>{
+        const type = e.target.textContent;
+        if(type === 'All'){
+            setSelected("All");
+        } else if(type === "Revenue"){
+            setSelected("Revenue");
+        } else if(type === "Expenses"){
+            setSelected("Expenses");
+        }
+    }
 
     const [selected, setSelected] = useState("All");
     const types = ["All", "Revenue", "Expenses"];
     const btns = types.map(type=>{
-        return <TypeButton selected={selected} type={type}></TypeButton>
+        return <TypeButton onTypeBtnClick={onTypeBtnClick} selected={selected} type={type}></TypeButton>
     })
 
     return(
