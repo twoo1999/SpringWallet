@@ -5,6 +5,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {DateSelector} from "./DateSelector";
 import {TypeButton} from "./TypeButton";
+import {useCookies} from "react-cookie";
+import '../../common/fonts.css'
+import '../../common/color.css'
 
 const Wrapper = styled.div`
     height: 100%;
@@ -33,6 +36,14 @@ const TypeBtns = styled.div`
     display: flex;
     flex-direction: row;
     gap: 2rem;
+`;
+
+const SummaryWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap:3rem;
 `;
 export function RecordViewer(){
 
@@ -86,13 +97,24 @@ export function RecordViewer(){
             setSelected("Expenses");
         }
     }
+    const [cookies, setCookie, removeCookie] = useCookies(["year", "month"]);
 
     const [selected, setSelected] = useState("All");
     const types = ["All", "Revenue", "Expenses"];
     const btns = types.map(type=>{
         return <TypeButton onTypeBtnClick={onTypeBtnClick} selected={selected} type={type}></TypeButton>
     })
-
+    const ll = list.filter(l=>{
+        if(l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month){
+            if(selected === "All"){
+                return true;
+            } else if(selected === "Revenue"){
+                return l.amount > 0;
+            } else if(selected === "Expenses"){
+                return l.amount < 0;
+            }
+        }
+    })
     return(
         <Wrapper>
             <FilteringWrapper>
@@ -106,8 +128,21 @@ export function RecordViewer(){
             <ListWrapper>
 
                 <RecordHeader></RecordHeader>
-                <RecordList selected={selected} list={list}></RecordList>
-
+                <RecordList list={ll}></RecordList>
+                <SummaryWrapper>
+                    {
+                        (selected === "All" || selected === "Revenue") &&
+                        <span className="ExtraBold18 PrimaryColor">Revenue 10,000</span>
+                    }
+                    {
+                        selected === "All" &&
+                        <span className="ExtraBold18">/</span>
+                    }
+                    {
+                        (selected === "All" || selected === "Expenses") &&
+                        <span className="ExtraBold18 red">Expenses 4,000</span>
+                    }
+                </SummaryWrapper>
             </ListWrapper>
 
         </Wrapper>
