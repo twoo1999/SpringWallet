@@ -50,10 +50,18 @@ const AmountP = styled.span`
     width: 160px;
     text-align: center;
 `;
-export function RecordList({list}){
+export function RecordList({list, selected}){
     const [cookies, setCookie, removeCookie] = useCookies(["year", "month"]);
     const ll = list.filter(l=>{
-        return (l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month);
+        if(l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month){
+            if(selected === "All"){
+                return true;
+            } else if(selected === "Revenue"){
+                return l.amount > 0;
+            } else if(selected === "Expenses"){
+                return l.amount < 0;
+            }
+        }
     })
     const content = ll.map(l=>{
         return <RowWrapper>

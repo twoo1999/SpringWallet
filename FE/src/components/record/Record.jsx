@@ -50,10 +50,13 @@ export function Record(){
                 <InputForm></InputForm>
             </RecordWrapper>
             <ViewerWrapper>
-                <ViewerHeaderWrapper>
-                    <span className="Header22 Gray01"> Transaction</span>
-                    <DateSelector></DateSelector>
-                </ViewerHeaderWrapper>
+                {/*<ViewerHeaderWrapper>*/}
+                {/*    <span className="Header22 Gray01"> Transaction</span>*/}
+                {/*    <DateSelector></DateSelector>*/}
+                {/*</ViewerHeaderWrapper>*/}
+
+                {/*<RecordViewer></RecordViewer>*/}
+                <span className="Header22 Gray01"> Transaction</span>
 
                 <RecordViewer></RecordViewer>
             </ViewerWrapper>
