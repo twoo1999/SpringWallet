@@ -3,6 +3,7 @@ import {ReactComponent as Memo} from "../../assets/memo.svg";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useCookies} from "react-cookie";
+import {DataDetailModal} from "./DataDetailModal";
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -18,6 +19,8 @@ const RowWrapper = styled.div`
     justify-content: space-between;
     padding: 16px;
     box-sizing: border-box;
+    
+    cursor: pointer;
 `;
 
 const CategoryP = styled.span`
@@ -50,9 +53,25 @@ const AmountP = styled.span`
     width: 160px;
     text-align: center;
 `;
+const ModalBack = styled.div`
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        
+    `;
 export function RecordList({list}){
+    const [detailView, setDetailView] = useState(true);
+    const [data, setData] = useState();
+
+    const onDataClick = ()=>{
+
+    }
+
     const content = list.map(l=>{
-        return <RowWrapper>
+        return <RowWrapper key={l.id}>
             <CategoryP className="ExtraBold18">{l.category}</CategoryP>
             <ItemP className="ExtraBold18">{l.item}</ItemP>
             <TextP className="ExtraBold18">{l.timestamp[0]}.{String(l.timestamp[1]).padStart(2, '0')}.{String(l.timestamp[2]).padStart(2, '0')}</TextP>
@@ -64,11 +83,21 @@ export function RecordList({list}){
         </RowWrapper>
 
     })
-
+    const closeDetaolModalHandeler = ()=>{
+        setDetailView(!detailView);
+    }
 
     return (
         <Wrapper>
             {content}
+            {
+                detailView &&
+                <ModalBack onClick={closeDetaolModalHandeler}>
+                    <DataDetailModal></DataDetailModal>
+                </ModalBack>
+            }
+
+
         </Wrapper>
     );
 }
