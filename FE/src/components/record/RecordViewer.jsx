@@ -87,6 +87,49 @@ export function RecordViewer(){
     useEffect(async () => {
         getData();
     }, []);
+
+    const filterData = ()=>{
+        const ll = list.filter(l=>{
+            if(l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month){
+                if(selected === "All"){
+                    return true;
+                } else if(selected === "Revenue"){
+                    return l.amount > 0;
+                } else if(selected === "Expenses"){
+                    return l.amount < 0;
+                }
+            }
+        });
+
+        setFilteredList(ll);
+    }
+    const [cookies, setCookie, removeCookie] = useCookies(["year", "month"]);
+    const [filterdList, setFilteredList] = useState(list);
+    const [selected, setSelected] = useState("All");
+    const types = ["All", "Revenue", "Expenses"];
+    const [expenses, setExpenses] = useState(0);
+    const [revenue, setRevenue] = useState(0);
+    const calExpeneses = ()=>{
+        setExpenses(filterdList.reduce((acc, cur, idx)=> acc + (cur.amount < 0 ? cur.amount*-1 : 0), 0));
+    }
+
+    const calRevenue = ()=>{
+        setRevenue(filterdList.reduce((acc, cur, idx)=> acc + (cur.amount > 0 ? cur.amount : 0), 0));
+
+    }
+    useEffect(() => {
+        filterData();
+    }, [list, cookies, selected]);
+
+
+    useEffect(() => {
+        if(filterdList.length !== 0){
+            calExpeneses();
+            calRevenue();
+        }
+
+
+    }, [filterdList]);
     const onTypeBtnClick = (e)=>{
         const type = e.target.textContent;
         if(type === 'All'){
@@ -97,24 +140,12 @@ export function RecordViewer(){
             setSelected("Expenses");
         }
     }
-    const [cookies, setCookie, removeCookie] = useCookies(["year", "month"]);
 
-    const [selected, setSelected] = useState("All");
-    const types = ["All", "Revenue", "Expenses"];
     const btns = types.map(type=>{
         return <TypeButton onTypeBtnClick={onTypeBtnClick} selected={selected} type={type}></TypeButton>
     })
-    const ll = list.filter(l=>{
-        if(l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month){
-            if(selected === "All"){
-                return true;
-            } else if(selected === "Revenue"){
-                return l.amount > 0;
-            } else if(selected === "Expenses"){
-                return l.amount < 0;
-            }
-        }
-    })
+
+
     return(
         <Wrapper>
             <FilteringWrapper>
@@ -128,11 +159,11 @@ export function RecordViewer(){
             <ListWrapper>
 
                 <RecordHeader></RecordHeader>
-                <RecordList list={ll}></RecordList>
+                <RecordList list={filterdList}></RecordList>
                 <SummaryWrapper>
                     {
                         (selected === "All" || selected === "Revenue") &&
-                        <span className="ExtraBold18 PrimaryColor">Revenue 10,000</span>
+                        <span className="ExtraBold18 PrimaryColor">Revenue {revenue}</span>
                     }
                     {
                         selected === "All" &&
@@ -140,7 +171,7 @@ export function RecordViewer(){
                     }
                     {
                         (selected === "All" || selected === "Expenses") &&
-                        <span className="ExtraBold18 red">Expenses 4,000</span>
+                        <span className="ExtraBold18 red">Expenses {expenses}</span>
                     }
                 </SummaryWrapper>
             </ListWrapper>
