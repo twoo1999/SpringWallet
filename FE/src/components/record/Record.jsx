@@ -1,12 +1,8 @@
 import '../../common/fonts.css'
 import '../../common/color.css'
 import styled from "styled-components";
-import {InputBlock} from "./InputBlock";
-import {useEffect, useState} from "react";
 import {RecordViewer} from "./RecordViewer";
-import {useNavigate} from "react-router-dom";
 import {InputForm} from "./InputForm";
-import {DateSelector} from "./DateSelector";
 
 
 const Wrapper = styled.div`
@@ -50,14 +46,7 @@ export function Record(){
                 <InputForm></InputForm>
             </RecordWrapper>
             <ViewerWrapper>
-                {/*<ViewerHeaderWrapper>*/}
-                {/*    <span className="Header22 Gray01"> Transaction</span>*/}
-                {/*    <DateSelector></DateSelector>*/}
-                {/*</ViewerHeaderWrapper>*/}
-
-                {/*<RecordViewer></RecordViewer>*/}
                 <span className="Header22 Gray01"> Transaction</span>
-
                 <RecordViewer></RecordViewer>
             </ViewerWrapper>
         </Wrapper>

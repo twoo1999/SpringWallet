@@ -1,4 +1,4 @@
-. PrimaryColor{
+.PrimaryColor{
     color: #299D91;
 }
 
@@ -51,4 +51,8 @@
 
 :root{
     --primary-color: #299D91;
+}
+
+.red{
+    color:red;
 }
