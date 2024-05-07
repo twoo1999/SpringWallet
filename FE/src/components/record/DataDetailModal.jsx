@@ -6,7 +6,7 @@ import {AmountInput} from "./AmoutInput";
 import {SelctInput} from "./SelctInput";
 import {DateInput} from "./DateInput";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 const Wrapper = styled.div`
     position: absolute;
     top: 50%;
@@ -31,35 +31,84 @@ const MemoInput = styled.textarea`
     width: 100%;
     height: 400px;
     resize: none;
-    background-color: #D1D1D1;
+    background-color: white;
     border: none;
     padding: 2rem;
     box-sizing: border-box;
     border-radius: 16px;
+    border: 2px solid black;
 `;
 export function DataDetailModal({data}){
-    const onChangeValue = (e)=>{
+    const [currData, setCurrData] = useState(data[0]);
+    const [change, setChange] = useState(false);
+    // console.log(currData);
 
+    const onChangeValue = (e)=>{
+        setCurrData(prevState => {
+            return {...prevState, [e.target.id]: e.target.value};
+        });
+    }
+    const onChangeDateValue = (e)=>{
+        setCurrData(prevState => {
+            return {...prevState, [e.target.id]: e.target.value.split("-").map(x=>Number(x))};
+        });
     }
     const onChangeValueReadonly = (key, value)=>{
+        if(value){
+            setCurrData((prevState) => {
+                return {...prevState, [key]: value}
+            });
+        }
 
     }
-    const [sign, setSign] = useState(true);
+    const [sign, setSign] = useState(data.amount >= 0 ? true : false);
     const [categories, setCategories] = useState();
+    const isChanged = ()=>{
+        const keys = Object.keys(data[0]);
+        const diff = keys.filter(key => {
+            if(key === 'timestamp'){
+                return JSON.stringify(currData[key])  !== JSON.stringify(data[0][key]);
+            } else{
+                return data[0][key] !== currData[key]
+            }
+
+        });
+        console.log(diff)
+        if(diff.length != 0){
+            setChange(true);
+        } else{
+            setChange(false);
+        }
+    }
+
+    useEffect(() => {
+        isChanged();
+    }, [currData, sign]);
+
+    useEffect(() => {
+        if (sign) {
+            setCategories(["월급", "용돈", "행운(득)"]);
+        } else {
+            setCategories(["식비", "교통비", "취미", "카드값"])
+        }
+
+
+    }, [sign]);
     const navigate = useNavigate();
     return(
         <Wrapper onClick={(e)=>e.stopPropagation()}>
             <DataWrapper>
-                <ItemInput onChangeValue={onChangeValue}></ItemInput>
-                <AmountInput onChangeValueReadonly={onChangeValueReadonly} sign={sign}
+                <ItemInput value={currData.item} onChangeValue={onChangeValue}></ItemInput>
+                <AmountInput value={Math.abs(data[0].amount)} onChangeValueReadonly={onChangeValueReadonly} sign={sign}
                              onChangeSign={() => setSign(!sign)}></AmountInput>
-                <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="category"
+                <SelctInput value={data[0].category} onChangeValueReadonly={onChangeValueReadonly} type="category"
                             items={categories}></SelctInput>
-                <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="method"
+                <SelctInput value={data[0].method} onChangeValueReadonly={onChangeValueReadonly} type="method"
                             items={["카드", "현금"]}></SelctInput>
-                <DateInput onChangeValue={onChangeValue}></DateInput>
+                <DateInput value={currData.timestamp} onChangeValue={onChangeDateValue}></DateInput>
             </DataWrapper>
             <MemoInput></MemoInput>
+            <CustomButton bgColor={change ? "#299D91" : "#666666"} onClickBtn={()=>{console.log("클릭")}} content={"수정"} disable={!change}></CustomButton>
         </Wrapper>
     )
 

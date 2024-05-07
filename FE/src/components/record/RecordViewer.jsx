@@ -61,7 +61,7 @@ export function RecordViewer(){
         const l = [];
         for(let i = 1; i < 12; i++){
             l.push({
-                id: 0,
+                id: 1,
                 email: "test@email.com",
                 category: "식비",
                 item: "냉면",
@@ -71,7 +71,7 @@ export function RecordViewer(){
                 memo: null
             });
             l.push({
-                id: 0,
+                id: 2,
                 email: "test@email.com",
                 category: "월급",
                 item: "월급",

@@ -63,15 +63,19 @@ const ModalBack = styled.div`
         
     `;
 export function RecordList({list}){
-    const [detailView, setDetailView] = useState(true);
+    const [detailView, setDetailView] = useState(false);
     const [data, setData] = useState();
 
-    const onDataClick = ()=>{
-
+    const onDataClick = (e)=>{
+        setData(list.filter(l=>{
+            return l.id === Number(e.currentTarget.getAttribute('id'));
+        }));
+        setDetailView(!detailView);
+        // setData()
     }
 
     const content = list.map(l=>{
-        return <RowWrapper key={l.id}>
+        return <RowWrapper id={l.id} key={l.id} onClick={onDataClick}>
             <CategoryP className="ExtraBold18">{l.category}</CategoryP>
             <ItemP className="ExtraBold18">{l.item}</ItemP>
             <TextP className="ExtraBold18">{l.timestamp[0]}.{String(l.timestamp[1]).padStart(2, '0')}.{String(l.timestamp[2]).padStart(2, '0')}</TextP>
@@ -93,7 +97,7 @@ export function RecordList({list}){
             {
                 detailView &&
                 <ModalBack onClick={closeDetaolModalHandeler}>
-                    <DataDetailModal></DataDetailModal>
+                    <DataDetailModal data={data}></DataDetailModal>
                 </ModalBack>
             }
 

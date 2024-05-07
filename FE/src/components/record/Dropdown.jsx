@@ -7,7 +7,7 @@ import {DirectInputModal} from "./DirectInputModal";
 const Wrapper = styled.div`
     position: absolute;
     background-color: #D1D1D1;
-    transform: translateY(44px);
+    transform: translateY(46px);
     padding: 16px 18px;
     border-radius: 8px;
     width: 120px;
