@@ -165,7 +165,7 @@ export function RecordViewer(){
                 <SummaryWrapper>
                     {
                         (selected === "All" || selected === "Revenue") &&
-                        <span className="ExtraBold18 PrimaryColor">Revenue {revenue}</span>
+                        <span className="ExtraBold18 PrimaryColor">Revenue {revenue.toLocaleString()}</span>
                     }
                     {
                         selected === "All" &&
@@ -173,7 +173,7 @@ export function RecordViewer(){
                     }
                     {
                         (selected === "All" || selected === "Expenses") &&
-                        <span className="ExtraBold18 red">Expenses {expenses}</span>
+                        <span className="ExtraBold18 red">Expenses {expenses.toLocaleString()}</span>
                     }
                 </SummaryWrapper>
             </ListWrapper>
