@@ -7,6 +7,7 @@ import {SelctInput} from "./SelctInput";
 import {DateInput} from "./DateInput";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
+import axios from "axios";
 const Wrapper = styled.div`
     position: absolute;
     top: 50%;
@@ -61,7 +62,7 @@ export function DataDetailModal({data}){
         }
 
     }
-    const [sign, setSign] = useState(data.amount >= 0 ? true : false);
+    const [sign, setSign] = useState(data[0].amount >= 0 ? true : false);
     const [categories, setCategories] = useState();
     const isChanged = ()=>{
         const keys = Object.keys(data[0]);
@@ -94,6 +95,44 @@ export function DataDetailModal({data}){
 
 
     }, [sign]);
+
+    const updateButton = (e)=>{
+        const updateData = {};
+        const keys = Object.keys(data[0]);
+        keys.forEach(key => {
+            if (key === "id") {
+                return;
+            }
+            if(key === 'timestamp'){
+                if(JSON.stringify(currData[key])  !== JSON.stringify(data[0][key])){
+                    updateData.timestamp = currData[key].map(x=>String(x).padStart(2, '0')).join("-");
+                } else {
+                    updateData.timestamp = null;
+                }
+            } else{
+                if(data[0][key] !== currData[key]){
+                    updateData[key] = currData[key];
+                } else {
+                    updateData[key] = null;
+                }
+            }
+
+        });
+
+
+        axios({
+            method: "POST",
+            url: `http://localhost:8080/record/${data[0].id}`,
+            data: JSON.stringify(updateData),
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json"
+            }
+
+        })
+        window.location.replace("/record");
+        console.log(updateData);
+    }
     const navigate = useNavigate();
     return(
         <Wrapper onClick={(e)=>e.stopPropagation()}>
@@ -108,7 +147,7 @@ export function DataDetailModal({data}){
                 <DateInput value={currData.timestamp} onChangeValue={onChangeDateValue}></DateInput>
             </DataWrapper>
             <MemoInput></MemoInput>
-            <CustomButton bgColor={change ? "#299D91" : "#666666"} onClickBtn={()=>{console.log("클릭")}} content={"수정"} disable={!change}></CustomButton>
+            <CustomButton bgColor={change ? "#299D91" : "#666666"} onClickBtn={updateButton} content={"수정"} disable={!change}></CustomButton>
         </Wrapper>
     )
 
