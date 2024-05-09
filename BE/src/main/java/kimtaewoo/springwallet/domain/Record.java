@@ -17,7 +17,7 @@ public class Record {
     private String item;
     private LocalDate timestamp;
     private String method;
-    private int amount;
+    private Integer amount;
     private String memo;
 
     public Long getId() {
@@ -68,11 +68,11 @@ public class Record {
         this.method = method;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
