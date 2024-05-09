@@ -39,6 +39,14 @@ const MemoInput = styled.textarea`
     border-radius: 16px;
     border: 2px solid black;
 `;
+
+const Btns = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap : 2rem;
+`;
+
+
 export function DataDetailModal({data}){
     const [currData, setCurrData] = useState(data[0]);
     const [change, setChange] = useState(false);
@@ -130,7 +138,19 @@ export function DataDetailModal({data}){
 
         })
         window.location.replace("/record");
-        console.log(updateData);
+    }
+    const deleteButton = (e)=>{
+        console.log("ASD")
+        axios({
+            method: "DELETE",
+            url: `http://localhost:8080/record/${data[0].id}`,
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json"
+            }
+
+        })
+        window.location.replace("/record");
     }
     const navigate = useNavigate();
     return(
@@ -146,7 +166,11 @@ export function DataDetailModal({data}){
                 <DateInput value={currData.timestamp} onChangeValue={onChangeDateValue}></DateInput>
             </DataWrapper>
             <MemoInput id="memo" onChange={onChangeValue} defaultValue={currData.memo}></MemoInput>
-            <CustomButton bgColor={change ? "#299D91" : "#666666"} onClickBtn={updateButton} content={"수정"} disable={!change}></CustomButton>
+            <Btns>
+                <CustomButton bgColor={change ? "#299D91" : "#666666"} onClickBtn={updateButton} content={"수정"} disable={!change}></CustomButton>
+                <CustomButton bgColor={"red"} onClickBtn={deleteButton} content={"삭제"}></CustomButton>
+            </Btns>
+
         </Wrapper>
     )
 
