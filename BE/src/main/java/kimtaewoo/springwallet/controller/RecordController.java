@@ -36,4 +36,12 @@ public class RecordController {
     public List<Record> getRecord(AccessTokenPayload acp){
         return recordService.getRecord(acp);
     }
+
+    @PostMapping("/record/{id}")
+    @ResponseBody
+    public ResponseEntity modifyRecord(@RequestBody CreateRecordReqDto record, @PathVariable("id") Long id){
+        return recordService.modifyRecord(record, id);
+    }
+
+
 }
