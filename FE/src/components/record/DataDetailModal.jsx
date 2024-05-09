@@ -74,7 +74,6 @@ export function DataDetailModal({data}){
             }
 
         });
-        console.log(diff)
         if(diff.length != 0){
             setChange(true);
         } else{
@@ -146,7 +145,7 @@ export function DataDetailModal({data}){
                             items={["카드", "현금"]}></SelctInput>
                 <DateInput value={currData.timestamp} onChangeValue={onChangeDateValue}></DateInput>
             </DataWrapper>
-            <MemoInput></MemoInput>
+            <MemoInput id="memo" onChange={onChangeValue} defaultValue={currData.memo}></MemoInput>
             <CustomButton bgColor={change ? "#299D91" : "#666666"} onClickBtn={updateButton} content={"수정"} disable={!change}></CustomButton>
         </Wrapper>
     )

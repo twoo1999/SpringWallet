@@ -69,7 +69,7 @@ export function RecordViewer(){
         //         timestamp: [2024, i, 20],
         //         method: "카드",
         //         amount: -4700,
-        //         memo: null
+        //         memo: ""
         //     });
         //     l.push({
         //         id: 2,
@@ -79,7 +79,7 @@ export function RecordViewer(){
         //         timestamp: [2024, i, 20],
         //         method: "현금",
         //         amount: 500000,
-        //         memo: null
+        //         memo: ""
         //     });
         // }
         //
