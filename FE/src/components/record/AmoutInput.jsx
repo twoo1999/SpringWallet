@@ -29,14 +29,14 @@ export function AmountInput({value, sign, onChangeSign, onChangeValueReadonly}){
 
 
     useEffect(() => {
-        onChangeValueReadonly("amount", sign ? val : val * -1);
+        onChangeValueReadonly("amount", sign ? val*1 : val * (-1));
     }, [sign, val]);
     const changeHandler = (e)=>{
         setVal(e.target.value);
     }
     return (
         <Wrapper>
-            <span className="Regular12 Gray02">Item</span>
+            <span className="Regular12 Gray02">Amount</span>
             <AmountDiv>
                 {sign ? <Plus onClick={() => {
                     onChangeSign(!sign);
@@ -44,7 +44,7 @@ export function AmountInput({value, sign, onChangeSign, onChangeValueReadonly}){
                     onChangeSign(!sign);
                 }}></Minus>}
                 {/*<AmountP defaultValue="10" id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' value={val} onChange={changeHandler}></AmountP>*/}
-                <AmountP defaultValue={value ? value : "0"} id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
+                <AmountP min='0' defaultValue={value ? value : "0"} id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
             </AmountDiv>
         </Wrapper>
 

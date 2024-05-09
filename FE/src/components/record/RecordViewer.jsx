@@ -54,7 +54,6 @@ export function RecordViewer(){
             url: `http://localhost:8080/record`,
             withCredentials:true,
         }).then((res)=>{
-            // console
             setList(res.data);
         }).catch(err=>{
             console.log(err);

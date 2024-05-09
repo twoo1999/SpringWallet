@@ -58,8 +58,14 @@ export function InputForm(){
 
     useEffect(() => {
 
-        const flag = !Object.values(input).every(val => val.length > 0);
-        setAble(flag);
+        const emptyList = Object.keys(input).filter(key=>{
+            if(key === 'amount'){
+                return input[key] === 0;
+            } else{
+                return input[key].length === 0;
+            }
+        })
+        setAble(emptyList.length !== 0);
       }, [input]);
 
 
@@ -68,12 +74,14 @@ export function InputForm(){
     }
 
     const onChangeValue = (e)=>{
+
         setInput((prevState) => {
             return {...prevState, [e.target.id]: e.target.value}
         });
     }
     const onChangeValueReadonly = (key, value)=>{
-        if(value){
+
+        if(value !== undefined){
             setInput((prevState) => {
                 return {...prevState, [key]: value}
             });
@@ -114,7 +122,6 @@ export function InputForm(){
                             url: "http://localhost:8080/record",
                             data: JSON.stringify({
                                 ...input,
-                                amount: sign ? amount : -1 * amount,
                                 memo: memoValue.length > 0 ? memoValue : ""
                             }),
                             withCredentials: true,
