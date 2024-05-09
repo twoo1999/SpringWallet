@@ -1,10 +1,13 @@
 package kimtaewoo.springwallet.Service;
 
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Record;
 import kimtaewoo.springwallet.dto.CreateRecordReqDto;
 import kimtaewoo.springwallet.repository.RecordRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.time.LocalDate;
@@ -36,4 +39,30 @@ public class RecordService {
         return recordRepository.findByEmail(email);
     }
 
+
+    public ResponseEntity modifyRecord(CreateRecordReqDto record, Long id){
+        Record re = recordRepository.findById(id).get();
+
+        if(record.getAmount() != null){
+            re.setAmount(record.getAmount());
+        }
+        if(record.getCategory() != null){
+            re.setCategory(record.getCategory());
+        }
+        if (record.getMemo() != null) {
+            re.setMemo(record.getMemo());
+        }
+        if (record.getMethod() != null) {
+            re.setMethod(record.getMethod());
+        }
+        if (record.getItem() != null) {
+            re.setItem(record.getItem());
+        }
+        if (record.getTimestamp() != null) {
+            re.setTimestamp(record.getTimestamp());
+        }
+
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

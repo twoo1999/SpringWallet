@@ -60,4 +60,35 @@ public class RecordServiceTest {
     }
 
 
+    @Test
+    public void 기록_수정() throws Exception{
+        //given
+        Record record = new Record();
+        record.setEmail("test@email.com");
+        record.setCategory("식비");
+        record.setTimestamp(LocalDate.of(2020, 1, 1));
+        record.setMethod("현금");
+        record.setAmount(null);
+        record.setMemo(null);
+
+
+        // mocking
+
+        Record newRecord = new Record();
+        record.setEmail("test2@email.com");
+        record.setCategory("식비");
+        record.setTimestamp(LocalDate.of(2020, 1, 1));
+        record.setMethod("현금");
+        record.setAmount(1000);
+        record.setMemo(null);
+
+
+        // when
+        int a = 1;
+        System.out.println((Integer)a);
+        // then
+
+    }
+
+
 }
