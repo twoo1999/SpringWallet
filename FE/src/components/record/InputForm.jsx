@@ -115,7 +115,7 @@ export function InputForm(){
                             data: JSON.stringify({
                                 ...input,
                                 amount: sign ? amount : -1 * amount,
-                                memo: memoValue.length > 0 ? memoValue : null
+                                memo: memoValue.length > 0 ? memoValue : ""
                             }),
                             withCredentials: true,
                             headers: {
