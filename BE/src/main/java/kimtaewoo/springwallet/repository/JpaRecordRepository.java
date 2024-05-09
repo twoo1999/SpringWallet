@@ -42,4 +42,10 @@ public class JpaRecordRepository implements RecordRepository {
                 .getResultList();
     }
 
+    @Override
+    public void deleteById(Long id) {
+        em.createQuery("delete from Record r where r.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }

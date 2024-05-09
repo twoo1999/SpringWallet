@@ -14,4 +14,6 @@ public interface RecordRepository {
 
 
     List<Record> findByEmail(String email);
+
+    void deleteById(Long id);
 }
