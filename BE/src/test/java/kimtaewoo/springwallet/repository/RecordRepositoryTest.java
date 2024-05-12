@@ -90,4 +90,26 @@ public class RecordRepositoryTest {
         assertThat(newnewRecord.getEmail()).isEqualTo("test2@email.com");
 
     }
+
+    @Test
+    @Transactional
+    void 기록_삭제(){
+        // given
+        Record record = new Record();
+        record.setEmail("test@email.com");
+        record.setCategory("식비");
+        record.setTimestamp(LocalDate.of(2020, 1, 1));
+        record.setMethod("현금");
+        record.setAmount(1000);
+        record.setMemo(null);
+
+        repository.save(record);
+
+        // when
+        repository.deleteById(1L);
+        List<Record> newR = repository.findAll();
+
+        // then
+        assertThat(newR.size()).isEqualTo(1);
+    }
 }

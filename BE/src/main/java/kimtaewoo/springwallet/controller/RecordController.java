@@ -43,5 +43,10 @@ public class RecordController {
         return recordService.modifyRecord(record, id);
     }
 
+    @DeleteMapping("/record/{id}")
+    @ResponseBody
+    public ResponseEntity deleteRecord(@PathVariable("id") Long id) {
+        return recordService.deleteRecord(id);
+    }
 
 }
