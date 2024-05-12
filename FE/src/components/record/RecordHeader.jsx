@@ -41,7 +41,6 @@ export function RecordHeader({data}){
 
             <TextP className="ExtraBold18">Amount</TextP>
 
-            <MemoP className="ExtraBold18">Memo</MemoP>
         </Wrapper>
     )
 }

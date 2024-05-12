@@ -81,9 +81,6 @@ export function RecordList({list}){
             <TextP className="ExtraBold18">{l.timestamp[0]}.{String(l.timestamp[1]).padStart(2, '0')}.{String(l.timestamp[2]).padStart(2, '0')}</TextP>
             <TextP className="ExtraBold18">{l.method}</TextP>
             <AmountP className="ExtraBold18" color={l.amount > 0 ? '#299D91' : 'red'}>{l.amount>0? `+${(l.amount).toLocaleString()}` : `${(l.amount).toLocaleString()}`}</AmountP>
-            <MemoButton>
-                <Memo></Memo>
-            </MemoButton>
         </RowWrapper>
 
     })
