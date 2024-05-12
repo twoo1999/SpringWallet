@@ -43,8 +43,7 @@ export function AmountInput({value, sign, onChangeSign, onChangeValueReadonly}){
                 }}></Plus> : <Minus onClick={() => {
                     onChangeSign(!sign);
                 }}></Minus>}
-                {/*<AmountP defaultValue="10" id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' value={val} onChange={changeHandler}></AmountP>*/}
-                <AmountP min='0' defaultValue={value ? value : "0"} id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
+                <AmountP min='0' defaultValue={value ? value : ""} id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
             </AmountDiv>
         </Wrapper>
 
