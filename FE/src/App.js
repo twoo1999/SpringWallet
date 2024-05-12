@@ -8,6 +8,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "./components/login/Login";
 import {Loading} from "./components/login/loading";
 import {CookiesProvider} from "react-cookie";
+import {Preparing} from "./components/common/Preparing";
 
 const Wrapper = styled.div`
     height : 100%;
@@ -42,6 +43,11 @@ function App() {
                             <Route path="/record/*" element={<Record></Record>}></Route>
                             <Route path="/login" element={<Login></Login>}></Route>
                             <Route path="/loading" element={<Loading/>}></Route>
+                            <Route path="/overview" element={<Preparing/>}></Route>
+                            <Route path="/fast-record" element={<Preparing/>}></Route>
+                            <Route path="/AI" element={<Preparing/>}></Route>
+                            <Route path="/goals" element={<Preparing/>}></Route>
+                            <Route path="/setting" element={<Preparing/>}></Route>
                         </Routes>
                     </MainWrapper>
                 </Wrapper>
