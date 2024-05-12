@@ -49,40 +49,41 @@ export function RecordViewer(){
 
     const [list, setList] = useState([]);
     const getData = async()=>{
-        // await axios({
-        //     method: "GET",
-        //     url: `http://localhost:8080/record`,
-        //     withCredentials:true,
-        // }).then((res)=>{
-        //     setList(res.data);
-        // }).catch(err=>{
-        //     console.log(err);
-        // })
-        const l = [];
-        for(let i = 1; i < 12; i++){
-            l.push({
-                id: 0,
-                email: "test@email.com",
-                category: "식비",
-                item: "냉면",
-                timestamp: [2024, i, 20],
-                method: "카드",
-                amount: -4700,
-                memo: null
-            });
-            l.push({
-                id: 0,
-                email: "test@email.com",
-                category: "월급",
-                item: "월급",
-                timestamp: [2024, i, 20],
-                method: "현금",
-                amount: 500000,
-                memo: null
-            });
-        }
+        await axios({
+            method: "GET",
+            url: `http://localhost:8080/record`,
+            withCredentials:true,
+        }).then((res)=>{
+            setList(res.data);
+        }).catch(err=>{
+            console.log(err);
+        })
+        // const l = [];
+        // for(let i = 1; i < 12; i++){
+        //     l.push({
+        //         id: 1,
+        //         email: "test@email.com",
+        //         category: "식비",
+        //         item: "냉면",
+        //         timestamp: [2024, i, 20],
+        //         method: "카드",
+        //         amount: -4700,
+        //         memo: ""
+        //     });
+        //     l.push({
+        //         id: 2,
+        //         email: "test@email.com",
+        //         category: "월급",
+        //         item: "월급",
+        //         timestamp: [2024, i, 20],
+        //         method: "현금",
+        //         amount: 500000,
+        //         memo: ""
+        //     });
+        // }
+        //
+        // setList(l);
 
-        setList(l);
     }
     useEffect(async () => {
         getData();
@@ -163,7 +164,7 @@ export function RecordViewer(){
                 <SummaryWrapper>
                     {
                         (selected === "All" || selected === "Revenue") &&
-                        <span className="ExtraBold18 PrimaryColor">Revenue {revenue}</span>
+                        <span className="ExtraBold18 PrimaryColor">Revenue {revenue.toLocaleString()}</span>
                     }
                     {
                         selected === "All" &&
@@ -171,7 +172,7 @@ export function RecordViewer(){
                     }
                     {
                         (selected === "All" || selected === "Expenses") &&
-                        <span className="ExtraBold18 red">Expenses {expenses}</span>
+                        <span className="ExtraBold18 red">Expenses {expenses.toLocaleString()}</span>
                     }
                 </SummaryWrapper>
             </ListWrapper>
