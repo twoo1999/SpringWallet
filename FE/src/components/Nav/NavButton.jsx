@@ -20,6 +20,7 @@ const Wrapper = styled.div`
     padding: 12px 16px;    
     width: 15rem;
     background: ${props=>props.bColor};
+    cursor: pointer;
 `;
 export function NavButton(props) {
     const c = props.bColor;
@@ -51,7 +52,9 @@ export function NavButton(props) {
             break;
     }
     return (
-        <Wrapper bColor={c}>
+        <Wrapper onClick={()=>{
+            window.location.replace(`${props.type}`);
+        }} bColor={c}>
             {icon}
             <MenuStr>{strs[num]}</MenuStr>
         </Wrapper>
