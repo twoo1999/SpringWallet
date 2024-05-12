@@ -65,4 +65,11 @@ public class RecordService {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
+    public ResponseEntity deleteRecord(Long id){
+        recordRepository.deleteById(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }
