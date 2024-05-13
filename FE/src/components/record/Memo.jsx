@@ -1,8 +1,4 @@
 import styled from "styled-components";
-import {ItemInput} from "./ItemInput";
-import {AmountInput} from "./AmoutInput";
-import {SelctInput} from "./SelctInput";
-import {DateInput} from "./DateInput";
 import {CustomButton} from "./CustomButton";
 import '../../common/color.css'
 const Wrapper = styled.div`
@@ -26,11 +22,12 @@ const MemoInput = styled.textarea`
     width: 100%;
     height: 400px;
     resize: none;
-    background-color: #D1D1D1;
+    background-color: white;
     border: none;
     padding: 16px;
     box-sizing: border-box;
     border-radius: 16px;
+    border: 2px solid black;
 `;
 
 const BtnWrapper = styled.div`

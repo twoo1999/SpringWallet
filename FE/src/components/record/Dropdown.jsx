@@ -7,7 +7,7 @@ import {DirectInputModal} from "./DirectInputModal";
 const Wrapper = styled.div`
     position: absolute;
     background-color: #D1D1D1;
-    transform: translateY(44px);
+    transform: translateY(46px);
     padding: 16px 18px;
     border-radius: 8px;
     width: 120px;
@@ -41,8 +41,6 @@ const DirectSelector = styled.div`
 
 
 function Dropdown({onSelect, sign, num, items}) {
-
-    // const items = num === 2 ? (sign ? ["월급", "용돈"] : ["카드값", "식비", "교통비", "취미"]) : ["카드", "현금"];
 
     const [view, setView] = useState(false);
     const list = [];

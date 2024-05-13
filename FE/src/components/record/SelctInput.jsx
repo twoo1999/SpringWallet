@@ -12,10 +12,10 @@ const BorderlessInput = styled.input`
     border: none;
 `;
 
-export function SelctInput({type, items, onChangeValueReadonly}){
+export function SelctInput({value, type, items, onChangeValueReadonly}){
     const [view, setView] = useState(false);
-    const [inputValue, setInputValue] = useState();
-
+    const [inputValue, setInputValue] = useState(value ? value : "");
+    // console.log(inputValue);
     useEffect(() => {
         onChangeValueReadonly(type, inputValue);
     }, [inputValue]);
