@@ -16,18 +16,18 @@ export function Loading(){
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const code = searchParams.get("code");
-    // useEffect(() => {
-    //     const GoogleLogin = async () => {
-    //         await axios({
-    //             method: "GET",
-    //             url: `http://localhost:8080/auth/google?code=${code}`,
-    //             withCredentials:true,
-    //         }).then((res) => {
-    //             navigate("/login");
-    //         });
-    //     };
-    //     GoogleLogin();
-    // }, []);
+    useEffect(() => {
+        const GoogleLogin = async () => {
+            await axios({
+                method: "GET",
+                url: `http://localhost:8080/auth/google?code=${code}`,
+                withCredentials:true,
+            }).then((res) => {
+                navigate("/login");
+            });
+        };
+        GoogleLogin();
+    }, []);
 
 
     return (

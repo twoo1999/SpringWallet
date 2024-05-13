@@ -67,17 +67,17 @@ export function SignIn(){
                     구글로 로그인
                 </Span>
             </LoginBar>
-            <SignUp>
-                <Sep className="Bold16">
-                    회원가입
-                </Sep>
-                <SignUpBar>
-                    <SignUpIcons>
-                        <Google></Google>
-                    </SignUpIcons>
+            {/*<SignUp>*/}
+            {/*    <Sep className="Bold16">*/}
+            {/*        회원가입*/}
+            {/*    </Sep>*/}
+            {/*    <SignUpBar>*/}
+            {/*        <SignUpIcons>*/}
+            {/*            <Google></Google>*/}
+            {/*        </SignUpIcons>*/}
 
-                </SignUpBar>
-            </SignUp>
+            {/*    </SignUpBar>*/}
+            {/*</SignUp>*/}
 
         </Wrapper>
     );

@@ -9,6 +9,7 @@ import {SignIn} from "./components/login/SignIn";
 import {Loading} from "./components/login/loading";
 import {CookiesProvider} from "react-cookie";
 import {Preparing} from "./components/common/Preparing";
+import {PrivateRoute} from "./components/common/PrivateRoute";
 
 const Wrapper = styled.div`
     height : 100%;
@@ -40,14 +41,17 @@ function App() {
                     </NavWrapper>
                     <MainWrapper>
                         <Routes>
-                            <Route path="/record/*" element={<Record></Record>}></Route>
                             <Route path="/signin" element={<SignIn></SignIn>}></Route>
                             <Route path="/loading" element={<Loading/>}></Route>
-                            <Route path="/overview" element={<Preparing/>}></Route>
-                            <Route path="/fast-record" element={<Preparing/>}></Route>
-                            <Route path="/AI" element={<Preparing/>}></Route>
-                            <Route path="/goals" element={<Preparing/>}></Route>
-                            <Route path="/setting" element={<Preparing/>}></Route>
+                            <Route element={<PrivateRoute />}>
+                                <Route path="/record/*" element={<Record></Record>}></Route>
+                                <Route path="/overview" element={<Preparing/>}></Route>
+                                <Route path="/fast-record" element={<Preparing/>}></Route>
+                                <Route path="/AI" element={<Preparing/>}></Route>
+                                <Route path="/goals" element={<Preparing/>}></Route>
+                                <Route path="/setting" element={<Preparing/>}></Route>
+                            </Route>
+
                         </Routes>
                     </MainWrapper>
                 </Wrapper>
