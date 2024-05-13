@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {Header} from "./components/header/Header";
 import {Record} from "./components/record/Record";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Login} from "./components/login/Login";
+import {SignIn} from "./components/login/SignIn";
 import {Loading} from "./components/login/loading";
 import {CookiesProvider} from "react-cookie";
 import {Preparing} from "./components/common/Preparing";
@@ -41,7 +41,7 @@ function App() {
                     <MainWrapper>
                         <Routes>
                             <Route path="/record/*" element={<Record></Record>}></Route>
-                            <Route path="/login" element={<Login></Login>}></Route>
+                            <Route path="/signin" element={<SignIn></SignIn>}></Route>
                             <Route path="/loading" element={<Loading/>}></Route>
                             <Route path="/overview" element={<Preparing/>}></Route>
                             <Route path="/fast-record" element={<Preparing/>}></Route>
