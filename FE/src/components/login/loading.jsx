@@ -23,7 +23,8 @@ export function Loading(){
                 url: `http://localhost:8080/auth/google?code=${code}`,
                 withCredentials:true,
             }).then((res) => {
-                navigate("/login");
+                window.sessionStorage.setItem("jwt", "Google");
+                navigate("/");
             });
         };
         GoogleLogin();
