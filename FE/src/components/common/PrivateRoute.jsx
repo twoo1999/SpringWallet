@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import {useCookies} from "react-cookie";
 export const PrivateRoute = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(["AccessToken"]);
-    const isLogin = cookies.AccessToken !== undefined;
+    const isLogin = window.sessionStorage.getItem("jwt") !== null;
+    console.log(window.sessionStorage.getItem("jwt"))
+    console.log(isLogin)
     return isLogin ? <Outlet /> : <Navigate to="/signin" />;
 };

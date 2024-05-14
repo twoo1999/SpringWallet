@@ -44,6 +44,7 @@ function App() {
                             <Route path="/signin" element={<SignIn></SignIn>}></Route>
                             <Route path="/loading" element={<Loading/>}></Route>
                             <Route element={<PrivateRoute />}>
+                                <Route path="/" element={<div/>}></Route>
                                 <Route path="/record/*" element={<Record></Record>}></Route>
                                 <Route path="/overview" element={<Preparing/>}></Route>
                                 <Route path="/fast-record" element={<Preparing/>}></Route>
