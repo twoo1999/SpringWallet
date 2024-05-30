@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class CreateRecordReqDto {
     private String item;
-    private int amount;
+    private Integer amount;
     private String category;
     private String method;
     private LocalDate timestamp;
@@ -44,11 +44,11 @@ public class CreateRecordReqDto {
         this.method = method;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
