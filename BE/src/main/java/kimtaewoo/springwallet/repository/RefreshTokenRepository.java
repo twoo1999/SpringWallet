@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 @Repository
 public class RefreshTokenRepository {
     private RedisTemplate redisTemplate;
-
+    private int REFRESH_TOKEN_DURATION = 24;
     public RefreshTokenRepository(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
@@ -20,7 +20,7 @@ public class RefreshTokenRepository {
     public void save(RefreshToken refreshToken) {
         ValueOperations<String, Long> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(refreshToken.getToken(), refreshToken.getId());
-        redisTemplate.expire(refreshToken.getToken(), 24, TimeUnit.HOURS);
+        redisTemplate.expire(refreshToken.getToken(), REFRESH_TOKEN_DURATION, TimeUnit.HOURS);
 
     }
 
@@ -33,6 +33,16 @@ public class RefreshTokenRepository {
         }
 
         return Optional.of(new RefreshToken(refreshToken, id));
+    }
+
+
+    public void deleteByRefreshToken(String token){
+        try {
+            redisTemplate.delete(token);
+        } catch (Exception e){
+            System.out.print("refresh token delete fail");
+        }
+
     }
 
 
