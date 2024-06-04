@@ -1,7 +1,10 @@
 package kimtaewoo.springwallet.dto;
 
+import lombok.Getter;
+
 import java.time.LocalDate;
 
+@Getter
 public class LoginDto {
     private String accessToken;
     private String refreshToken;
