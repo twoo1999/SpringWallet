@@ -24,7 +24,7 @@ export function Loading(){
                 withCredentials:true,
             }).then((res) => {
                 window.sessionStorage.setItem("jwt", "Google");
-                navigate("/");
+                window.location.href = "/";
             });
         };
         GoogleLogin();

@@ -10,6 +10,7 @@ import {Loading} from "./components/login/loading";
 import {CookiesProvider} from "react-cookie";
 import {Preparing} from "./components/common/Preparing";
 import {PrivateRoute} from "./components/common/PrivateRoute";
+import {LoginButton} from "./components/login/LoginButton";
 
 const Wrapper = styled.div`
     height : 100%;
@@ -28,8 +29,16 @@ const NavWrapper = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    background-color: #191919;
 `;
 
+const LoginWrapper = styled.div`
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    box-sizing: border-box;
+`;
 
 function App() {
     return (
@@ -37,11 +46,12 @@ function App() {
             <CookiesProvider>
                 <Wrapper >
                     <NavWrapper>
+
                         <NavBar></NavBar>
                     </NavWrapper>
                     <MainWrapper>
                         <Routes>
-                            <Route path="/signin" element={<SignIn></SignIn>}></Route>
+                            <Route path="/login" element={<SignIn></SignIn>}></Route>
                             <Route path="/loading" element={<Loading/>}></Route>
                             <Route element={<PrivateRoute />}>
                                 <Route path="/" element={<div/>}></Route>

@@ -4,11 +4,14 @@ import {ReactComponent as Record} from "../../assets/Record.svg";
 import {ReactComponent as Fast} from "../../assets/Fast.svg";
 import {ReactComponent as AI} from "../../assets/AI.svg";
 import {ReactComponent as Goal} from "../../assets/Goal.svg";
-import {ReactComponent as Settings} from "../../assets/Settings.svg";
+import "../../common/fonts.css"
 import {ReactComponent as Logout} from "../../assets/Logout.svg";
-
+import {ReactComponent as Login} from "../../assets/Login.svg";
+import {useLocation, useNavigate} from "react-router-dom";
 const MenuStr = styled.span`
     color: white;
+    flex-grow: 1;
+    text-align: center;
 `
 
 const Wrapper = styled.div`
@@ -22,41 +25,42 @@ const Wrapper = styled.div`
     background: ${props=>props.bColor};
     cursor: pointer;
 `;
-export function NavButton(props) {
-    const c = props.bColor;
-    const num = props.num;
-    const strs = ["한 눈에 보기", "기록", "빠른 기록", "AI 분석", "목표", "설정", "Logout"]
+export function NavButton({path, content}) {
+    const strs = ["한 눈에 보기", "기록", "빠른 기록", "AI 분석", "목표", "로그인", "Logout"]
     let icon;
-
-    switch (num) {
-        case 0:
+    const location = useLocation();
+    const navigate = useNavigate();
+    const bColor = path === location.pathname ? '#299D91' : '#191919';
+    switch (path) {
+        case '/overview':
             icon = <Overview></Overview>;
             break;
-        case 1:
+        case '/record':
             icon = <Record></Record>;
             break;
-        case 2:
+        case '/fast-record':
             icon = <Fast></Fast>;
             break;
-        case 3:
+        case '/AI':
             icon = <AI></AI>;
             break;
-        case 4:
+        case '/goals':
             icon = <Goal></Goal>
             break;
-        case 5:
-            icon = <Settings></Settings>;
+        case '/login':
+            icon = <Login></Login>;
             break;
-        case 6:
+        case '/logout':
             icon = <Logout></Logout>;
             break;
     }
     return (
         <Wrapper onClick={()=>{
-            window.location.replace(`${props.type}`);
-        }} bColor={c}>
+            window.location.replace(path);
+            // navigate(path);
+        }} bColor={bColor}>
             {icon}
-            <MenuStr>{strs[num]}</MenuStr>
+            <MenuStr className="Bold16">{content}</MenuStr>
         </Wrapper>
 
     );
