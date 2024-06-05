@@ -47,7 +47,7 @@ public class AuthIntercepter implements HandlerInterceptor {
             res.getOutputStream().write(c.getBytes());
             return false;
         }
-        System.out.println(authUtil.getCookie(cookies, "AccessToken"));
+//        System.out.println(authUtil.getCookie(cookies, "AccessToken"));
         return true;
     }
 }

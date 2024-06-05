@@ -1,12 +1,19 @@
 package kimtaewoo.springwallet.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+@Getter
+@AllArgsConstructor
 public enum ErrorCode {
 
-    NOT_VALID_TOKEN(HttpStatus.BAD_REQUEST, "AUTH-001", "유효하지 않는 토큰입니다."),
-    ALREADY_EXPRIED_TOKEN(HttpStatus.BAD_REQUEST, "AUTH-002", "유효기간이 지난 토큰입니다."),
-    NOT_EXIST_COOKIE(HttpStatus.BAD_REQUEST, "AUTH-003", "해당하는 쿠키가 없습니다.");
+    NOT_VALID_TOKEN(HttpStatus.BAD_REQUEST, "AUTH-001", "no valid token."),
+    EXPIRED_ACCEESS_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH-002", "expired access token."),
+    EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH-003", "expired refresh token.");
+//    NOT_EXIST_COOKIE(HttpStatus.BAD_REQUEST, "AUTH-003", "no matching cookie value"),
 
 
 
@@ -14,23 +21,7 @@ public enum ErrorCode {
     private final String code;
     private final String message;
 
-    ErrorCode(HttpStatus httpStatus, String code, String message) {
-        this.httpStatus = httpStatus;
-        this.code = code;
-        this.message = message;
-    }
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
 
 

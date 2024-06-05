@@ -5,13 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import kimtaewoo.springwallet.domain.GoogleOauthAccessToken;
-import kimtaewoo.springwallet.domain.GoogleOauthUserInfo;
-import kimtaewoo.springwallet.domain.Member;
-import kimtaewoo.springwallet.domain.RefreshToken;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import kimtaewoo.springwallet.domain.*;
 import kimtaewoo.springwallet.repository.MemberRepository;
 import kimtaewoo.springwallet.repository.RecordRepository;
 import kimtaewoo.springwallet.repository.RefreshTokenRepository;
+import kimtaewoo.springwallet.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @Service
+
 public class OauthService {
 
     private final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -37,12 +39,23 @@ public class OauthService {
 
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final AuthUtil authUtil;
 
-    public OauthService(MemberRepository memberRepository, RefreshTokenRepository refreshTokenRepository) {
+    public OauthService(MemberRepository memberRepository, RefreshTokenRepository refreshTokenRepository, AuthUtil authUtil) {
         this.memberRepository = memberRepository;
         this.refreshTokenRepository = refreshTokenRepository;
+        this.authUtil = authUtil;
     }
 
+
+    public void reissueAccessToken(HttpServletRequest req, HttpServletResponse res){
+        Cookie[] cookies = req.getCookies();
+        String ref = authUtil.getCookie(cookies, "RefreshToken");
+        RefreshToken newRef = refreshTokenRepository.findByToken(ref).get();
+        Long id = newRef.getId();
+        Member m = memberRepository.findById(id).get();
+        authUtil.setAccessTokenToCookie(res, authUtil.getAccessToken(m.getEmail(), m.getName()));
+    }
     public String[] login(String code) throws JsonProcessingException {
         String response = this.getAccessTokenFromGoogle(code);
 
@@ -56,9 +69,16 @@ public class OauthService {
         Long id;
         Optional<Member> m = memberRepository.findByEmail(email);
         if (m.isEmpty()) {
-            Member member = new Member();
-            member.setEmail(email);
-            member.setName(name);
+            Member member = Member.builder()
+                    .email(email)
+                    .name(name)
+                    .role(Role.USER)
+                    .socialtype(SocialType.GOOGLE)
+                    .build();
+
+//            Member member = new Member();
+//            member.setEmail(email);
+//            member.setName(name);
             Member newMember = memberRepository.save(member);
             id = newMember.getId();
         } else{
@@ -132,4 +152,8 @@ public class OauthService {
         return om.readValue(jsonString, GoogleOauthAccessToken.class);
     }
 
+
+    public void deleteRefreshToken(String token){
+        refreshTokenRepository.deleteByRefreshToken(token);
+    }
 }

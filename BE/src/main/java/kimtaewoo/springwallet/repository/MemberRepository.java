@@ -26,7 +26,16 @@ public class MemberRepository {
         em.persist(member);
         return member;
     }
-
+    public Optional<Member> findById(Long id){
+        try {
+            Member member = em.createQuery("select m from Member m where m.id = :id", Member.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            return Optional.ofNullable(member);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
     public Optional<Member> findByEmail(String email) {
         try {
             Member member = em.createQuery("select m from Member m where m.email = :email", Member.class)
