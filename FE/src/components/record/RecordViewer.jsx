@@ -8,6 +8,7 @@ import {TypeButton} from "./TypeButton";
 import {useCookies} from "react-cookie";
 import '../../common/fonts.css'
 import '../../common/color.css'
+import {api, getApi} from "../../axiosIntercepter";
 
 const Wrapper = styled.div`
     height: 100%;
@@ -49,15 +50,19 @@ export function RecordViewer(){
 
     const [list, setList] = useState([]);
     const getData = async()=>{
-        await axios({
-            method: "GET",
-            url: `http://localhost:8080/record`,
-            withCredentials:true,
-        }).then((res)=>{
-            setList(res.data);
-        }).catch(err=>{
-            console.log(err);
-        })
+        const data = await getApi('/record');
+        console.log(data);
+        setList(data);
+
+        // await axios({
+        //     method: "GET",
+        //     url: `http://localhost:8080/record`,
+        //     withCredentials:true,
+        // }).then((res)=>{
+        //     setList(res.data);
+        // }).catch(err=>{
+        //     console.log(err.response.data);
+        // })
         // const l = [];
         // for(let i = 1; i < 12; i++){
         //     l.push({
@@ -89,21 +94,23 @@ export function RecordViewer(){
         getData();
     }, []);
 
-    const filterData = ()=>{
-        const ll = list.filter(l=>{
-            if(l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month){
-                if(selected === "All"){
+    const filterData = () => {
+        const ll = list.filter(l => {
+            if (l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month) {
+                if (selected === "All") {
                     return true;
-                } else if(selected === "Revenue"){
+                } else if (selected === "Revenue") {
                     return l.amount > 0;
-                } else if(selected === "Expenses"){
+                } else if (selected === "Expenses") {
                     return l.amount < 0;
                 }
             }
         });
-
         setFilteredList(ll);
-    }
+
+
+
+    };
     const [cookies, setCookie, removeCookie] = useCookies(["year", "month"]);
     const [filterdList, setFilteredList] = useState(list);
     const [selected, setSelected] = useState("All");

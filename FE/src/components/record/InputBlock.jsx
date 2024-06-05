@@ -38,14 +38,7 @@ export function InputBlock({num}){
     const [view, setView] = useState(false);
     const [cate, setC] = useState([]);
     let input = <BorderlessInput className="Bold16 Black" onClick={()=>{setView(!view)}} placeholder="선택하세요" value={inputValue} readOnly></BorderlessInput>;
-    useEffect(() => {
 
-        if (sign) {
-            setC(["a", "b"]);
-        } else
-            setC(["c", "d"]);
-        console.log(cate)
-    }, [sign]);
     if (num === 0) {
         input = <BorderlessInput type='text' className="Bold16 Black" placeholder="입력하세요" ></BorderlessInput>;
     } else if (num === 1) {
