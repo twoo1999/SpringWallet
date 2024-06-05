@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ReactComponent as Plus} from "../../assets/Plus.svg";
 import {ReactComponent as Minus} from "../../assets/Minus.svg";
 
@@ -17,25 +17,33 @@ const AmountDiv = styled.div`
     gap:10px;
 `;
 
-const AmountSpan = styled.input`
+const AmountP = styled.input`
     width: 100%;
     text-align: end;
     border: none;
 `;
 
 
-export function AmountInput({sign, onChangeSign}){
-    // const [sign, setSign] = useState(true);
+export function AmountInput({value, sign, onChangeSign, onChangeValueReadonly}){
+    const [val, setVal] = useState(value);
+
+
+    useEffect(() => {
+        onChangeValueReadonly("amount", sign ? val*1 : val * (-1));
+    }, [sign, val]);
+    const changeHandler = (e)=>{
+        setVal(e.target.value);
+    }
     return (
         <Wrapper>
-            <span className="Regular12 Gray02">Item</span>
+            <span className="Regular12 Gray02">Amount</span>
             <AmountDiv>
                 {sign ? <Plus onClick={() => {
                     onChangeSign(!sign);
                 }}></Plus> : <Minus onClick={() => {
                     onChangeSign(!sign);
                 }}></Minus>}
-                <AmountSpan type="number" className="Bold16 Black" placeholder='0'></AmountSpan>
+                <AmountP min='0' defaultValue={value ? value : ""} id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
             </AmountDiv>
         </Wrapper>
 

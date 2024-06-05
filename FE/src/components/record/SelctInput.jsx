@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const Wrapper = styled.div`
     display: flex;
@@ -12,13 +12,17 @@ const BorderlessInput = styled.input`
     border: none;
 `;
 
-export function SelctInput({type, items}){
+export function SelctInput({value, type, items, onChangeValueReadonly}){
     const [view, setView] = useState(false);
-    const [inputValue, setInputValue] = useState();
+    const [inputValue, setInputValue] = useState(value ? value : "");
+    // console.log(inputValue);
+    useEffect(() => {
+        onChangeValueReadonly(type, inputValue);
+    }, [inputValue]);
     return(
         <Wrapper>
             <span className="Regular12 Gray02">{type}</span>
-            <BorderlessInput className="Bold16 Black" onClick={()=>{setView(!view)}} placeholder="선택하세요" value={inputValue} readOnly></BorderlessInput>
+            <BorderlessInput id={type} name={type} onChange={onChangeValueReadonly} className="Bold16 Black" onClick={()=>{setView(!view)}} placeholder="선택하세요" value={inputValue} readOnly></BorderlessInput>
             {view && <Dropdown items={items} onSelect={(selected)=>{setInputValue(selected); setView(!view);}}></Dropdown>}
         </Wrapper>
     )

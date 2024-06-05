@@ -1,4 +1,4 @@
-. PrimaryColor{
+.PrimaryColor{
     color: #299D91;
 }
 
@@ -38,11 +38,21 @@
 .MainBG{
     background-color: #F4F5F7;
 }
-
+.GrayBG{
+    background-color: #666666;
+}
 .Black{
     color: black;
 }
 
 .White{
     color: white;
+}
+
+:root{
+    --primary-color: #299D91;
+}
+
+.red{
+    color:red;
 }
