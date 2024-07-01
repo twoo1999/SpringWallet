@@ -38,7 +38,7 @@ export function NavBar() {
     const strs = ["한 눈에 보기", "기록", "빠른 기록", "AI 분석", "목표", "로그인"];
     const paths = ["/overview", "/record", "/fast-record", "/AI", "/goals"];
     for (let i = 0; i < 5; i++) {
-        listMenu.push(<NavButton path={paths[i]} content={strs[i]}></NavButton>);
+        listMenu.push(<NavButton key={i} path={paths[i]} content={strs[i]}></NavButton>);
     }
 
     return (

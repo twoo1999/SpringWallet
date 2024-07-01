@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import {ReactComponent as Memo} from "../../assets/memo.svg";
 import {useEffect, useState} from "react";
-import axios from "axios";
-import {useCookies} from "react-cookie";
 import {DataDetailModal} from "./DataDetailModal";
 const Wrapper = styled.div`
     display: flex;
@@ -28,10 +25,6 @@ const CategoryP = styled.span`
     text-align: center;
 `;
 
-const MemoP = styled.span`
-    width: 60px;
-    text-align: center;
-`;
 
 const TextP = styled.span`
     width: 160px;
@@ -42,11 +35,7 @@ const ItemP = styled.span`
     width: 160px;
     text-align: center;
 `;
-const MemoButton = styled.button`
-    border: none;
-    background-color: white;
-    width: 60px;
-`;
+
 
 const AmountP = styled.span`
     color: ${props=>props.color};
@@ -62,7 +51,7 @@ const ModalBack = styled.div`
         background-color: rgba(0, 0, 0, 0.5);
         
     `;
-export function RecordList({list}){
+export function RecordList({list, CM, R}){
     const [detailView, setDetailView] = useState(false);
     const [data, setData] = useState();
 
@@ -74,17 +63,25 @@ export function RecordList({list}){
         // setData()
     }
 
-    const content = list.map(l=>{
+    const partData = list.map((l, idx)=>{
+        return {idx, "val":l.timestamp[2]};
+    })
+    partData.sort((x, y) => y.val - x.val);
+    const sortedList = partData.map(pd=>{
+        return list[pd.idx];
+    })
+
+    const content = sortedList.map(l=>{
         return <RowWrapper id={l.id} key={l.id} onClick={onDataClick}>
-            <CategoryP className="ExtraBold18">{l.category}</CategoryP>
-            <ItemP className="ExtraBold18">{l.item}</ItemP>
-            <TextP className="ExtraBold18">{l.timestamp[0]}.{String(l.timestamp[1]).padStart(2, '0')}.{String(l.timestamp[2]).padStart(2, '0')}</TextP>
-            <TextP className="ExtraBold18">{l.method}</TextP>
-            <AmountP className="ExtraBold18" color={l.amount > 0 ? '#299D91' : 'red'}>{l.amount>0? `+${(l.amount).toLocaleString()}` : `${(l.amount).toLocaleString()}`}</AmountP>
+            <CategoryP key="category" className="ExtraBold18">{l.category.category_name}</CategoryP>
+            <ItemP key="item" className="ExtraBold18">{l.item}</ItemP>
+            <TextP key="date" className="ExtraBold18">{l.timestamp[0]}.{String(l.timestamp[1]).padStart(2, '0')}.{String(l.timestamp[2]).padStart(2, '0')}</TextP>
+            <TextP key="method" className="ExtraBold18">{l.method.method_name}</TextP>
+            <AmountP key="amout" className="ExtraBold18" color={l.amount > 0 ? '#299D91' : 'red'}>{l.amount>0? `+${(l.amount).toLocaleString()}` : `${(l.amount).toLocaleString()}`}</AmountP>
         </RowWrapper>
 
     })
-    const closeDetaolModalHandeler = ()=>{
+    const closeDetailModalHandeler = ()=>{
         setDetailView(!detailView);
     }
 
@@ -93,8 +90,8 @@ export function RecordList({list}){
             {content}
             {
                 detailView &&
-                <ModalBack onClick={closeDetaolModalHandeler}>
-                    <DataDetailModal data={data}></DataDetailModal>
+                <ModalBack onClick={closeDetailModalHandeler}>
+                    <DataDetailModal data={data} CM={CM} R={R} closeDetailModalHandeler={closeDetailModalHandeler}></DataDetailModal>
                 </ModalBack>
             }
 

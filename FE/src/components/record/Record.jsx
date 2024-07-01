@@ -1,8 +1,10 @@
 import '../../common/fonts.css'
 import '../../common/color.css'
 import styled from "styled-components";
-import {RecordViewer} from "./RecordViewer";
-import {InputForm} from "./InputForm";
+import {RecordViewer} from "./viewer/RecordViewer";
+import {InputForm} from "./input/InputForm";
+import {getApi} from "../../axiosIntercepter";
+import {useEffect, useState} from "react";
 
 
 const Wrapper = styled.div`
@@ -29,25 +31,64 @@ const ViewerWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    height: 50vh;
 `;
-const ViewerHeaderWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: end;
-`;
+
 export function Record(){
+    const [record, setRecord] = useState();
+    const [category, setCategory] = useState();
+    const [method, setMethod] = useState();
+    const getCategory = async ()=>{
+        return await getApi(`${process.env.REACT_APP_BASE_URL}/category`);
+    }
+    const getMethod = async ()=>{
+        return await getApi(`${process.env.REACT_APP_BASE_URL}/method`);
+    }
+
+    const getRecord = async ()=>{
+        return await getApi(`${process.env.REACT_APP_BASE_URL}/record`);
+    }
+
+
+    const renewCategory = async ()=>{
+        setCategory(await getCategory());
+    }
+    const renewMethod = async ()=>{
+        setMethod(await getMethod());
+    }
+
+    const renewRecord = async ()=>{
+        setRecord(await getRecord());
+    }
+
+
+    // renewCategory();
+    // renewMethod();
+    // renewRecord();
+    useEffect(() => {
+        renewCategory();
+        renewMethod();
+        renewRecord();
+    }, []);
+
+    const CM = {
+        category, method, renewMethod, renewCategory
+    }
+
+    const R = {
+        record, renewRecord,
+    };
+
 
     return (
-
         <Wrapper>
             <RecordWrapper>
                 <span className="Header22 Gray01">Record</span>
-                <InputForm></InputForm>
+                <InputForm CM={CM} R={R}></InputForm>
             </RecordWrapper>
             <ViewerWrapper>
                 <span className="Header22 Gray01"> Transaction</span>
-                <RecordViewer></RecordViewer>
+                <RecordViewer CM={CM} R={R}></RecordViewer>
             </ViewerWrapper>
         </Wrapper>
     );

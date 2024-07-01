@@ -13,7 +13,7 @@ export function ItemInput({value, onChangeValue}){
     return (
         <Wrapper>
             <span className="Regular12 Gray02">Item</span>
-            <BorderlessInput defaultValue={value ? value: ""} onChange={onChangeValue} id="item" name="item" type='text' className="Bold16 Black" placeholder="입력하세요"></BorderlessInput>
+            <BorderlessInput value={value} onChange={onChangeValue} id="item" name="item" type='text' className="Bold16 Black" placeholder="입력하세요"></BorderlessInput>
         </Wrapper>
 
     );
