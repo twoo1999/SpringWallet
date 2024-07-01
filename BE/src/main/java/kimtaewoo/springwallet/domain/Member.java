@@ -1,18 +1,26 @@
 package kimtaewoo.springwallet.domain;
 
 import jakarta.persistence.*;
+import kimtaewoo.springwallet.domain.enumClass.Role;
+import kimtaewoo.springwallet.domain.enumClass.SocialType;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
 
 
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@Getter
+@NoArgsConstructor()
 @AllArgsConstructor
 public class Member {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @UuidGenerator
+    private UUID id;
+
     private String email;
     private String name;
 

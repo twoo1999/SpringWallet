@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @Transactional
@@ -26,7 +27,7 @@ public class MemberRepository {
         em.persist(member);
         return member;
     }
-    public Optional<Member> findById(Long id){
+    public Optional<Member> findById(UUID id){
         try {
             Member member = em.createQuery("select m from Member m where m.id = :id", Member.class)
                     .setParameter("id", id)
