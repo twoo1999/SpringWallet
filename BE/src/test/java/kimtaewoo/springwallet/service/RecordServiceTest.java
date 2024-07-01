@@ -3,92 +3,134 @@ package kimtaewoo.springwallet.service;
 
 import kimtaewoo.springwallet.Service.RecordService;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
+import kimtaewoo.springwallet.domain.Category;
+import kimtaewoo.springwallet.domain.Method;
 import kimtaewoo.springwallet.domain.Record;
-import kimtaewoo.springwallet.repository.RecordRepository;
+import kimtaewoo.springwallet.dto.record.CreateRecordReqDto;
+import kimtaewoo.springwallet.repository.CategoryRepository;
+import kimtaewoo.springwallet.repository.JpaRecordRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.time.LocalDate;
-
-import static org.mockito.BDDMockito.given;
+import org.springframework.test.util.ReflectionTestUtils;
 import static org.assertj.core.api.Assertions.assertThat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 public class RecordServiceTest {
 
     @InjectMocks
-    private RecordService service;
+    private RecordService recordService;
 
     @Mock
-    private RecordRepository recordRepository;
+    private JpaRecordRepository jpaRecordRepository;
+    @Mock
+    private CategoryRepository categoryRepository;
+
+    static AccessTokenPayload atp;
+    @BeforeAll
+    static void setting(){
+        UUID uid = UUID.randomUUID();
+        atp = AccessTokenPayload.builder()
+                .name("test")
+                .id(uid)
+                .iat(0)
+                .email("test email")
+                .build();
+
+    }
 
     @Test
-    public void 기록_가져오기() throws Exception{
+    void 저장(){
+        // given
+        CreateRecordReqDto record = CreateRecordReqDto.builder()
+                .item("test")
+                .amount(100)
+                .categoryId(1L)
+                .methodId(1L)
+                .timestamp(LocalDate.now())
+                .memo(null)
+                .build();
+        Category category = Category.builder()
+                .user_id(atp.getId())
+                .category_name("test")
+                .build();
 
-        //given
-        AccessTokenPayload acp = new AccessTokenPayload();
-        acp.setName("test");
-        acp.setEmail("test@email.com");
-        acp.setIat(1);
+        Method method = Method.builder()
+                .user_id(atp.getId())
+                .method_name("test")
+                .build();
 
+        ReflectionTestUtils.setField(category, "id", 1L);
+        Record r = Record.toEntity(atp, record, category, method);
+        ReflectionTestUtils.setField(r, "id", 1L);
+        // mock
 
-        Record record = new Record();
-        record.setEmail("test@email.com");
-        record.setCategory("식비");
-        record.setTimestamp(LocalDate.of(2020, 1, 1));
-        record.setMethod("현금");
-        record.setAmount(1000);
-        record.setMemo(null);
-        List<Record> l = new LinkedList<>();
-        l.add(record);
+        given(jpaRecordRepository.save(any())).willReturn(r);
+        given(categoryRepository.getOne(any())).willReturn(category);
 
-
-        // mocking
-        given(recordRepository.findByEmail(acp.getEmail())).willReturn(l);
 
         // when
-        List<Record> result = service.getRecord(acp);
-        Record re = result.get(0);
+        Long id = recordService.save(atp, record);
 
         // then
-        assertThat(re.getEmail()).isEqualTo(record.getEmail());
+        assertThat(id).isEqualTo(1L);
 
     }
 
 
     @Test
-    public void 기록_수정() throws Exception{
-        //given
-        Record record = new Record();
-        record.setEmail("test@email.com");
-        record.setCategory("식비");
-        record.setTimestamp(LocalDate.of(2020, 1, 1));
-        record.setMethod("현금");
-        record.setAmount(null);
-        record.setMemo(null);
+    void 가져오기(){
+        // given
+        Category c = Category.builder()
+                .user_id(atp.getId())
+                .category_name("test")
+                .build();
 
-
+        Method m = Method.builder()
+                .user_id(atp.getId())
+                .method_name("test")
+                .build();
+        ReflectionTestUtils.setField(c, "id", 1L);
+        Record r = Record.builder()
+                .user_id(atp.getId())
+                .item("test")
+                .timestamp(LocalDate.now())
+                .amount(1000)
+                .memo(null)
+                .category(c)
+                .method(m)
+                .build();
+        ReflectionTestUtils.setField(r, "id", 1L);
+        List<Record> list = new ArrayList<>();
+        list.add(r);
         // mocking
-
-        Record newRecord = new Record();
-        record.setEmail("test2@email.com");
-        record.setCategory("식비");
-        record.setTimestamp(LocalDate.of(2020, 1, 1));
-        record.setMethod("현금");
-        record.setAmount(1000);
-        record.setMemo(null);
-
+        given(jpaRecordRepository.findByUserId(atp.getId())).willReturn(list);
 
         // when
-        int a = 1;
-        System.out.println((Integer)a);
-        // then
+        List<Record> result = recordService.findByUserId(atp);
+
+        // the
+
+        assertThat(result.size()).isEqualTo(1);
+
+
+
 
     }
+
+
+
 
 
 }
+
+
