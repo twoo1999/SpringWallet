@@ -1,8 +1,8 @@
 package kimtaewoo.springwallet.oauth;
 
 import kimtaewoo.springwallet.domain.Member;
-import kimtaewoo.springwallet.domain.Role;
-import kimtaewoo.springwallet.domain.SocialType;
+import kimtaewoo.springwallet.domain.enumClass.Role;
+import kimtaewoo.springwallet.domain.enumClass.SocialType;
 import kimtaewoo.springwallet.oauth.userInfo.GoogleOAuthUserInfo;
 import kimtaewoo.springwallet.oauth.userInfo.OAuth2UserInfo;
 import lombok.Builder;

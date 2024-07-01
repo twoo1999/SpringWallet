@@ -25,9 +25,9 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final AuthenticationFailureHandler oAuth2LoginFaliHandler;
-    private final AuthenticationSuccessHandler oAuth2LoginSuccessHandler;
+//    private final CustomOAuth2UserService customOAuth2UserService;
+//    private final AuthenticationFailureHandler oAuth2LoginFaliHandler;
+//    private final AuthenticationSuccessHandler oAuth2LoginSuccessHandler;
     private final AuthUtil authUtil;
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;
