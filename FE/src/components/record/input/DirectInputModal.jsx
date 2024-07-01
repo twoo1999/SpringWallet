@@ -26,7 +26,7 @@ export function DirectInputModal({onSelect}){
 
     return (
         <Wrapper>
-            <BorderlessInput type="text" ref={inputRef}/>
+            <BorderlessInput className="Regular16" type="text" ref={inputRef}/>
             <button onClick={()=>{onSelect(inputRef.current.value)}}>입력</button>
         </Wrapper>
     )

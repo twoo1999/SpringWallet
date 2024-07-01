@@ -1,15 +1,15 @@
 import {ItemInput} from "./ItemInput";
 import {AmountInput} from "./AmoutInput";
-import {SelctInput} from "./SelctInput";
 import {DateInput} from "./DateInput";
-import axios from "axios";
-import {ReactComponent as Report} from "../../assets/Report.svg";
-import {ReactComponent as Memo} from "../../assets/memo.svg";
+import {ReactComponent as Report} from "../../../assets/Report.svg";
+import {ReactComponent as Memo} from "../../../assets/memo.svg";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
 import {InputBlock} from "./InputBlock";
-import {useNavigate} from "react-router-dom";
-import {MemoModal} from "./Memo";
+import {MemoModal} from "../Memo";
+import {CategoryInput} from "./CategoryInput";
+import {MethodInput} from "./MethodInput";
+import {postApi} from "../../../axiosIntercepter";
 
 const RecordTable = styled.div`
     display: flex;
@@ -31,31 +31,20 @@ const ModalBack = styled.div`
         background-color: rgba(0, 0, 0, 0.5);
         
     `;
-export function InputForm(){
-    const inputBlock = [];
-    const [categories, setCategories] = useState();
-    const [sign, setSign] = useState(true);
-    const [input, setInput] = useState({
+export function InputForm({CM, R}){
+    const defaultValue = {
         item: "",
         amount: "",
-        category: "",
-        method: "",
+        categoryId: "",
+        methodId: "",
         timestamp:new Date().toISOString().split('T')[0]
-    });
+    }
+    const inputBlock = [];
+    const [sign, setSign] = useState(true);
+    const [input, setInput] = useState(defaultValue);
     const [memoValue, setMemoValue] = useState("");
     const [able, setAble] = useState(true);
     const [memoView, setMemoView] = useState(false);
-    const [change, setChange] = useState(true);
-    useEffect(() => {
-        if (sign) {
-            setCategories(["월급", "용돈", "행운(득)"]);
-        } else {
-            setCategories(["식비", "교통비", "취미", "카드값"])
-        }
-
-
-    }, [sign]);
-
     useEffect(() => {
 
         const emptyList = Object.keys(input).filter(key=>{
@@ -87,8 +76,9 @@ export function InputForm(){
             });
         }
 
-    }
 
+
+    }
     const onChangeMemoValue = (e)=>{
         setMemoValue(e.target.value);
     }
@@ -97,41 +87,36 @@ export function InputForm(){
     const closeMemoModalHandeler = ()=>{
         setMemoView(!memoView);
     }
-    const navigate = useNavigate();
 
+
+
+    const onClickPostBtn = async (e)=>{
+        e.preventDefault();
+        await postApi(`${process.env.REACT_APP_BASE_URL}/record`, JSON.stringify({
+            ...input,
+            memo: memoValue.length > 0 ? memoValue : ""
+        }));
+
+        await R.renewRecord();
+
+        setInput(defaultValue);
+        setMemoValue("")
+
+    }
     return (
         <>
-            <form action="http://localhost:8080/record" method="post">
+            <form>
                 <RecordTable className="White">
-                    <ItemInput onChangeValue={onChangeValue}></ItemInput>
-                    <AmountInput onChangeValueReadonly={onChangeValueReadonly} sign={sign}
+                    <ItemInput value={input.item} onChangeValue={onChangeValue}></ItemInput>
+                    <AmountInput value={input.amount} onChangeValueReadonly={onChangeValueReadonly} sign={sign}
                                  onChangeSign={() => setSign(!sign)}></AmountInput>
-                    <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="category"
-                                items={categories}></SelctInput>
-                    <SelctInput onChangeValueReadonly={onChangeValueReadonly} type="method"
-                                items={["카드", "현금"]}></SelctInput>
-                    <DateInput onChangeValue={onChangeValue}></DateInput>
+                    <CategoryInput value={input.categoryId} items={CM.category} renewItem={CM.renewCategory} onChangeValueReadonly={onChangeValueReadonly} sign={sign}></CategoryInput>
+                    <MethodInput value={input.methodId} items={CM.method} renewItem={CM.renewMethod} onChangeValueReadonly={onChangeValueReadonly}></MethodInput>
+                    <DateInput value={input.timestamp} onChangeValue={onChangeValue}></DateInput>
                     <Memo onClick={() => {
                         setMemoView(!memoView)
                     }}></Memo>
-                    <button disabled={able} onClick={(e) => {
-                        e.preventDefault();
-                        const amount = Number(input.amount);
-                        axios({
-                            method: "POST",
-                            url: "http://localhost:8080/record",
-                            data: JSON.stringify({
-                                ...input,
-                                memo: memoValue.length > 0 ? memoValue : ""
-                            }),
-                            withCredentials: true,
-                            headers: {
-                                "Content-Type": "application/json"
-                            }
-
-                        })
-                        window.location.replace("/record");
-                    }}><Report></Report></button>
+                    <button disabled={able} onClick={onClickPostBtn}><Report></Report></button>
 
 
                 </RecordTable>

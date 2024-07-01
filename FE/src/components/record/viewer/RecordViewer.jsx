@@ -2,13 +2,11 @@ import styled from "styled-components";
 import {RecordHeader} from "./RecordHeader";
 import {RecordList} from "./RecordList";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {DateSelector} from "./DateSelector";
-import {TypeButton} from "./TypeButton";
+import {TypeButton} from "../TypeButton";
 import {useCookies} from "react-cookie";
-import '../../common/fonts.css'
-import '../../common/color.css'
-import {api, getApi} from "../../axiosIntercepter";
+import '../../../common/fonts.css'
+import '../../../common/color.css'
 
 const Wrapper = styled.div`
     height: 100%;
@@ -46,67 +44,73 @@ const SummaryWrapper = styled.div`
     justify-content: center;
     gap:3rem;
 `;
-export function RecordViewer(){
+export function RecordViewer({CM, R}){
 
     const [list, setList] = useState([]);
-    const getData = async()=>{
-        const data = await getApi('/record');
-        console.log(data);
-        setList(data);
+    // const getData = async()=>{
+    //     return await getApi(`${process.env.REACT_APP_BASE_URL}/record`);
+    //     // setList(data);
+    //
+    //     // await axios({
+    //     //     method: "GET",
+    //     //     url: `http://localhost:8080/record`,
+    //     //     withCredentials:true,
+    //     // }).then((res)=>{
+    //     //     setList(res.data);
+    //     // }).catch(err=>{
+    //     //     console.log(err.response.data);
+    //     // })
+    //     // console.log(data)
+    //     // const l = [];
+    //     // for(let i = 1; i < 12; i++){
+    //     //     l.push({
+    //     //         id: 1,
+    //     //         user_id: "45dd282a-1922-4104-a3bd-44c8afbbd0d0",
+    //     //         category: "식비",
+    //     //         item: "냉면",
+    //     //         timestamp: [2024, i, 20],
+    //     //         method: "카드",
+    //     //         amount: -4700,
+    //     //         memo: ""
+    //     //     });
+    //     //     l.push({
+    //     //         id: 2,
+    //     //         user_id: "45dd282a-1922-4104-a3bd-44c8afbbd0d0",
+    //     //         category: "월급",
+    //     //         item: "월급",
+    //     //         timestamp: [2024, i, 20],
+    //     //         method: "현금",
+    //     //         amount: 500000,
+    //     //         memo: ""
+    //     //     });
+    //     // }
+    //
+    //
+    //
+    // }
 
-        // await axios({
-        //     method: "GET",
-        //     url: `http://localhost:8080/record`,
-        //     withCredentials:true,
-        // }).then((res)=>{
-        //     setList(res.data);
-        // }).catch(err=>{
-        //     console.log(err.response.data);
-        // })
-        // const l = [];
-        // for(let i = 1; i < 12; i++){
-        //     l.push({
-        //         id: 1,
-        //         email: "test@email.com",
-        //         category: "식비",
-        //         item: "냉면",
-        //         timestamp: [2024, i, 20],
-        //         method: "카드",
-        //         amount: -4700,
-        //         memo: ""
-        //     });
-        //     l.push({
-        //         id: 2,
-        //         email: "test@email.com",
-        //         category: "월급",
-        //         item: "월급",
-        //         timestamp: [2024, i, 20],
-        //         method: "현금",
-        //         amount: 500000,
-        //         memo: ""
-        //     });
-        // }
-        //
-        // setList(l);
 
-    }
-    useEffect(async () => {
-        getData();
-    }, []);
+    useEffect( () => {
+        setList(R.record);
+    }, [R.record]);
 
     const filterData = () => {
-        const ll = list.filter(l => {
-            if (l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month) {
-                if (selected === "All") {
-                    return true;
-                } else if (selected === "Revenue") {
-                    return l.amount > 0;
-                } else if (selected === "Expenses") {
-                    return l.amount < 0;
+        if (list !== undefined) {
+            const ll = list.filter(l => {
+                if (l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month) {
+                    if (selected === "All") {
+                        return true;
+                    } else if (selected === "Revenue") {
+                        return l.amount > 0;
+                    } else if (selected === "Expenses") {
+                        return l.amount < 0;
+                    }
                 }
-            }
-        });
-        setFilteredList(ll);
+            });
+
+            setFilteredList(ll);
+        }
+
 
 
 
@@ -131,12 +135,8 @@ export function RecordViewer(){
 
 
     useEffect(() => {
-        if(filterdList.length !== 0){
-            calExpeneses();
-            calRevenue();
-        }
-
-
+        calExpeneses();
+        calRevenue();
     }, [filterdList]);
     const onTypeBtnClick = (e)=>{
         const type = e.target.textContent;
@@ -150,13 +150,13 @@ export function RecordViewer(){
     }
 
     const btns = types.map(type=>{
-        return <TypeButton onTypeBtnClick={onTypeBtnClick} selected={selected} type={type}></TypeButton>
+        return <TypeButton key={type} onTypeBtnClick={onTypeBtnClick} selected={selected} type={type}></TypeButton>
     })
 
 
     return(
         <Wrapper>
-            <FilteringWrapper>
+            <FilteringWrapper >
                 <TypeBtns>
                     {btns}
                 </TypeBtns>
@@ -167,7 +167,7 @@ export function RecordViewer(){
             <ListWrapper>
 
                 <RecordHeader></RecordHeader>
-                <RecordList list={filterdList}></RecordList>
+                <RecordList CM={CM} R={R} list={filterdList}></RecordList>
                 <SummaryWrapper>
                     {
                         (selected === "All" || selected === "Revenue") &&

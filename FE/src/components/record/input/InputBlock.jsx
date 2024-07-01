@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import '../../common/fonts.css'
-import '../../common/color.css'
-import {ReactComponent as Plus} from "../../assets/Plus.svg";
-import {ReactComponent as Minus} from "../../assets/Minus.svg";
-import {useEffect, useState} from "react";
+import '../../../common/fonts.css'
+import '../../../common/color.css'
+import {ReactComponent as Plus} from "../../../assets/Plus.svg";
+import {ReactComponent as Minus} from "../../../assets/Minus.svg";
+import {useState} from "react";
 import Dropdown from "./Dropdown";
 
 const Wrapper = styled.div`

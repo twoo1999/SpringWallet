@@ -22,7 +22,7 @@ const Wrapper = styled.div`
     border-radius: 4px;
     padding: 12px 16px;    
     width: 15rem;
-    background: ${props=>props.bColor};
+    background: ${props=>props.$bgColor};
     cursor: pointer;
 `;
 export function NavButton({path, content}) {
@@ -30,7 +30,7 @@ export function NavButton({path, content}) {
     let icon;
     const location = useLocation();
     const navigate = useNavigate();
-    const bColor = path === location.pathname ? '#299D91' : '#191919';
+    const bgColor = path === location.pathname ? '#299D91' : '#191919';
     switch (path) {
         case '/overview':
             icon = <Overview></Overview>;
@@ -58,7 +58,7 @@ export function NavButton({path, content}) {
         <Wrapper onClick={()=>{
             window.location.replace(path);
             // navigate(path);
-        }} bColor={bColor}>
+        }} $bgColor={bgColor}>
             {icon}
             <MenuStr className="Bold16">{content}</MenuStr>
         </Wrapper>

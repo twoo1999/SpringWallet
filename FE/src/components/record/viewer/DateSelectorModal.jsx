@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import '../../common/fonts.css'
-import '../../common/color.css'
-import {ReactComponent as Next} from "../../assets/Next.svg";
+import '../../../common/fonts.css'
+import '../../../common/color.css'
+import {ReactComponent as Next} from "../../../assets/Next.svg";
 import {useState} from "react";
 import {useCookies} from "react-cookie";
 const Wrapper = styled.div`

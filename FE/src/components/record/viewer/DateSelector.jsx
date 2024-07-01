@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import '../../common/fonts.css'
-import '../../common/color.css'
-import {ReactComponent as Next} from "../../assets/Next.svg";
-import {ReactComponent as Prev} from "../../assets/Prev.svg";
+import '../../../common/fonts.css'
+import '../../../common/color.css'
+import {ReactComponent as Next} from "../../../assets/Next.svg";
+import {ReactComponent as Prev} from "../../../assets/Prev.svg";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {DateSelectorModal} from "./DateSelectorModal";
@@ -16,19 +16,17 @@ const Wrapper = styled.div`
 
 export function DateSelector(){
     const [cookies, setCookie, removeCookie] = useCookies(["year", "month"]);
-    const [date, setDate] = useState({
-       year: 2024,
-       month: 5,
-    });
 
     const [dateView, setDateView] = useState(false);
     useEffect(() => {
         const [year, month, day] = new Date().toISOString().split('T')[0].split("-");
-        if(cookies.year == undefined && cookies.month == undefined){
+        if (cookies.year === undefined) {
             setCookie("year", year, {path: '/', expires: new Date(Date.now()+ 604800000)});
+        }
+        if (cookies.month === undefined) {
             setCookie("month", month, {path: '/', expires: new Date(Date.now()+ 604800000)});
         }
-    }, [cookies]);
+    }, [cookies.year, cookies.month]);
 
     const onClickNextMonth = ()=>{
         const year = Number(cookies.year);

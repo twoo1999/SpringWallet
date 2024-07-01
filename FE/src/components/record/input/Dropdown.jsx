@@ -1,16 +1,17 @@
 import styled from "styled-components";
-import '../../common/color.css';
-import '../../common/fonts.css';
-import {useState} from "react";
-import {DirectInputModal} from "./DirectInputModal";
+import '../../../common/color.css';
+import '../../../common/fonts.css';
 
 const Wrapper = styled.div`
     position: absolute;
+    display: flex;
+    flex-direction: column;
     background-color: #D1D1D1;
     transform: translateY(46px);
     padding: 16px 18px;
     border-radius: 8px;
     width: 120px;
+    gap: 16px;
     box-sizing: border-box;
     color: black;
 `;
@@ -35,28 +36,23 @@ const CategorySelector = styled.div`
 
 `;
 
-const DirectSelector = styled.div`
-    padding: 16px 0px;
-`;
 
 
-function Dropdown({onSelect, sign, num, items}) {
+function Dropdown({onSelect, items, onSettingClick}) {
 
-    const [view, setView] = useState(false);
     const list = [];
     items.forEach(item=>{
-        list.push(<span onClick={()=>onSelect(item)}>{item}</span>)
+        list.push(<span id={item.id} key={item.id} onClick={()=>onSelect(item.id)}>{item.name}</span>)
     })
 
     return (
-        <Wrapper>
+        <Wrapper className="Regular14">
             <CategorySelector>
                 {list}
             </CategorySelector>
-            <DirectSelector>
-                <span onClick={()=>setView(!view)}>직접입력</span>
-                {view && <DirectInputModal onSelect={(item)=>onSelect(item)}></DirectInputModal>}
-            </DirectSelector>
+            <span onClick={onSettingClick}>
+                추가/삭제
+            </span>
         </Wrapper>
 
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import {ReactComponent as Plus} from "../../../assets/Plus.svg";
+import {ReactComponent as Minus} from "../../../assets/Minus.svg";
 import {useEffect, useState} from "react";
-import {ReactComponent as Plus} from "../../assets/Plus.svg";
-import {ReactComponent as Minus} from "../../assets/Minus.svg";
 
 const Wrapper = styled.div`
     display: flex;
@@ -25,25 +25,35 @@ const AmountP = styled.input`
 
 
 export function AmountInput({value, sign, onChangeSign, onChangeValueReadonly}){
+
     const [val, setVal] = useState(value);
 
 
     useEffect(() => {
-        onChangeValueReadonly("amount", sign ? val*1 : val * (-1));
-    }, [sign, val]);
+        onChangeValueReadonly("amount", val);
+    }, [val]);
+
+    useEffect(() => {
+        const v = Math.abs(val);
+        setVal(sign ? v : v * -1);
+    }, [sign]);
+
     const changeHandler = (e)=>{
-        setVal(e.target.value);
+        // const val = e.target.value;
+        const v = e.target.value;
+        setVal(sign ? v : v * -1);
+        // onChangeValueReadonly("amount", val);
     }
     return (
         <Wrapper>
             <span className="Regular12 Gray02">Amount</span>
             <AmountDiv>
-                {sign ? <Plus onClick={() => {
+                {sign ? <Plus onClick={(e) => {
                     onChangeSign(!sign);
-                }}></Plus> : <Minus onClick={() => {
+                }}></Plus> : <Minus onClick={(e) => {
                     onChangeSign(!sign);
                 }}></Minus>}
-                <AmountP min='0' defaultValue={value ? value : ""} id="fakeAmount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
+                <AmountP min='0' value={Math.abs(val)} id="amount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
             </AmountDiv>
         </Wrapper>
 
