@@ -44,12 +44,10 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if(acc != null){
             if(authUtil.validateToken(acc, "AccessToken")){
                 filterChain.doFilter(req, res);
+                return;
             } else{
                 ErrorCode e = ErrorCode.NOT_VALID_TOKEN;
                 ResponseEntity<ErrorResponseEntity> err = ErrorResponseEntity.toResposeEntity(e);
-//                res.setStatus(e.getHttpStatus().value());
-//                res.setContentType("application/json");
-//                res.getWriter().write(ErrorResponseEntity.toSerializedString(e));
                 setResponse(res, e);
                 return;
             }
@@ -58,19 +56,13 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if (acc == null && ref != null) {
             // acc 재발급
             ErrorCode e = ErrorCode.EXPIRED_ACCEESS_TOKEN;
-//            res.setStatus(e.getHttpStatus().value());
-//            res.setContentType("application/json");
-//            res.getWriter().write(ErrorResponseEntity.toSerializedString(e));
             setResponse(res, e);
             return;
         }
 
         if(ref == null){
-//            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            res.getWriter().write("refresh token 없음");
             ErrorCode e = ErrorCode.EXPIRED_REFRESH_TOKEN;
             setResponse(res, e);
-            return;
         }
     }
 
