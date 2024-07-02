@@ -24,6 +24,9 @@ api.interceptors.response.use(
 
             return axios(originReq);
 
+        } else if (data.code === "AUTH-003") {
+            sessionStorage.removeItem("jwt");
+            window.location.href = "/login";
         }
     }
 )
