@@ -29,41 +29,30 @@ api.interceptors.response.use(
 )
 
 const getApi = async (url)=>{
-    try{
-        const res = await api.get(url);
-        const data = res.data;
-        return data;
-    } catch (err){
-        console.log(err);
-    }
+
+    const res = await api.get(url);
+    const data = res.data;
+    return data;
 }
 
 const postApi = async (url, body)=>{
-    try{
-        const res = await api.post(url, body);
-        const data = res.data;
-        if(data !== undefined){
-            return data;
-        }
 
-        return null;
-    } catch (err){
-        console.log(err);
+    const res = await api.post(url, body);
+    const data = res.data;
+    if (data !== undefined) {
+        return data;
     }
+    return null;
 }
 
 
 const deleteApi = async (url, body)=>{
-    try{
-        const res = await api.delete(url, {data: body});
-        const data = res.data;
-        if(data !== undefined){
-            return data;
-        }
-        return null;
-    } catch (err){
-        console.log(err)
+    const res = await api.delete(url, {data: body});
+    const data = res.data;
+    if (data !== undefined) {
+        return data;
     }
+    return null;
 
 }
 
