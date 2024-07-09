@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class JpaRecordRepository implements RecordRepository {
@@ -30,6 +31,12 @@ public class JpaRecordRepository implements RecordRepository {
         return Optional.ofNullable(re);
     }
 
+    @Override
+    public List<Record> findByUserId(UUID id) {
+        return em.createQuery("select r from Record r where r.user_id = :id", Record.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
     @Override
     public List<Record> findAll() {
         return em.createQuery("select r from Record r", Record.class).getResultList();

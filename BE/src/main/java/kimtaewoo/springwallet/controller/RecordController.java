@@ -1,14 +1,12 @@
 package kimtaewoo.springwallet.controller;
 
 
-import jakarta.servlet.http.HttpServletRequest;
 import kimtaewoo.springwallet.Service.RecordService;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Record;
-import kimtaewoo.springwallet.dto.CreateRecordReqDto;
-import kimtaewoo.springwallet.dto.CreateRecordResDto;
+import kimtaewoo.springwallet.dto.record.CreateRecordReqDto;
+import kimtaewoo.springwallet.dto.record.CreateRecordResDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,22 +23,23 @@ public class RecordController {
 
     @PostMapping("record")
     @ResponseBody
-    public ResponseEntity<String> join(AccessTokenPayload ap, @RequestBody CreateRecordReqDto record) {
+    public ResponseEntity createRecord(AccessTokenPayload ap, @RequestBody CreateRecordReqDto record) {
 
-        recordService.join(ap, record);
-        return ResponseEntity.ok("ok");
+        CreateRecordResDto r = recordService.save(ap, record);
+        return ResponseEntity.ok(r);
     }
 
     @GetMapping("record")
     @ResponseBody
-    public List<Record> getRecord(AccessTokenPayload acp){
-        return recordService.getRecord(acp);
+    public List<Record> findRecordByUserId(AccessTokenPayload acp){
+        return recordService.findByUserId(acp);
     }
 
     @PostMapping("/record/{id}")
     @ResponseBody
-    public ResponseEntity modifyRecord(@RequestBody CreateRecordReqDto record, @PathVariable("id") Long id){
-        return recordService.modifyRecord(record, id);
+    public ResponseEntity updateRecord(@RequestBody CreateRecordReqDto record, @PathVariable("id") Long id){
+        CreateRecordResDto createRecordResDto = recordService.updateRecord(record, id);
+        return ResponseEntity.ok(createRecordResDto);
     }
 
     @DeleteMapping("/record/{id}")

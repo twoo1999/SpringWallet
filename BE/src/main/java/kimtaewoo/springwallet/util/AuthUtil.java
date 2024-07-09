@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class AuthUtil {
@@ -39,8 +40,9 @@ public class AuthUtil {
         return null;
     }
 
-    public String getAccessToken(String email, String name){
+    public String getAccessToken(UUID id, String email, String name){
         Claims claims = Jwts.claims();
+        claims.put("id", id);
         claims.put("email", email);
         claims.put("name", name);
         String token = Jwts.builder()

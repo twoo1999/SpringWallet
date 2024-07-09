@@ -9,8 +9,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kimtaewoo.springwallet.domain.*;
+import kimtaewoo.springwallet.domain.enumClass.Role;
+import kimtaewoo.springwallet.domain.enumClass.SocialType;
 import kimtaewoo.springwallet.repository.MemberRepository;
-import kimtaewoo.springwallet.repository.RecordRepository;
 import kimtaewoo.springwallet.repository.RefreshTokenRepository;
 import kimtaewoo.springwallet.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,10 +52,11 @@ public class OauthService {
     public void reissueAccessToken(HttpServletRequest req, HttpServletResponse res){
         Cookie[] cookies = req.getCookies();
         String ref = authUtil.getCookie(cookies, "RefreshToken");
+        System.out.println(ref);
         RefreshToken newRef = refreshTokenRepository.findByToken(ref).get();
-        Long id = newRef.getId();
+        UUID id = newRef.getId();
         Member m = memberRepository.findById(id).get();
-        authUtil.setAccessTokenToCookie(res, authUtil.getAccessToken(m.getEmail(), m.getName()));
+        authUtil.setAccessTokenToCookie(res, authUtil.getAccessToken(id, m.getEmail(), m.getName()));
     }
     public String[] login(String code) throws JsonProcessingException {
         String response = this.getAccessTokenFromGoogle(code);
@@ -66,7 +68,7 @@ public class OauthService {
         GoogleOauthUserInfo userInfo = this.getUserInfo(idTokenPayload);
         String email = userInfo.getEmail();
         String name = userInfo.getName();
-        Long id;
+        UUID id;
         Optional<Member> m = memberRepository.findByEmail(email);
         if (m.isEmpty()) {
             Member member = Member.builder()
@@ -84,7 +86,7 @@ public class OauthService {
         } else{
             id = m.get().getId();
         }
-        String accessToken = this.getAccessToken(email, name);
+        String accessToken = this.getAccessToken(email, name, id);
         String refreshToken = this.getRefreshToken();
         RefreshToken ref = new RefreshToken(refreshToken, id);
         refreshTokenRepository.save(ref);
@@ -92,10 +94,11 @@ public class OauthService {
         return tokens;
     }
 
-    public String getAccessToken(String email, String name){
+    public String getAccessToken(String email, String name, UUID id){
         Claims claims = Jwts.claims();
         claims.put("email", email);
         claims.put("name", name);
+        claims.put("id", id);
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))

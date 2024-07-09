@@ -4,14 +4,17 @@ import jakarta.persistence.Id;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
+import java.util.UUID;
+
 public class RefreshToken {
 
     @Id
     private String token;
 
-    private Long id;
+//    private Long id;
 
-    public RefreshToken(String token, Long id) {
+    private UUID id;
+    public RefreshToken(String token, UUID id) {
         this.token = token;
         this.id = id;
     }
@@ -24,11 +27,11 @@ public class RefreshToken {
         this.token = token;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 }

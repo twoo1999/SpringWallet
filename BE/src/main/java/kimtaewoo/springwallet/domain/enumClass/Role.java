@@ -1,4 +1,4 @@
-package kimtaewoo.springwallet.domain;
+package kimtaewoo.springwallet.domain.enumClass;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

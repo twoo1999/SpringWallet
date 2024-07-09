@@ -1,87 +1,54 @@
 package kimtaewoo.springwallet.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import kimtaewoo.springwallet.dto.record.CreateRecordReqDto;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor()
+@AllArgsConstructor
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private String category;
+    private UUID user_id;
+
     private String item;
     private LocalDate timestamp;
-    private String method;
+
     private Integer amount;
     private String memo;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToOne
+    @JoinColumn(name="category_id")
+    private Category category;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+   @OneToOne
+   @JoinColumn(name="method_id")
+   private Method method;
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+    public static Record toEntity(AccessTokenPayload atp, CreateRecordReqDto record, Category category, Method method){
+        Record newR = Record.builder()
+                .user_id(atp.getId())
+                .item(record.getItem())
+                .timestamp(record.getTimestamp())
+                .amount(record.getAmount())
+                .memo(record.getMemo())
+                .category(category)
+                .method(method)
+                .build();
 
-    public String getItem() {
-        return item;
-    }
+        return newR;
 
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    public LocalDate getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDate timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    public String getMemo() {
-        return memo;
-    }
-
-    public void setMemo(String memo) {
-        this.memo = memo;
     }
 }
 

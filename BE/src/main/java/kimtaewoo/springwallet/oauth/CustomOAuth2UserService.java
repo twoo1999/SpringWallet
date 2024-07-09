@@ -2,7 +2,7 @@ package kimtaewoo.springwallet.oauth;
 
 
 import kimtaewoo.springwallet.domain.Member;
-import kimtaewoo.springwallet.domain.SocialType;
+import kimtaewoo.springwallet.domain.enumClass.SocialType;
 import kimtaewoo.springwallet.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 

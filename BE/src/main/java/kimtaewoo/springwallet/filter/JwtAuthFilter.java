@@ -28,16 +28,11 @@ public class JwtAuthFilter extends GenericFilterBean {
         }
 
         String token = authUtil.getCookie(httpReq.getCookies(), "AccessToken");
-        System.out.print("111");
         if(token == null || !authUtil.validateToken(token, "AceessToken")){
-            System.out.print("222");
-//            System.out.print(token);
             throw new IOException("없음");
         }
 
         filterChain.doFilter(req, res);
-        System.out.print("333");
-
 
     }
 }
