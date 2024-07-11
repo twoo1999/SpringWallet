@@ -109,7 +109,7 @@ export function InputForm({CM, R}){
                 <RecordTable className="White">
                     <ItemInput value={input.item} onChangeValue={onChangeValue}></ItemInput>
                     <AmountInput value={input.amount} onChangeValueReadonly={onChangeValueReadonly} sign={sign}
-                                 onChangeSign={() => setSign(!sign)}></AmountInput>
+                                 onChangeSign={() => {setSign(!sign); onChangeValueReadonly("categoryId", "")}}></AmountInput>
                     <CategoryInput value={input.categoryId} items={CM.category} renewItem={CM.renewCategory} onChangeValueReadonly={onChangeValueReadonly} sign={sign}></CategoryInput>
                     <MethodInput value={input.methodId} items={CM.method} renewItem={CM.renewMethod} onChangeValueReadonly={onChangeValueReadonly}></MethodInput>
                     <DateInput value={input.timestamp} onChangeValue={onChangeValue}></DateInput>

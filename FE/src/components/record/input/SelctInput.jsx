@@ -97,35 +97,20 @@ export function SelctInput({renewItem, items, type, onChangeValueReadonly, sign,
                 "name": newItem,
                 "type": sign ? "revenue" : "expense"
             }
-            try{
-                await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
-            } catch (e){
-                navigate("/error");
-                // alert("데이터 전송 중 오류가 발생했습니다.");
-
-            }
-
+            await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
 
         } else{
             const data = {
                 "name": newItem,
             }
-            try{
-                await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
-            } catch (e){
-                // alert("데이터 전송 중 오류가 발생했습니다.");
-                navigate("/error");
-            }
+            await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
+
 
         }
 
 
-        try{
-            await deleteApi(`${process.env.REACT_APP_BASE_URL}/${type}`, {"ids":deleteItem.map(item=>item.id)});
-        } catch (e){
-            // alert("데이터 전송 중 오류가 발생했습니다.");
-            navigate("/error");
-        }
+        await deleteApi(`${process.env.REACT_APP_BASE_URL}/${type}`, {"ids": deleteItem.map(item => item.id)});
+
 
         renewItem();
         setModalView(!modalView);
