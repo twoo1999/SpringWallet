@@ -11,25 +11,28 @@ const api = axios.create({
 
 api.interceptors.response.use(
     (res)=> res,
-    async (err)=>{
-        const {config, response: {data}} = err;
-        const originReq = config;
-
-        if(data.code === "AUTH-002"){
-            await axios({
-                method: "GET",
-                url: `${process.env.REACT_APP_BASE_URL}/auth/accessToken`,
-                withCredentials:true,
-            })
-
-            return axios(originReq);
-
+    async (r)=>{
+        const {config, code, response} = r;
+        if(code === "ERR_NETWORK"){
+            window.location.href = "/error";
         }
+        if(response){
+            const data= response.data;
+            if(data.code === "AUTH-002"){
+                await axios({
+                    method: "GET",
+                    url: `${process.env.REACT_APP_BASE_URL}/auth/accessToken`,
+                    withCredentials:true,
+                })
+
+                return axios(config);
+            }
+        }
+
     }
 )
 
 const getApi = async (url)=>{
-
     const res = await api.get(url);
     const data = res.data;
     return data;
