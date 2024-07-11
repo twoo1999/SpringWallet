@@ -73,11 +73,11 @@ export function RecordList({list, CM, R}){
 
     const content = sortedList.map(l=>{
         return <RowWrapper id={l.id} key={l.id} onClick={onDataClick}>
-            <CategoryP key="category" className="ExtraBold18">{l.category.category_name}</CategoryP>
             <ItemP key="item" className="ExtraBold18">{l.item}</ItemP>
-            <TextP key="date" className="ExtraBold18">{l.timestamp[0]}.{String(l.timestamp[1]).padStart(2, '0')}.{String(l.timestamp[2]).padStart(2, '0')}</TextP>
-            <TextP key="method" className="ExtraBold18">{l.method.method_name}</TextP>
             <AmountP key="amout" className="ExtraBold18" color={l.amount > 0 ? '#299D91' : 'red'}>{l.amount>0? `+${(l.amount).toLocaleString()}` : `${(l.amount).toLocaleString()}`}</AmountP>
+            <CategoryP key="category" className="ExtraBold18">{l.category.category_name}</CategoryP>
+            <TextP key="method" className="ExtraBold18">{l.method.method_name}</TextP>
+            <TextP key="date" className="ExtraBold18">{l.timestamp[0]}.{String(l.timestamp[1]).padStart(2, '0')}.{String(l.timestamp[2]).padStart(2, '0')}</TextP>
         </RowWrapper>
 
     })
