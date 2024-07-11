@@ -3,6 +3,7 @@ import Dropdown from "./Dropdown";
 import {useEffect, useState} from "react";
 import {CategorySettingModal} from "../category/CategorySettingModal";
 import {deleteApi, postApi} from "../../../axiosIntercepter";
+import {useNavigate} from "react-router-dom";
 
 const Wrapper = styled.div`
     display: flex;
@@ -37,6 +38,8 @@ export function SelctInput({renewItem, items, type, onChangeValueReadonly, sign,
     const [newItem, setNewItem] = useState([]);
     const [deleteItem, setDeleteItem] = useState([]);
     const [selected, setSelected] = useState("");
+
+    const navigate = useNavigate();
     const onItemInputChange = (e)=>{
         setInputItem(e.target.value);
     }
@@ -94,16 +97,36 @@ export function SelctInput({renewItem, items, type, onChangeValueReadonly, sign,
                 "name": newItem,
                 "type": sign ? "revenue" : "expense"
             }
-            await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
+            try{
+                await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
+            } catch (e){
+                navigate("/error");
+                // alert("데이터 전송 중 오류가 발생했습니다.");
+
+            }
+
 
         } else{
             const data = {
                 "name": newItem,
             }
-            await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
+            try{
+                await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
+            } catch (e){
+                // alert("데이터 전송 중 오류가 발생했습니다.");
+                navigate("/error");
+            }
+
         }
 
-        await deleteApi(`${process.env.REACT_APP_BASE_URL}/${type}`, {"ids":deleteItem.map(item=>item.id)});
+
+        try{
+            await deleteApi(`${process.env.REACT_APP_BASE_URL}/${type}`, {"ids":deleteItem.map(item=>item.id)});
+        } catch (e){
+            // alert("데이터 전송 중 오류가 발생했습니다.");
+            navigate("/error");
+        }
+
         renewItem();
         setModalView(!modalView);
     }

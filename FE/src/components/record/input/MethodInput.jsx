@@ -6,13 +6,16 @@ export function MethodInput({value, onChangeValueReadonly, items, renewItem}){
     const [method, setMethod] = useState([]);
     const filterData = (data)=>{
         if (data !== undefined) {
-            return data.filter(d=>d.status === 'ACTIVE').map(d=>{
-                return{
+            return data.filter(d => d.status === 'ACTIVE').map(d => {
+                return {
                     id: d.id,
                     name: d.method_name,
                 }
             });
+        } else {
+            return [];
         }
+
     }
     useEffect(() => {
         setMethod(filterData(items));

@@ -15,6 +15,8 @@ export function CategoryInput({value, sign, onChangeValueReadonly, items, renewI
                         name: d.category_name,
                     }
                 });
+            } else{
+                return [];
             }
 
         }
