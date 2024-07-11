@@ -34,7 +34,7 @@ const ModalBack = styled.div`
 export function InputForm({CM, R}){
     const defaultValue = {
         item: "",
-        amount: "",
+        amount: 0,
         categoryId: "",
         methodId: "",
         timestamp:new Date().toISOString().split('T')[0]

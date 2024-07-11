@@ -28,7 +28,6 @@ export function AmountInput({value, sign, onChangeSign, onChangeValueReadonly}){
 
     const [val, setVal] = useState(value);
 
-
     useEffect(() => {
         onChangeValueReadonly("amount", val);
     }, [val]);
@@ -53,7 +52,7 @@ export function AmountInput({value, sign, onChangeSign, onChangeValueReadonly}){
                 }}></Plus> : <Minus onClick={(e) => {
                     onChangeSign(!sign);
                 }}></Minus>}
-                <AmountP min='0' value={Math.abs(val)} id="amount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
+                <AmountP min='0' value={Math.abs(value)} id="amount" type="number" className="Bold16 Black" placeholder='0' onChange={changeHandler}></AmountP>
             </AmountDiv>
         </Wrapper>
 
