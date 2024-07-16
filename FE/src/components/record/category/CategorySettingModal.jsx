@@ -46,9 +46,9 @@ const BtnWrapper = styled.div`
 `;
 export function CategorySettingModal({items, onItemInputChange, deleteItem, newItem, onPlusClick, onMinusClick, onSaveBtnClick, onCancleBtnClick}){
     const itemRow = [];
-    items.forEach(item=>{
+    items.forEach((item, idx)=>{
         if(!deleteItem.map(di=>di.name).includes(item.name)){
-            itemRow.push(<ItemRow>
+            itemRow.push(<ItemRow key={`${idx}`}>
                     <span className="Black Bold16">{item.name}</span>
                     <Btn id={item.id} name={item.name} onClick={onMinusClick}>
                         <Minus></Minus>
@@ -60,8 +60,8 @@ export function CategorySettingModal({items, onItemInputChange, deleteItem, newI
 
     })
 
-    newItem.forEach(item=>{
-        itemRow.push(<ItemRow>
+    newItem.forEach((item, idx)=>{
+        itemRow.push(<ItemRow key={`n${idx}`}>
                 <span className="Black Bold16">{item}</span>
                 <Btn id={null} name={item} onClick={onMinusClick}>
                     <Minus></Minus>

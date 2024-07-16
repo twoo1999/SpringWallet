@@ -3,6 +3,7 @@ import Dropdown from "./Dropdown";
 import {useEffect, useState} from "react";
 import {CategorySettingModal} from "../category/CategorySettingModal";
 import {deleteApi, postApi} from "../../../axiosIntercepter";
+import {useNavigate} from "react-router-dom";
 
 const Wrapper = styled.div`
     display: flex;
@@ -37,6 +38,8 @@ export function SelctInput({renewItem, items, type, onChangeValueReadonly, sign,
     const [newItem, setNewItem] = useState([]);
     const [deleteItem, setDeleteItem] = useState([]);
     const [selected, setSelected] = useState("");
+
+    const navigate = useNavigate();
     const onItemInputChange = (e)=>{
         setInputItem(e.target.value);
     }
@@ -101,9 +104,14 @@ export function SelctInput({renewItem, items, type, onChangeValueReadonly, sign,
                 "name": newItem,
             }
             await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
+
+
         }
 
-        await deleteApi(`${process.env.REACT_APP_BASE_URL}/${type}`, {"ids":deleteItem.map(item=>item.id)});
+
+        await deleteApi(`${process.env.REACT_APP_BASE_URL}/${type}`, {"ids": deleteItem.map(item => item.id)});
+
+
         renewItem();
         setModalView(!modalView);
     }

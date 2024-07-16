@@ -11,59 +11,51 @@ const api = axios.create({
 
 api.interceptors.response.use(
     (res)=> res,
-    async (err)=>{
-        const {config, response: {data}} = err;
-        const originReq = config;
-
-        if(data.code === "AUTH-002"){
-            await axios({
-                method: "GET",
-                url: `${process.env.REACT_APP_BASE_URL}/auth/accessToken`,
-                withCredentials:true,
-            })
-
-            return axios(originReq);
-
+    async (r)=>{
+        const {config, code, response} = r;
+        if(code === "ERR_NETWORK"){
+            window.location.href = "/error";
         }
+        if(response){
+            const data= response.data;
+            if(data.code === "AUTH-002"){
+                await axios({
+                    method: "GET",
+                    url: `${process.env.REACT_APP_BASE_URL}/auth/accessToken`,
+                    withCredentials:true,
+                })
+
+                return axios(config);
+            }
+        }
+
     }
 )
 
 const getApi = async (url)=>{
-    try{
-        const res = await api.get(url);
-        const data = res.data;
-        return data;
-    } catch (err){
-        console.log(err);
-    }
+    const res = await api.get(url);
+    const data = res.data;
+    return data;
 }
 
 const postApi = async (url, body)=>{
-    try{
-        const res = await api.post(url, body);
-        const data = res.data;
-        if(data !== undefined){
-            return data;
-        }
 
-        return null;
-    } catch (err){
-        console.log(err);
+    const res = await api.post(url, body);
+    const data = res.data;
+    if (data !== undefined) {
+        return data;
     }
+    return null;
 }
 
 
 const deleteApi = async (url, body)=>{
-    try{
-        const res = await api.delete(url, {data: body});
-        const data = res.data;
-        if(data !== undefined){
-            return data;
-        }
-        return null;
-    } catch (err){
-        console.log(err)
+    const res = await api.delete(url, {data: body});
+    const data = res.data;
+    if (data !== undefined) {
+        return data;
     }
+    return null;
 
 }
 

@@ -11,6 +11,7 @@ import {CookiesProvider} from "react-cookie";
 import {Preparing} from "./components/common/Preparing";
 import {PrivateRoute} from "./components/common/PrivateRoute";
 import {LoginButton} from "./components/login/LoginButton";
+import {ErrorPage} from "./components/error/ErrorPage";
 
 const Wrapper = styled.div`
     height : 100%;
@@ -62,6 +63,7 @@ function App() {
                                 <Route path="/goals" element={<Preparing/>}></Route>
                                 <Route path="/setting" element={<Preparing/>}></Route>
                             </Route>
+                            <Route path="/error" element={<ErrorPage/>}></Route>
 
                         </Routes>
                     </MainWrapper>

@@ -5,6 +5,7 @@ import {RecordViewer} from "./viewer/RecordViewer";
 import {InputForm} from "./input/InputForm";
 import {getApi} from "../../axiosIntercepter";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 
 const Wrapper = styled.div`
@@ -35,18 +36,39 @@ const ViewerWrapper = styled.div`
 `;
 
 export function Record(){
+    const navigate = useNavigate();
     const [record, setRecord] = useState();
     const [category, setCategory] = useState();
     const [method, setMethod] = useState();
     const getCategory = async ()=>{
-        return await getApi(`${process.env.REACT_APP_BASE_URL}/category`);
+        try {
+            return await getApi(`${process.env.REACT_APP_BASE_URL}/category`);
+        } catch (e){
+            return [];
+            // navigate("/error");
+        }
+
+
+
     }
     const getMethod = async ()=>{
-        return await getApi(`${process.env.REACT_APP_BASE_URL}/method`);
+        try{
+            return await getApi(`${process.env.REACT_APP_BASE_URL}/method`);
+        } catch (e){
+            return [];
+            // navigate("/error");
+        }
+
     }
 
     const getRecord = async ()=>{
-        return await getApi(`${process.env.REACT_APP_BASE_URL}/record`);
+        try {
+            return await getApi(`${process.env.REACT_APP_BASE_URL}/record`);
+        } catch (e){
+            return [];
+            // navigate("/error");
+        }
+
     }
 
 
@@ -61,10 +83,6 @@ export function Record(){
         setRecord(await getRecord());
     }
 
-
-    // renewCategory();
-    // renewMethod();
-    // renewRecord();
     useEffect(() => {
         renewCategory();
         renewMethod();

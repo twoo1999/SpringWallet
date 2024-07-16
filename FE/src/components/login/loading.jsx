@@ -3,6 +3,7 @@ import axios from "axios";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
 import '../../common/fonts.css'
+import {getApi} from "../../axiosIntercepter";
 
 const Wrapper = styled.div`
     display: flex;
@@ -13,19 +14,18 @@ const Wrapper = styled.div`
     gap: 5rem;
 `;
 export function Loading(){
-    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const code = searchParams.get("code");
     useEffect(() => {
         const GoogleLogin = async () => {
-            await axios({
-                method: "GET",
-                url: `http://localhost:8080/auth/google?code=${code}`,
-                withCredentials:true,
-            }).then((res) => {
+            try{
+                await getApi(`http://localhost:8080/auth/google?code=${code}`);
                 window.sessionStorage.setItem("jwt", "Google");
-                window.location.href = "/";
-            });
+            } catch (err){
+                alert("로그인 실패");
+            }
+            window.location.href = "/";
+
         };
         GoogleLogin();
     }, []);

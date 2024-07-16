@@ -2,6 +2,8 @@ import styled from "styled-components";
 import "../../common/fonts.css"
 import {useState} from "react";
 import axios from "axios";
+import {deleteApi} from "../../axiosIntercepter";
+import {useCookies} from "react-cookie";
 const Wrapper = styled
 const Button = styled.button`
     position: absolute;
@@ -21,15 +23,10 @@ export function LoginButton(){
     const [isLogin, setLogin] = useState(window.sessionStorage.getItem("jwt") !== null);
     const onClick = async ()=>{
         if (isLogin) {
-
-            await axios({
-                method: "DELETE",
-                url: `http://localhost:8080/auth`,
-                withCredentials:true,
-            }).then(res=>{
-                sessionStorage.removeItem("jwt");
-            })
+            await deleteApi(`http://localhost:8080/auth`);
+            sessionStorage.removeItem("jwt");
         }
+
         window.location.href = "/login";
 
 
