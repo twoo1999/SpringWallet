@@ -7,8 +7,10 @@ import kimtaewoo.springwallet.domain.Category;
 import kimtaewoo.springwallet.domain.Method;
 import kimtaewoo.springwallet.domain.Record;
 import kimtaewoo.springwallet.dto.record.CreateRecordReqDto;
+import kimtaewoo.springwallet.dto.record.CreateRecordResDto;
 import kimtaewoo.springwallet.repository.CategoryRepository;
 import kimtaewoo.springwallet.repository.JpaRecordRepository;
+import kimtaewoo.springwallet.repository.MethodRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +36,8 @@ public class RecordServiceTest {
     private JpaRecordRepository jpaRecordRepository;
     @Mock
     private CategoryRepository categoryRepository;
+    @Mock
+    private MethodRepository methodRepository;
 
     static AccessTokenPayload atp;
     @BeforeAll
@@ -76,13 +80,13 @@ public class RecordServiceTest {
 
         given(jpaRecordRepository.save(any())).willReturn(r);
         given(categoryRepository.getOne(any())).willReturn(category);
-
+        given(methodRepository.getOne(any())).willReturn(method);
 
         // when
-        Long id = recordService.save(atp, record);
+        CreateRecordResDto res = recordService.save(atp, record);
 
         // then
-        assertThat(id).isEqualTo(1L);
+        assertThat(res.getId()).isEqualTo(1L);
 
     }
 
