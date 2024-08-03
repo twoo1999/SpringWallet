@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import kimtaewoo.springwallet.domain.Category;
 import kimtaewoo.springwallet.domain.Method;
 import kimtaewoo.springwallet.domain.Record;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,48 +43,78 @@ public class RecordRepositoryTest {
     }
 
 
-    static Long cid;
+    static Long cid1;
+    static Long cid2;
+    static Long mid1;
+    static Long mid2;
     static UUID uid;
-    static Long mid;
-    @BeforeEach
-    void beforeEach(){
-        uid = UUID.randomUUID();
-        Category category = Category.builder()
-                .user_id(uid)
-                .category_name("test category")
-                .build();
-        Category c = categoryRepository.save(category);
-        cid = c.getId();
 
-        Method method = Method.builder()
+    static Category category1;
+    static Category category2;
+    static Method method1;
+    static Method method2;
+
+    @BeforeAll
+    static void setting(){
+        uid = UUID.randomUUID();
+        category1 = Category.builder()
                 .user_id(uid)
-                .method_name("test method")
+                .category_name("test category1")
                 .build();
-        Method m = methodRepository.save(method);
-        mid = m.getId();
+
+        category2 = Category.builder()
+                .user_id(uid)
+                .category_name("test category2")
+                .build();
+
+        method1 = Method.builder()
+                .user_id(uid)
+                .method_name("test method1")
+                .build();
+        method2 = Method.builder()
+                .user_id(uid)
+                .method_name("test method2")
+                .build();
 
     }
+    @BeforeEach
+    void beforeEach(){
+        Category c1  = categoryRepository.save(category1);
+        cid1 = c1.getId();
+
+        Category c2 = categoryRepository.save(category2);
+        cid2 = c2.getId();
+
+        Method m1 = methodRepository.save(method1);
+        mid1 = m1.getId();
+
+        Method m2 = methodRepository.save(method2);
+        mid2 = m2.getId();
+
+    }
+
+
 
     @Test
     void 저장(){
         // given
-        Category c = em.getReference(Category.class, cid);
-        Method m = em.getReference(Method.class, mid);
+        Category c1 = em.getReference(Category.class, cid1);
+        Method m1 = em.getReference(Method.class, mid1);
         Record record = Record.builder()
                 .user_id(uid)
                 .item("test item")
                 .timestamp(LocalDate.now())
                 .amount(1000)
                 .memo(null)
-                .category(c)
-                .method(m)
+                .category(c1)
+                .method(m1)
                 .build();
 
         // when
 
         Record nc = recordRepository.save(record);
 
-        System.out.println(c.getCategory_name());
+        System.out.println(c1.getCategory_name());
 
         // then
         System.out.println(nc.getItem());
@@ -95,8 +126,8 @@ public class RecordRepositoryTest {
     @Test
     void 아이디로_찾기() {
         // given
-        Category c = em.getReference(Category.class, cid);
-        Method m = em.getReference(Method.class, mid);
+        Category c = em.getReference(Category.class, cid1);
+        Method m = em.getReference(Method.class, mid1);
         Record record = Record.builder()
                 .user_id(uid)
                 .item("test item")
@@ -123,50 +154,37 @@ public class RecordRepositoryTest {
 
     @Test
     void 유저아이디로_찾기() {
-        Category c = em.getReference(Category.class, cid);
-        Method m = em.getReference(Method.class, mid);
+        Category c1 = em.getReference(Category.class, cid1);
+        Method m1 = em.getReference(Method.class, mid1);
         Record record1 = Record.builder()
-//                .id(1L)
                 .user_id(uid)
                 .item("test item1")
                 .timestamp(LocalDate.now())
                 .amount(1000)
                 .memo(null)
-                .category(c)
-                .method(m)
+                .category(c1)
+                .method(m1)
                 .build();
 
 
         Record nc1 = recordRepository.save(record1);
 
         System.out.println(nc1.getCategory().getId());
+        Category c2 = em.getReference(Category.class, cid2);
+        Method m2 = em.getReference(Method.class, mid2);
         Record record2 = Record.builder()
-//                .id(2L)
                 .user_id(uid)
                 .item("test item2")
                 .timestamp(LocalDate.now())
                 .amount(1000)
                 .memo(null)
-                .category(c)
-                .method(m)
+                .category(c2)
+                .method(m2)
                 .build();
-//        System.out.println(record2.getAmount());
 
         Record nc2 = recordRepository.save(record2);
         System.out.println(nc2.getId());
-//        Record record1 = Record.builder()
-//                .user_id(uid)
-//                .item("test item1")
-//                .timestamp(LocalDate.now())
-//                .amount(1000)
-//                .memo(null)
-//                .category(c)
-//                .method(m)
-//                .build();
-//
-//
-//
-//        Record n = recordRepository.save(record1);
+
 //        // when
 //
         List<Record> rs = recordRepository.findByUserId(uid);
@@ -179,8 +197,8 @@ public class RecordRepositoryTest {
 
     @Test
     void 전체_탐색(){
-        Category c = em.getReference(Category.class, cid);
-        Method m = em.getReference(Method.class, mid);
+        Category c = em.getReference(Category.class, cid1);
+        Method m = em.getReference(Method.class, mid1);
         Record record = Record.builder()
                 .user_id(uid)
                 .item("test item")
@@ -221,8 +239,8 @@ public class RecordRepositoryTest {
     @Test
     void 삭제(){
         // given
-        Category c = em.getReference(Category.class, cid);
-        Method m = em.getReference(Method.class, mid);
+        Category c = em.getReference(Category.class, cid1);
+        Method m = em.getReference(Method.class, mid1);
         Record record = Record.builder()
                 .user_id(uid)
                 .item("test item")
