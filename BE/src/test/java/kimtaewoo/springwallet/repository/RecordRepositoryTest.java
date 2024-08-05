@@ -55,28 +55,6 @@ public class RecordRepositoryTest {
     static Method method1;
     static Method method2;
 
-//    @BeforeAll
-//    static void setting(){
-//        uid = UUID.randomUUID();
-//        category1 = Category.builder()
-//                .user_id(uid)
-//                .category_name("test category1")
-//                .build();
-//
-//        category2 = Category.builder()
-//                .user_id(uid)
-//                .category_name("test category2")
-//                .build();
-//
-//        method1 = Method.builder()
-//                .user_id(uid)
-//                .method_name("test method1")
-//                .build();
-//        method2 = Method.builder()
-//                .user_id(uid)
-//                .method_name("test method2")
-//                .build();
-//    }
     @BeforeEach
     void beforeEach(){
         uid = UUID.randomUUID();
@@ -123,7 +101,6 @@ public class RecordRepositoryTest {
     @Test
     void 저장(){
         // given
-        System.out.println("w저장" + " " + categoryRepository.count());
         Category c1 = em.getReference(Category.class, cid1);
         Method m1 = em.getReference(Method.class, mid1);
         System.out.println(m1.getId() + " " + c1.getId());
@@ -151,7 +128,6 @@ public class RecordRepositoryTest {
     @Test
     void 아이디로_찾기() {
         // given
-        System.out.println("찾기" + " " + categoryRepository.count());
         Category c = em.getReference(Category.class, cid1);
         Method m = em.getReference(Method.class, mid1);
 
@@ -295,124 +271,4 @@ public class RecordRepositoryTest {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-//    @BeforeEach
-//    void before(){
-//        Record record = Record.builder()
-//                .userId()
-//                .build();
-//
-//
-//                new Record();
-//        record.setEmail("test@email.com");
-//        record.setCategory("식비");
-//        record.setTimestamp(LocalDate.of(2020, 1, 1));
-//        record.setMethod("현금");
-//        record.setAmount(1000);
-//        record.setMemo(null);
-//
-//        repository.save(record);
-//    }
-
-
-
-//    @Test
-//    void 불러오기(){
-//        // given
-//        UUID id = UUID.randomUUID();
-//        Record record = Record.builder()
-//                .userId(id)
-//                .category()
-//                .build();
-//
-//
-//        new Record();
-//        record.setEmail("test@email.com");
-//        record.setCategory("식비");
-//        record.setTimestamp(LocalDate.of(2020, 1, 1));
-//        record.setMethod("현금");
-//        record.setAmount(1000);
-//        record.setMemo(null);
-//
-//        repository.save(record);
-//        //then
-//        Record result = repository.findById(1L).get();
-//        assertThat(result.getId()).isEqualTo(1L);
-//    }
-//
-//    @Test
-//    void 저장(){
-//        // given
-//
-//        //then
-//        Record result = repository.findById(1L).get();
-//        assertThat(result.getId()).isEqualTo(1L);
-//    }
-//
-//
-//    @Test
-//    void 이메일로_가져오기(){
-//        // given
-//
-//
-//        // when
-//        List<Record> recordList = repository.findByEmail("test@email.com");
-//        Record result = recordList.get(0);
-//
-//        // then
-//        assertThat(result.getCategoryId()).isEqualTo("식비");
-//    }
-//
-//
-//    @Test
-//    @Transactional
-//    void 기록_수정(){
-//        // given
-//
-//
-//        // when
-//
-//        Record newRecord = repository.findById(1L).get();
-//        newRecord.setEmail("test2@email.com");
-//
-//        Record newnewRecord = repository.findById(1L).get();
-//        System.out.println(newRecord.getId());
-//
-//
-//
-//        // then
-//        assertThat(newnewRecord.getEmail()).isEqualTo("test2@email.com");
-//
-//    }
-//
-//    @Test
-//    @Transactional
-//    void 기록_삭제(){
-//        // given
-//        Record record = new Record();
-//        record.setEmail("test@email.com");
-//        record.setCategory("식비");
-//        record.setTimestamp(LocalDate.of(2020, 1, 1));
-//        record.setMethod("현금");
-//        record.setAmount(1000);
-//        record.setMemo(null);
-//
-//        repository.save(record);
-//
-//        // when
-//        repository.deleteById(1L);
-//        List<Record> newR = repository.findAll();
-//
-//        // then
-//        assertThat(newR.size()).isEqualTo(1);
-//    }
 }
