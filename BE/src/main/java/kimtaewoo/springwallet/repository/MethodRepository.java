@@ -28,9 +28,9 @@ public class MethodRepository {
             em.merge(method);
         } else {
             if (method.getId() == null) {
-                em.merge(method);
-            } else {
                 em.persist(method);
+            } else {
+                em.merge(method);
             }
 
         }

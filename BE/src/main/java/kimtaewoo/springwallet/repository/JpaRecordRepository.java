@@ -1,6 +1,7 @@
 package kimtaewoo.springwallet.repository;
 
 import jakarta.persistence.EntityManager;
+import kimtaewoo.springwallet.domain.Category;
 import kimtaewoo.springwallet.domain.Member;
 import kimtaewoo.springwallet.domain.Record;
 import org.springframework.stereotype.Repository;
@@ -19,9 +20,26 @@ public class JpaRecordRepository implements RecordRepository {
         this.em = em;
     }
 
+
+    public void deleteAll(){
+        List<Record> recordList = em.createQuery("SELECT r from Record r", Record.class).getResultList();
+        for (Record r : recordList) {
+            em.remove(r);
+        }
+    }
     @Override
     public Record save(Record record) {
-        em.persist(record);
+
+        if (em.contains(record)) {
+            em.merge(record);
+        } else {
+            if (record.getId() == null) {
+                em.persist(record);
+            } else{
+                em.merge(record);
+            }
+        }
+
         return record;
     }
 
