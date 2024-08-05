@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import kimtaewoo.springwallet.domain.Category;
 import kimtaewoo.springwallet.domain.Method;
 import kimtaewoo.springwallet.domain.Record;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-
+// merge와 persist 에 대해 공부 
 @DataJpaTest
 @ExtendWith(MockitoExtension.class)
 public class RecordRepositoryTest {
@@ -54,8 +55,30 @@ public class RecordRepositoryTest {
     static Method method1;
     static Method method2;
 
-    @BeforeAll
-    static void setting(){
+//    @BeforeAll
+//    static void setting(){
+//        uid = UUID.randomUUID();
+//        category1 = Category.builder()
+//                .user_id(uid)
+//                .category_name("test category1")
+//                .build();
+//
+//        category2 = Category.builder()
+//                .user_id(uid)
+//                .category_name("test category2")
+//                .build();
+//
+//        method1 = Method.builder()
+//                .user_id(uid)
+//                .method_name("test method1")
+//                .build();
+//        method2 = Method.builder()
+//                .user_id(uid)
+//                .method_name("test method2")
+//                .build();
+//    }
+    @BeforeEach
+    void beforeEach(){
         uid = UUID.randomUUID();
         category1 = Category.builder()
                 .user_id(uid)
@@ -76,9 +99,6 @@ public class RecordRepositoryTest {
                 .method_name("test method2")
                 .build();
 
-    }
-    @BeforeEach
-    void beforeEach(){
         Category c1  = categoryRepository.save(category1);
         cid1 = c1.getId();
 
@@ -92,14 +112,21 @@ public class RecordRepositoryTest {
         mid2 = m2.getId();
 
     }
-
+    @AfterEach
+    void afterEach(){
+        categoryRepository.deleteAll();
+        methodRepository.deleteAll();
+        recordRepository.deleteAll();
+    }
 
 
     @Test
     void 저장(){
         // given
+        System.out.println("w저장" + " " + categoryRepository.count());
         Category c1 = em.getReference(Category.class, cid1);
         Method m1 = em.getReference(Method.class, mid1);
+        System.out.println(m1.getId() + " " + c1.getId());
         Record record = Record.builder()
                 .user_id(uid)
                 .item("test item")
@@ -114,10 +141,8 @@ public class RecordRepositoryTest {
 
         Record nc = recordRepository.save(record);
 
-        System.out.println(c1.getCategory_name());
 
         // then
-        System.out.println(nc.getItem());
 
         assertThat(nc.getItem()).isEqualTo("test item");
 
@@ -126,8 +151,10 @@ public class RecordRepositoryTest {
     @Test
     void 아이디로_찾기() {
         // given
+        System.out.println("찾기" + " " + categoryRepository.count());
         Category c = em.getReference(Category.class, cid1);
         Method m = em.getReference(Method.class, mid1);
+
         Record record = Record.builder()
                 .user_id(uid)
                 .item("test item")
@@ -146,12 +173,12 @@ public class RecordRepositoryTest {
         Record nr = recordRepository.findById(rid).get();
 
         //then
-        System.out.println(nr.getCategory().getCategory_name());
         assertThat(nr.getItem()).isEqualTo(nc.getItem());
-        assertThat(nr.getCategory().getCategory_name()).isEqualTo("test category");
+        assertThat(nr.getCategory().getCategory_name()).isEqualTo("test category1");
     }
-
-
+//
+//
+    @Transactional
     @Test
     void 유저아이디로_찾기() {
         Category c1 = em.getReference(Category.class, cid1);
@@ -169,7 +196,6 @@ public class RecordRepositoryTest {
 
         Record nc1 = recordRepository.save(record1);
 
-        System.out.println(nc1.getCategory().getId());
         Category c2 = em.getReference(Category.class, cid2);
         Method m2 = em.getReference(Method.class, mid2);
         Record record2 = Record.builder()
@@ -183,7 +209,6 @@ public class RecordRepositoryTest {
                 .build();
 
         Record nc2 = recordRepository.save(record2);
-        System.out.println(nc2.getId());
 
 //        // when
 //
@@ -195,37 +220,40 @@ public class RecordRepositoryTest {
     }
 
 
+    @Transactional
     @Test
     void 전체_탐색(){
-        Category c = em.getReference(Category.class, cid1);
-        Method m = em.getReference(Method.class, mid1);
-        Record record = Record.builder()
+        Category c1 = em.getReference(Category.class, cid1);
+        Method m1 = em.getReference(Method.class, mid1);
+        Record record1 = Record.builder()
                 .user_id(uid)
                 .item("test item")
                 .timestamp(LocalDate.now())
                 .amount(1000)
                 .memo(null)
-                .category(c)
-                .method(m)
+                .category(c1)
+                .method(m1)
                 .build();
 
 
-        Record nc = recordRepository.save(record);
+        Record nc = recordRepository.save(record1);
 
+        Category c2 = em.getReference(Category.class, cid2);
+        Method m2 = em.getReference(Method.class, mid2);
 
-        Record record1 = Record.builder()
+        Record record2 = Record.builder()
                 .user_id(uid)
                 .item("test item1")
                 .timestamp(LocalDate.now())
                 .amount(1000)
                 .memo(null)
-                .category(c)
-                .method(m)
+                .category(c2)
+                .method(m2)
                 .build();
 
 
 
-        recordRepository.save(record1);
+        recordRepository.save(record2);
 
 
         // when
@@ -236,6 +264,7 @@ public class RecordRepositoryTest {
     }
 
 
+    @Transactional
     @Test
     void 삭제(){
         // given
@@ -265,6 +294,15 @@ public class RecordRepositoryTest {
         assertThat(recordRepository.findAll().size()).isEqualTo(0);
 
     }
+
+
+
+
+
+
+
+
+
 
 
 //    @BeforeEach
