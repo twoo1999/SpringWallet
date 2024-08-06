@@ -3,6 +3,7 @@ package kimtaewoo.springwallet.service;
 import kimtaewoo.springwallet.Service.CategoryService;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Category;
+import kimtaewoo.springwallet.dto.category.CreateCategoryReqDto;
 import kimtaewoo.springwallet.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -75,6 +76,10 @@ public class CategoryServiceTest {
         // given
         String[] names = new String[]{"test1", "test2", "test3"};
 
+        CreateCategoryReqDto req  = CreateCategoryReqDto.builder()
+                .name(names)
+                .type("expense")
+                .build();
         List<Category> expected = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
             Category c = Category.builder()
@@ -90,8 +95,9 @@ public class CategoryServiceTest {
         // mock
         given(categoryRepository.saveAll(any())).willReturn(expected);
 
+
         // when
-        List<Category> result = categoryService.saveAll(atp, names);
+        List<Category> result = categoryService.saveAll(atp, req);
 
         // then
 

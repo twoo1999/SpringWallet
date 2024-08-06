@@ -19,11 +19,32 @@ public class CategoryRepository {
         this.em = em;
     }
 
+    public int count(){
+        List<Category> categories = em.createQuery("SELECT c from Category c", Category.class).getResultList();
+        return categories.size();
+    }
 
-
-
+    public void deleteAll(){
+        List<Category> categories = em.createQuery("SELECT c from Category c", Category.class).getResultList();
+        for (Category c : categories) {
+            em.remove(c);
+        }
+    }
+    public boolean isContain(Category category){
+        return em.contains(category);
+    }
     public Category save(Category category) {
-        em.persist(category);
+
+        if (em.contains(category)) {
+            em.merge(category);
+        } else {
+            if (category.getId() == null) {
+                em.persist(category);
+            } else{
+                em.merge(category);
+            }
+        }
+
         return category;
     }
     public List<Category> saveAll(List<Category> categorys) {

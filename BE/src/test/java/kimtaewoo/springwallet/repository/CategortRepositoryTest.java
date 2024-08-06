@@ -115,9 +115,12 @@ public class CategortRepositoryTest {
         }
 
         repository.saveAll(categories);
-        repository.deleteByUserIdAndNameAll(new String[]{"test1", "test2"}, id);
+        List<Category> savedC = repository.findByUserId(id);
+//        repository.deleteByIdAll(new String[]{"test1", "test2"}, id);
+        Long[] ids = savedC.stream().map(c->c.getId()).toArray(Long[]::new);
+        repository.deleteByIdAll(ids, id);
         List<Category> newCs = repository.findByUserId(id);
-        assertThat(newCs.size()).isEqualTo(1);
+        assertThat(newCs.size()).isEqualTo(0);
     }
 
 

@@ -17,8 +17,24 @@ public class MethodRepository {
     private final EntityManager em;
     public MethodRepository(EntityManager em){this.em = em;}
 
+    public void deleteAll(){
+        List<Method> methods = em.createQuery("SELECT m from Method m", Method.class).getResultList();
+        for (Method m : methods) {
+            em.remove(m);
+        }
+    }
     public Method save(Method method){
-        em.persist(method);
+        if (em.contains(method)) {
+            em.merge(method);
+        } else {
+            if (method.getId() == null) {
+                em.persist(method);
+            } else {
+                em.merge(method);
+            }
+
+        }
+
         return method;
     }
 
