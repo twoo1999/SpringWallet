@@ -27,13 +27,13 @@ public class OauthController {
     }
 
 
-    @GetMapping("/auth/accessToken")
+    @GetMapping("/api/auth/accessToken")
     @ResponseBody
     public ResponseEntity reissueAccessToken(HttpServletRequest req, HttpServletResponse res){
         oauthService.reissueAccessToken(req, res);
         return ResponseEntity.ok("ok");
     }
-    @GetMapping("/auth/google")
+    @GetMapping("/api/auth/google")
     @ResponseBody
     public LoginDto login(HttpServletResponse res, @RequestParam("code") String code) throws JsonProcessingException {
         String[] tokens = oauthService.login(code);
@@ -56,7 +56,7 @@ public class OauthController {
     }
 
 
-    @DeleteMapping("/auth")
+    @DeleteMapping("/api/auth")
     @ResponseBody
     public ResponseEntity logout(HttpServletRequest req, HttpServletResponse res, AccessTokenPayload ap){
         Cookie[] token =  req.getCookies();

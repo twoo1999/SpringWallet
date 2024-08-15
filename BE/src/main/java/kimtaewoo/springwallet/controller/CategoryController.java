@@ -23,13 +23,13 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category")
+    @GetMapping("/api/category")
     @ResponseBody
     public List<Category> getCategory(AccessTokenPayload atp) {
         return categoryService.getCategoryByUserId(atp);
     }
 
-    @GetMapping("/category/active")
+    @GetMapping("/api/category/active")
     @ResponseBody
     public List<Category> getCategoryActive(AccessTokenPayload atp) {
         return categoryService.getCategoryByUserIdActive(atp);
@@ -42,7 +42,7 @@ public class CategoryController {
 //        return ResponseEntity.ok(result);
 //    }
 
-    @PostMapping("/category")
+    @PostMapping("/api/category")
     @ResponseBody
     public ResponseEntity createCategory(AccessTokenPayload atp, @RequestBody CreateCategoryReqDto category) {
         List<Category> result = categoryService.saveAllCategory(atp, category);
@@ -58,7 +58,7 @@ public class CategoryController {
 //        return ResponseEntity.ok(res);
 //    }
 
-    @DeleteMapping("/category")
+    @DeleteMapping("/api/category")
     @ResponseBody
     public ResponseEntity deleteCategory(AccessTokenPayload atp, @RequestBody DeleteCategoryReqDto category) {
         System.out.println("카테고리 삭제");
