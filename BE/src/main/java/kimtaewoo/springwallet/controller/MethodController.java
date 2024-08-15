@@ -22,13 +22,13 @@ public class MethodController {
         this.methodService = methodService;
     }
 
-    @GetMapping("method")
+    @GetMapping("/api/method")
     @ResponseBody
     public List<Method> getMethod(AccessTokenPayload atp) {
         return methodService.getCategoryByUserId(atp);
     }
 
-    @PostMapping("method")
+    @PostMapping("/api/method")
     @ResponseBody
     public ResponseEntity createMethod(AccessTokenPayload atp, @RequestBody CreateMethodReqDto method) {
         List<Method> result = methodService.saveAll(atp, method);
@@ -36,7 +36,7 @@ public class MethodController {
     }
 
 
-    @DeleteMapping("method")
+    @DeleteMapping("/api/method")
     @ResponseBody
     public ResponseEntity deleteMethod(AccessTokenPayload atp, @RequestBody DeleteMethodReqDto deleteMethodReqDto){
         List<Long> result = methodService.deleteByIdAll(atp, deleteMethodReqDto);

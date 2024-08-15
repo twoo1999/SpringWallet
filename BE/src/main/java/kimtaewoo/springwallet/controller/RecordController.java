@@ -21,7 +21,7 @@ public class RecordController {
     }
 
 
-    @PostMapping("record")
+    @PostMapping("/api/record")
     @ResponseBody
     public ResponseEntity createRecord(AccessTokenPayload ap, @RequestBody CreateRecordReqDto record) {
 
@@ -29,20 +29,20 @@ public class RecordController {
         return ResponseEntity.ok(r);
     }
 
-    @GetMapping("record")
+    @GetMapping("/api/record")
     @ResponseBody
     public List<Record> findRecordByUserId(AccessTokenPayload acp){
         return recordService.findByUserId(acp);
     }
 
-    @PostMapping("/record/{id}")
+    @PostMapping("/api/record/{id}")
     @ResponseBody
     public ResponseEntity updateRecord(@RequestBody CreateRecordReqDto record, @PathVariable("id") Long id){
         CreateRecordResDto createRecordResDto = recordService.updateRecord(record, id);
         return ResponseEntity.ok(createRecordResDto);
     }
 
-    @DeleteMapping("/record/{id}")
+    @DeleteMapping("/api/record/{id}")
     @ResponseBody
     public ResponseEntity deleteRecord(@PathVariable("id") Long id) {
         return recordService.deleteRecord(id);
