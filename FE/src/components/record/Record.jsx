@@ -42,7 +42,7 @@ export function Record(){
     const [method, setMethod] = useState();
     const getCategory = async ()=>{
         try {
-            return await getApi(`${process.env.REACT_APP_BASE_URL}/category`);
+            return await getApi(`${process.env.REACT_APP_API_URL}/category`);
         } catch (e){
             return [];
             // navigate("/error");
@@ -53,7 +53,7 @@ export function Record(){
     }
     const getMethod = async ()=>{
         try{
-            return await getApi(`${process.env.REACT_APP_BASE_URL}/method`);
+            return await getApi(`${process.env.REACT_APP_API_URL}/method`);
         } catch (e){
             return [];
             // navigate("/error");
@@ -63,7 +63,7 @@ export function Record(){
 
     const getRecord = async ()=>{
         try {
-            return await getApi(`${process.env.REACT_APP_BASE_URL}/record`);
+            return await getApi(`${process.env.REACT_APP_API_URL}/record`);
         } catch (e){
             return [];
             // navigate("/error");

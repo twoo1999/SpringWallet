@@ -137,13 +137,13 @@ export function DataDetailModal({data, CM, R, closeDetailModalHandeler}){
             }
 
         });
-        await postApi(`${process.env.REACT_APP_BASE_URL}/record/${data[0].id}`, JSON.stringify(updateData));
+        await postApi(`${process.env.REACT_APP_API_URL}/record/${data[0].id}`, JSON.stringify(updateData));
 
         await R.renewRecord();
         closeDetailModalHandeler();
     }
     const deleteButton = async (e)=>{
-        await deleteApi(`${process.env.REACT_APP_BASE_URL}/record/${data[0].id}`)
+        await deleteApi(`${process.env.REACT_APP_API_URL}/record/${data[0].id}`)
         await R.renewRecord();
         closeDetailModalHandeler();
     }

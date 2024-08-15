@@ -92,7 +92,7 @@ export function InputForm({CM, R}){
 
     const onClickPostBtn = async (e)=>{
         e.preventDefault();
-        await postApi(`${process.env.REACT_APP_BASE_URL}/record`, JSON.stringify({
+        await postApi(`${process.env.REACT_APP_API_URL}/record`, JSON.stringify({
             ...input,
             memo: memoValue.length > 0 ? memoValue : ""
         }));

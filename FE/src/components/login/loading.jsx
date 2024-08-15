@@ -19,7 +19,7 @@ export function Loading(){
     useEffect(() => {
         const GoogleLogin = async () => {
             try{
-                await getApi(`http://localhost:8080/auth/google?code=${code}`);
+                await getApi(`${process.env.REACT_APP_API_URL}/auth/google?code=${code}`);
                 window.sessionStorage.setItem("jwt", "Google");
             } catch (err){
                 alert("로그인 실패");
