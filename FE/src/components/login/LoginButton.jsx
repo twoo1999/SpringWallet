@@ -23,7 +23,7 @@ export function LoginButton(){
     const [isLogin, setLogin] = useState(window.sessionStorage.getItem("jwt") !== null);
     const onClick = async ()=>{
         if (isLogin) {
-            await deleteApi(`http://localhost:8080/auth`);
+            await deleteApi(`${process.env.REACT_APP_API_URL}/auth`);
             sessionStorage.removeItem("jwt");
         }
 

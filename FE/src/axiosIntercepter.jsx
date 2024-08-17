@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: process.env.BASE_URL,
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true,
     headers: {
         "Content-Type": "application/json"
@@ -21,7 +21,7 @@ api.interceptors.response.use(
             if(data.code === "AUTH-002"){
                 await axios({
                     method: "GET",
-                    url: `${process.env.REACT_APP_BASE_URL}/auth/accessToken`,
+                    url: `${process.env.REACT_APP_API_URL}/auth/accessToken`,
                     withCredentials:true,
                 })
 

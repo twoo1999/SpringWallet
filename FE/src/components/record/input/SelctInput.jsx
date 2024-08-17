@@ -97,19 +97,19 @@ export function SelctInput({renewItem, items, type, onChangeValueReadonly, sign,
                 "name": newItem,
                 "type": sign ? "revenue" : "expense"
             }
-            await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
+            await postApi(`${process.env.REACT_APP_API_URL}/${type}`, JSON.stringify(data));
 
         } else{
             const data = {
                 "name": newItem,
             }
-            await postApi(`${process.env.REACT_APP_BASE_URL}/${type}`, JSON.stringify(data));
+            await postApi(`${process.env.REACT_APP_API_URL}/${type}`, JSON.stringify(data));
 
 
         }
 
 
-        await deleteApi(`${process.env.REACT_APP_BASE_URL}/${type}`, {"ids": deleteItem.map(item => item.id)});
+        await deleteApi(`${process.env.REACT_APP_API_URL}/${type}`, {"ids": deleteItem.map(item => item.id)});
 
 
         renewItem();
