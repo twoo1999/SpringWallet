@@ -12,21 +12,28 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
+          
+      - name: change directory to BE
+        run : cd BE
       - name: Grant execute permission for gradlew
-        run : chmod +x BE/gradlew
-
+        run : chmod +x gradlew
       - name: Build with Gradle
-        run: BE/gradlew clean build
+        run: ./gradlew clean build
 
-      - name: Build the Docker image
+      - name: Build the Spring Docker image
         run: |
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_TOKEN}}
-          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_BE }}:${{github.sha}} ./BE
+          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_BE }}:${{github.sha}} .
           # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_BE }}:${{github.sha}} ./
           docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO_BE}}:${{github.sha}}
-          # cd ../FE
+          
+      - name: change directory to BE
+        run : cd ../FE
+
+      - name: Build the react Docker image
+        run: |
           # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} ./
-          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} ./FE
+          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} .
           docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO_FE}}:${{github.sha}}
 
       - name: Deploy to server
