@@ -35,6 +35,7 @@ jobs:
       - name: Build the react Docker image
         run: |
           cd FE
+          npm install
           docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} .
           docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO_FE}}:${{github.sha}}
       #     # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} ./
