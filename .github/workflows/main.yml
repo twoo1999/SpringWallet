@@ -32,12 +32,12 @@ jobs:
       # - name: change directory to BE
       #   run : cd ../FE
 
-      - name: Build the react Docker image
-        run: |
-          cd FE
-          # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} ./
-          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} .
-          docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO_FE}}:${{github.sha}}
+      # - name: Build the react Docker image
+      #   run: |
+      #     cd FE
+      #     # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} ./
+      #     docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} .
+      #     docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO_FE}}:${{github.sha}}
 
       - name: Deploy to server
         uses: appleboy/ssh-action@master
