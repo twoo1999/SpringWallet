@@ -16,7 +16,7 @@ jobs:
         run : chmod +x BE/gradlew
 
       - name: Build with Gradle
-        run: ./BE/gradlew clean build
+        run: BE/gradlew clean build
 
       - name: Build the Docker image
         run: |
