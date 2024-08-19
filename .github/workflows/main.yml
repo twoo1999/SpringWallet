@@ -13,21 +13,20 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - name: Grant execute permission for gradlew
-        run : chmod +x gradlew
+        run : chmod +x BE/gradlew
 
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./BE/gradlew clean build
 
       - name: Build the Docker image
         run: |
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_TOKEN}}
-          cd BE
-          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_BE }}:${{github.sha}} .
+          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_BE }}:${{github.sha}} ./BE
           # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_BE }}:${{github.sha}} ./
           docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO_BE}}:${{github.sha}}
-          cd ../FE
+          # cd ../FE
           # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} ./
-          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} .
+          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_FE }}:${{github.sha}} ./FE
           docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO_FE}}:${{github.sha}}
 
       - name: Deploy to server
