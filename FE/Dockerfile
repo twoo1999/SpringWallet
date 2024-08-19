@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 node:18
+FROM arm64v8/node:alpine
 
 WORKDIR /src
 
