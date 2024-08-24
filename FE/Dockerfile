@@ -4,7 +4,7 @@ WORKDIR /src
 
 COPY package.json .
 
-# CMD ["npm", "install"]
+CMD ["npm", "install"]
 
 COPY . .
 
