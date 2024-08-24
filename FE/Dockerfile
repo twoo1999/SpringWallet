@@ -1,6 +1,6 @@
 FROM arm64v8/node:alpine
 
-WORKDIR /src
+#WORKDIR /src
 
 COPY package.json .
 
