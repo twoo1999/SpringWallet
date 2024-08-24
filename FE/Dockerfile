@@ -4,7 +4,7 @@ FROM arm64v8/node:alpine
 
 COPY package.json .
 
-CMD ["npm", "install"]
+RUN npm install
 
 COPY . .
 
