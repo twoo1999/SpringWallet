@@ -2,6 +2,7 @@ package kimtaewoo.springwallet.config;
 
 import kimtaewoo.springwallet.intercepter.AuthIntercepter;
 import kimtaewoo.springwallet.resolver.AuthUserResolver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -18,6 +19,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private AuthIntercepter authIntercepter;
     private AuthUserResolver authUserResolver;
 
+    @Value("${spring.base_url}")
+    private String BASE_URL;
     public WebMvcConfig(AuthIntercepter authIntercepter, AuthUserResolver authUserResolver) {
         this.authIntercepter = authIntercepter;
         this.authUserResolver = authUserResolver;
@@ -26,8 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns("https://www.musicspot.site")
-//                .allowedOriginPatterns("http://localhost:3000")
+                .allowedOriginPatterns(BASE_URL)
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("Authorization", "Content-Type")
                 .allowCredentials(true);
