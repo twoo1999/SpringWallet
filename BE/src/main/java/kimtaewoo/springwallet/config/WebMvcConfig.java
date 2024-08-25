@@ -18,10 +18,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     private AuthIntercepter authIntercepter;
     private AuthUserResolver authUserResolver;
-
     @Value("${spring.base_url}")
-    private String BASE_URL;
-    public WebMvcConfig(AuthIntercepter authIntercepter, AuthUserResolver authUserResolver) {
+    String BASE_URL;
+    public WebMvcConfig(AuthIntercepter authIntercepter, AuthUserResolver authUserResolver ) {
         this.authIntercepter = authIntercepter;
         this.authUserResolver = authUserResolver;
     }
