@@ -12,6 +12,7 @@ import {Preparing} from "./components/common/Preparing";
 import {PrivateRoute} from "./components/common/PrivateRoute";
 import {LoginButton} from "./components/login/LoginButton";
 import {ErrorPage} from "./components/error/ErrorPage";
+import {Ai} from "./components/ai/Ai";
 
 const Wrapper = styled.div`
     height : 100%;
@@ -57,9 +58,9 @@ function App() {
                             <Route element={<PrivateRoute />}>
                                 <Route path="/" element={<div/>}></Route>
                                 <Route path="/record/*" element={<Record></Record>}></Route>
+                                <Route path="/AI" element={<Ai/>}></Route>
                                 <Route path="/overview" element={<Preparing/>}></Route>
                                 <Route path="/fast-record" element={<Preparing/>}></Route>
-                                <Route path="/AI" element={<Preparing/>}></Route>
                                 <Route path="/goals" element={<Preparing/>}></Route>
                                 <Route path="/setting" element={<Preparing/>}></Route>
                             </Route>
