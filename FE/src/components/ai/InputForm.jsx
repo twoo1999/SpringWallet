@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import {InputTable} from "../../common/commonStyle";
+import {IconButton, InputTable} from "../../common/commonStyle";
 import {DateInput} from "./DateInput";
+import {ReactComponent as Analyze} from "../../assets/Analyze.svg";
+
 
 export function InputForm(){
     return (
@@ -8,9 +10,9 @@ export function InputForm(){
             <InputTable>
                 <DateInput type='Start'></DateInput>
                 <DateInput type='End'></DateInput>
-                <div>
-                    report
-                </div>
+                <IconButton>
+                    <Analyze></Analyze>
+                </IconButton>
             </InputTable>
         </>
     )
