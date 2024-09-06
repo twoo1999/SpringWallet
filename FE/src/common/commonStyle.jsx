@@ -22,6 +22,8 @@ export const BorderlessInput = styled.input`
     border: none;
 `;
 
-export const IconButton = styled.div`
+export const IconButton = styled.button`
+    border: none;
     cursor: pointer;
+    background-color: white;
 `;
