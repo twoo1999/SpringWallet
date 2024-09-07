@@ -11,6 +11,7 @@ export function TypeInput(){
     }
     const selectTypeHandler = (item)=>{
         setType(item);
+        setDropView(!dropView);
     }
     useEffect(() => {
         function handleClickOutside(e){
