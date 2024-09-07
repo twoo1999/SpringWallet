@@ -60,3 +60,13 @@ export const Selector = styled.div`
     height: 100px;
 
 `;
+
+export const ModalBackBlur = styled.div`
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+`;
+
