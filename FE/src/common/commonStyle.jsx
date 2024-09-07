@@ -27,3 +27,17 @@ export const IconButton = styled.button`
     cursor: pointer;
     background-color: white;
 `;
+
+export const DropdownBlock = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #D1D1D1;
+    transform: translateY(46px);
+    padding: 16px 18px;
+    border-radius: 8px;
+    width: 120px;
+    gap: 16px;
+    box-sizing: border-box;
+    color: black;
+`;
