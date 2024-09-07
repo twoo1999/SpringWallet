@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {BorderlessInput, InputBlock} from "../../common/commonStyle";
+import {BorderlessInput, InputBlock} from "../../../common/commonStyle";
 
 
 export function DateInput({type}){
