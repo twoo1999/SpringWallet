@@ -1,5 +1,4 @@
 name: Spring Wallet
-
 on:
   push:
     branches: ["main"]
