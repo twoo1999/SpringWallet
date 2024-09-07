@@ -20,6 +20,7 @@ export const InputBlock = styled.div`
 `;
 export const BorderlessInput = styled.input`
     border: none;
+    cursor: pointer;
 `;
 
 export const IconButton = styled.button`
@@ -70,3 +71,6 @@ export const ModalBackBlur = styled.div`
         background-color: rgba(0, 0, 0, 0.5);
 `;
 
+export const ClickableSpan = styled.span`
+    cursor: pointer;
+`;
