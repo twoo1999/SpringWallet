@@ -41,3 +41,22 @@ export const DropdownBlock = styled.div`
     box-sizing: border-box;
     color: black;
 `;
+export const Selector = styled.div`
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    gap: 16px;
+    
+    &::-webkit-scrollbar {
+        width: 5px;
+        border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 16px;
+        background-color: black;
+    }
+
+    height: 100px;
+
+`;
