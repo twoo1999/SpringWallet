@@ -25,10 +25,11 @@ export function InputForm() {
 
     useEffect(() => {
         const flag = Object.values(data).every(val => val != null);
+        console.log(flag)
         if(flag) setBtnAble(false)
         else setBtnAble(true);
 
-    }, [btnAble]);
+    }, [data]);
 
 
     return (
