@@ -12,33 +12,40 @@ export function InputForm() {
         end: null,
         type: null,
     });
-
+    const [btnAble, setBtnAble] = useState(true);
     const setDataHandler = (key, val)=>{
         setData((prevState)=>{
             return {...prevState, [key]: val}
         });
-        console.log(data);
-
     }
-
-    const [btnAble, setBtnAble] = useState(true);
 
     useEffect(() => {
         const flag = Object.values(data).every(val => val != null);
         console.log(flag)
         if(flag) setBtnAble(false)
         else setBtnAble(true);
-
     }, [data]);
+
+    const clickPostBtnHandler = ()=>{
+        if(new Date(data.start) > new Date(data.end)){
+            alert("시작 날짜는 끝 날짜보다 앞서야 합니다. 다시 선택해 주세요.");
+            return;
+        }
+
+        // console.log(data);
+        // post 버튼
+    }
+
+
 
 
     return (
         <>
             <InputTable>
-                <DateInput type='start' setDataHandler={setDataHandler}></DateInput>
-                <DateInput type='end' setDataHandler={setDataHandler}></DateInput>
+                <DateInput type='Start' setDataHandler={setDataHandler}></DateInput>
+                <DateInput type='End' setDataHandler={setDataHandler}></DateInput>
                 <TypeInput setDataHandler={setDataHandler}></TypeInput>
-                <IconButton disabled={btnAble}>
+                <IconButton onClick={clickPostBtnHandler} disabled={btnAble}>
                     <Analyze fill={btnAble ? "lightgray" : "black"}></Analyze>
                 </IconButton>
             </InputTable>

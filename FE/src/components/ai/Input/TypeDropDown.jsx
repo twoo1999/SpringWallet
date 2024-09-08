@@ -8,7 +8,7 @@ export function TypeDropdown({selectTypeHandler}) {
     })
 
     return (
-        <DropdownBlock className="Regular14">
+        <DropdownBlock key="typeDropdown" className="Regular14">
             <Selector>
                 {list}
             </Selector>
