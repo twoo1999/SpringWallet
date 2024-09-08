@@ -2,7 +2,7 @@ import {BorderlessInput, InputBlock, ModalBack} from "../../../common/commonStyl
 import {useEffect, useRef, useState} from "react";
 import {TypeDropdown} from "./TypeDropDown";
 
-export function TypeInput(){
+export function TypeInput({setDataHandler}){
     const [dropView, setDropView] = useState(false);
     const [type, setType] = useState("");
     const menuRef = useRef();
@@ -11,6 +11,7 @@ export function TypeInput(){
     }
     const selectTypeHandler = (item)=>{
         setType(item);
+        setDataHandler("type", item);
         setDropView(!dropView);
     }
     useEffect(() => {
@@ -32,8 +33,6 @@ export function TypeInput(){
                 {
                     dropView &&
                     <TypeDropdown selectTypeHandler={selectTypeHandler}></TypeDropdown>
-
-
                 }
 
             </InputBlock>

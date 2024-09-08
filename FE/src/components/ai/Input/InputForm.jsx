@@ -8,10 +8,19 @@ import {useEffect, useState} from "react";
 
 export function InputForm() {
     const [data, setData] = useState({
-        start: 1,
-        end: 1,
+        start: null,
+        end: null,
         type: null,
     });
+
+    const setDataHandler = (key, val)=>{
+        setData((prevState)=>{
+            return {...prevState, [key]: val}
+        });
+        console.log(data);
+
+    }
+
     const [btnAble, setBtnAble] = useState(true);
 
     useEffect(() => {
@@ -25,9 +34,9 @@ export function InputForm() {
     return (
         <>
             <InputTable>
-                <DateInput type='Start'></DateInput>
-                <DateInput type='End'></DateInput>
-                <TypeInput></TypeInput>
+                <DateInput type='start' setDataHandler={setDataHandler}></DateInput>
+                <DateInput type='end' setDataHandler={setDataHandler}></DateInput>
+                <TypeInput setDataHandler={setDataHandler}></TypeInput>
                 <IconButton disabled={btnAble}>
                     <Analyze fill={btnAble ? "lightgray" : "black"}></Analyze>
                 </IconButton>
