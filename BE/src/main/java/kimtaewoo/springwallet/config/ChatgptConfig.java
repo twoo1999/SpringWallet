@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class ChatgptConfig{
 
-    @Value("${openai.secret-key}")
+    @Value("${openai.secret_key}")
     private String secretKey;
 
     @Bean
