@@ -4,8 +4,10 @@ import jakarta.persistence.EntityManager;
 import kimtaewoo.springwallet.domain.Category;
 import kimtaewoo.springwallet.domain.Member;
 import kimtaewoo.springwallet.domain.Record;
+import kimtaewoo.springwallet.dto.ai.AnalysisRecordDto;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,6 +28,29 @@ public class JpaRecordRepository implements RecordRepository {
         for (Record r : recordList) {
             em.remove(r);
         }
+    }
+
+    @Override
+    public List<AnalysisRecordDto> findByTimestampRangeAndType(UUID id, LocalDate start, LocalDate end, String type) {
+        if (type.equals("revenue")) {
+            return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.user_id = :id and r.timestamp >= :start and r.timestamp <= :end and r.amount > 0", AnalysisRecordDto.class
+                    )
+                    .setParameter("id", id)
+                    .setParameter("start", start)
+                    .setParameter("end", end)
+                    .getResultList();
+        } else if (type.equals("expense")) {
+            return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.user_id = :id and r.timestamp >= :start and r.timestamp <= :end and r.amount < 0", AnalysisRecordDto.class)
+                    .setParameter("id", id)
+                    .setParameter("start", start)
+                    .setParameter("end", end)
+                    .getResultList();
+        }
+        return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.user_id = :id and r.timestamp >= :start and r.timestamp <= :end", AnalysisRecordDto.class)
+                .setParameter("id", id)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .getResultList();
     }
     @Override
     public Record save(Record record) {
