@@ -40,6 +40,13 @@ public class GeminiService implements AiService {
         return analysis;
     }
 
+    @Override
+    public List<Analysis> getAnalysisList(){
+        UUID uid = UUID.fromString("45dd282a-1922-4104-a3bd-44c8afbbd0d0");
+        return analysisRepository.findAllByUserId(uid);
+    }
+
+
 
 
 }
