@@ -1,5 +1,6 @@
 package kimtaewoo.springwallet.Service;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kimtaewoo.springwallet.domain.Analysis;
 import kimtaewoo.springwallet.domain.Record;
 import kimtaewoo.springwallet.domain.enumClass.analysisType;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -60,6 +62,21 @@ public class GeminiService implements AiService {
         SseEmitter emitter = new SseEmitter();
         return emitterRepository.save(uid, emitter);
     }
+
+    @Override
+    public void sendEvent(UUID uid, String data) {
+        SseEmitter emitter = emitterRepository.getEmitterByUserId(uid);
+        if (emitter != null) {
+            try {
+                emitter.send(SseEmitter.event().id(String.valueOf(uid)).name(data));
+            } catch (IOException e) {
+                emitterRepository.delete(uid);
+                emitter.completeWithError(e);
+            }
+        }
+    }
+
+
 
 
 

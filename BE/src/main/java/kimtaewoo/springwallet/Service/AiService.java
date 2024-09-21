@@ -1,5 +1,6 @@
 package kimtaewoo.springwallet.Service;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kimtaewoo.springwallet.domain.Analysis;
 import kimtaewoo.springwallet.dto.ai.AiAnalysisReqDto;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -15,4 +16,6 @@ public interface AiService {
     SseEmitter getEmitter(UUID uid);
 
     SseEmitter createEmitter(UUID uid);
+
+    void sendEvent(UUID uuid, String data);
 }
