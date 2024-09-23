@@ -24,7 +24,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
-    private static final String[] NO_CHECK_URL = {"/api/auth/google", "/api/auth/accessToken", "/api/ai/gemini", "/api/ai/generateStream", "/api/ai"};
+ㄲ    private static final String[] NO_CHECK_URL = {"/api/auth/google", "/api/auth/accessToken", "/api/ai/gemini", "/api/ai/generateStream", "/api/ai", "/api/ai/emitter"};
 
     private final AuthUtil authUtil;
     private final MemberRepository memberRepository;

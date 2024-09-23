@@ -33,6 +33,7 @@ public class AiController {
     @PostMapping("/api/ai/gemini")
     @ResponseBody
     public Analysis gemini(@RequestBody AiAnalysisReqDto req) {
+        System.out.println("분석 시작");
         Analysis re = aiService.analysis(req);
         return re;
     }
@@ -44,10 +45,11 @@ public class AiController {
     }
 
 
-//    @PostMapping(value = "/api/ai/emitter", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-//    public SseEmitter create() {
-////        return aiService.createEmitter(uid);
-//    }
+    @GetMapping(value = "/api/ai/emitter", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter create() {
+        System.out.println("sse 생성");
+        return aiService.createEmitter();
+    }
 //
 //    @PostMapping(value = "/api/ai/emitter", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 //    public SseEmitter getEmitter() {

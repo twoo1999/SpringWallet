@@ -15,7 +15,7 @@ public interface AiService {
 
     SseEmitter getEmitter(UUID uid);
 
-    SseEmitter createEmitter(UUID uid);
+    SseEmitter createEmitter();
 
     void sendEvent(UUID uuid, String data);
 }

@@ -12,6 +12,7 @@ import kimtaewoo.springwallet.repository.RecordRepository;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -19,6 +20,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 
 @Service
 public class GeminiService implements AiService {
@@ -42,6 +45,7 @@ public class GeminiService implements AiService {
 
         String result = chatModel.call(recordData + "분석해줘");
         Analysis analysis = analysisRepository.save(Analysis.toEntity(uid, req.getStart(), req.getEnd(), result));
+        this.sendEvent(uid, result);
 
         return analysis;
     }
@@ -58,19 +62,36 @@ public class GeminiService implements AiService {
     }
 
     @Override
-    public SseEmitter createEmitter(UUID uid) {
+    public SseEmitter createEmitter() {
+        UUID uid = UUID.fromString("45dd282a-1922-4104-a3bd-44c8afbbd0d0");
         SseEmitter emitter = new SseEmitter();
+        emitter.onCompletion(() -> emitterRepository.deleteById(uid));
+        try {
+            emitter.send(SseEmitter.event()
+                .id(String.valueOf(uid))
+                .data("연결"));
+        } catch (IOException e) {
+            emitterRepository.deleteById(uid);
+            emitter.completeWithError(e);
+        }
         return emitterRepository.save(uid, emitter);
     }
+
+
+
 
     @Override
     public void sendEvent(UUID uid, String data) {
         SseEmitter emitter = emitterRepository.getEmitterByUserId(uid);
         if (emitter != null) {
             try {
-                emitter.send(SseEmitter.event().id(String.valueOf(uid)).name(data));
+                System.out.println("데이터 전송");
+                emitter.send(SseEmitter.event()
+                        .id(String.valueOf(uid))
+                        .name("connect")
+                        .data(data ));
             } catch (IOException e) {
-                emitterRepository.delete(uid);
+                emitterRepository.deleteById(uid);
                 emitter.completeWithError(e);
             }
         }

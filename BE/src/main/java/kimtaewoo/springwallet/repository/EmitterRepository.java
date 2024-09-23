@@ -15,7 +15,7 @@ public class EmitterRepository {
         return emitter;
     }
 
-    public void delete(UUID uuid) {
+    public void deleteById(UUID uuid) {
         emitterMap.remove(uuid);
     }
 
