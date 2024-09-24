@@ -23,9 +23,9 @@ export function InputForm() {
 
     useEffect(() => {
         const flag = Object.values(data).every(val => val != null);
-        console.log(flag)
         if(flag) setBtnAble(false)
         else setBtnAble(true);
+        console.log(data)
     }, [data]);
 
     const clickPostBtnHandler = ()=>{
@@ -35,7 +35,7 @@ export function InputForm() {
         }
 
         postApi(`${process.env.REACT_APP_API_URL}/ai/gemini`, data); //
-
+        setData(initValue);
 
 
         // console.log(data);
@@ -48,9 +48,9 @@ export function InputForm() {
     return (
         <>
             <InputTable>
-                <DateInput type='Start' setDataHandler={setDataHandler}></DateInput>
-                <DateInput type='End' setDataHandler={setDataHandler}></DateInput>
-                <TypeInput setDataHandler={setDataHandler}></TypeInput>
+                <DateInput type='Start' value={data.start} setDataHandler={setDataHandler}></DateInput>
+                <DateInput type='End' value={data.end} setDataHandler={setDataHandler}></DateInput>
+                <TypeInput value={data.type} setDataHandler={setDataHandler}></TypeInput>
                 <IconButton onClick={clickPostBtnHandler} disabled={btnAble}>
                     <Analyze fill={btnAble ? "lightgray" : "black"}></Analyze>
                 </IconButton>
