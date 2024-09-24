@@ -4,14 +4,16 @@ import {ReactComponent as Analyze} from "../../../assets/Analyze.svg";
 import {TypeInput} from "./TypeInput";
 import {DateInput} from "./DateInput";
 import {useEffect, useState} from "react";
+import {postApi} from "../../../axiosIntercepter";
 
 
 export function InputForm() {
-    const [data, setData] = useState({
+    const initValue = {
         start: null,
         end: null,
         type: null,
-    });
+    };
+    const [data, setData] = useState(initValue);
     const [btnAble, setBtnAble] = useState(true);
     const setDataHandler = (key, val)=>{
         setData((prevState)=>{
@@ -31,6 +33,10 @@ export function InputForm() {
             alert("시작 날짜는 끝 날짜보다 앞서야 합니다. 다시 선택해 주세요.");
             return;
         }
+
+        postApi(`${process.env.REACT_APP_API_URL}/ai/gemini`, data); //
+
+
 
         // console.log(data);
         // post 버튼
