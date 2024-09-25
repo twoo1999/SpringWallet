@@ -7,7 +7,7 @@ export function DateInput({type, setDataHandler, value}){
         <InputBlock>
             <span className="Regular12 Gray02">{type}</span>
             <BorderlessInput id="timestamp" name={type} type='date' className="Bold16 Black"
-                             onChange={(e) => setDataHandler(type.toLowerCase(), e.target.value)}
+                             onChange={(e) => !setDataHandler || setDataHandler(type.toLowerCase(), e.target.value)}
                              value={value||""}>
             </BorderlessInput>
 

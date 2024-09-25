@@ -122,3 +122,38 @@ export const ListWrapper = styled.div`
     overflow-y: auto;
 `;
 
+export const ModalPage = styled(FlexColumnDiv)`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 5rem;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: center;
+    border-radius: 16px;
+    width: 70rem;
+`;
+
+export const MemoInput = styled.textarea`
+    width: 100%;
+    height: 400px;
+    resize: none;
+    background-color: white;
+    border: none;
+    padding: 2rem;
+    box-sizing: border-box;
+    border-radius: 16px;
+    border: 2px solid black;
+`;
+
+export const StyledBtn = styled.button`
+    width: 100px;
+    height: 34px;
+    background-color: ${props=>props.bgColor};
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+`;
