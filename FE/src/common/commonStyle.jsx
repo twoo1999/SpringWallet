@@ -74,3 +74,34 @@ export const ModalBackBlur = styled.div`
 export const ClickableSpan = styled.span`
     cursor: pointer;
 `;
+
+export const FlexColumnDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+export const FlexRowDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+export const ListBlock = styled(FlexColumnDiv)`
+    background-color: white;
+    border-radius: 16px;
+    padding: 16px;
+    height: 100%;
+    box-sizing: border-box;
+    border: 2px solid #666666;
+`;
+
+export const ListHeader = styled(FlexRowDiv)`
+    width: 100%;
+    justify-content: space-between;
+    padding: 16px;
+    box-sizing: border-box;
+    border-bottom: 2px solid #9F9F9F;
+`;
+
+export const DynamicSpan = styled.span`
+    width: ${(props) => props.width || "10px"};
+    text-align: ${(props) => props.side || "left"};
+`;
