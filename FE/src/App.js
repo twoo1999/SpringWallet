@@ -55,10 +55,11 @@ function App() {
                         <Routes>
                             <Route path="/login" element={<SignIn></SignIn>}></Route>
                             <Route path="/loading" element={<Loading/>}></Route>
+                            <Route path="/AI" element={<Ai/>}></Route>
                             <Route element={<PrivateRoute />}>
                                 <Route path="/" element={<div/>}></Route>
                                 <Route path="/record/*" element={<Record></Record>}></Route>
-                                <Route path="/AI" element={<Ai/>}></Route>
+                                {/*<Route path="/AI" element={<Ai/>}></Route>*/}
                                 <Route path="/overview" element={<Preparing/>}></Route>
                                 <Route path="/fast-record" element={<Preparing/>}></Route>
                                 <Route path="/goals" element={<Preparing/>}></Route>
