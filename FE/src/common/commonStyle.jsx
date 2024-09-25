@@ -105,3 +105,20 @@ export const DynamicSpan = styled.span`
     width: ${(props) => props.width || "10px"};
     text-align: ${(props) => props.side || "left"};
 `;
+
+export const RowWrapper = styled(FlexRowDiv)`
+    width: 100%;
+    justify-content: space-between;
+    padding: 16px;
+    box-sizing: border-box;
+    
+    cursor: pointer;
+`;
+
+export const ListWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+`;
+
