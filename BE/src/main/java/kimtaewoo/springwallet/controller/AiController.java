@@ -2,6 +2,7 @@ package kimtaewoo.springwallet.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kimtaewoo.springwallet.Service.AiService;
+import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Analysis;
 import kimtaewoo.springwallet.dto.ai.AiAnalysisReqDto;
 import org.springframework.ai.chat.client.ChatClient;
@@ -32,16 +33,16 @@ public class AiController {
 
     @PostMapping("/api/ai/gemini")
     @ResponseBody
-    public Analysis gemini(@RequestBody AiAnalysisReqDto req) {
+    public Analysis gemini(AccessTokenPayload ap, @RequestBody AiAnalysisReqDto req) {
         System.out.println("분석 시작");
-        Analysis re = aiService.analysis(req);
+        Analysis re = aiService.analysis(ap, req);
         return re;
     }
 
     @GetMapping("/api/ai")
     @ResponseBody
-    public List<Analysis> getAnalysisList() {
-        return aiService.getAnalysisList();
+    public List<Analysis> getAnalysisList(AccessTokenPayload ap) {
+        return aiService.getAnalysisList(ap);
     }
 
 
