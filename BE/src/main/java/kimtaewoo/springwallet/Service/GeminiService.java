@@ -1,6 +1,7 @@
 package kimtaewoo.springwallet.Service;
 
 import jakarta.servlet.http.HttpServletResponse;
+import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Analysis;
 import kimtaewoo.springwallet.domain.Record;
 import kimtaewoo.springwallet.domain.enumClass.analysisType;
@@ -38,22 +39,22 @@ public class GeminiService implements AiService {
     }
 
     @Override
-    public Analysis analysis(AiAnalysisReqDto req){
-        UUID uid = UUID.fromString("45dd282a-1922-4104-a3bd-44c8afbbd0d0");
-        List<AnalysisRecordDto> records = recordRepository.findByTimestampRangeAndType(uid, req.getStart(), req.getEnd(), req.getType());
+    public Analysis analysis(AccessTokenPayload ap, AiAnalysisReqDto req){
+//        UUID uid = UUID.fromString("45dd282a-1922-4104-a3bd-44c8afbbd0d0");
+        List<AnalysisRecordDto> records = recordRepository.findByTimestampRangeAndType(ap.getId(), req.getStart(), req.getEnd(), req.getType());
         String recordData = records.stream().map(x -> x.toString()).collect(Collectors.joining(","));
 
         String result = chatModel.call(recordData + "분석해줘");
-        Analysis analysis = analysisRepository.save(Analysis.toEntity(uid, req.getStart(), req.getEnd(), result));
-        this.sendEvent(uid, result);
+        Analysis analysis = analysisRepository.save(Analysis.toEntity(ap.getId(), req.getStart(), req.getEnd(), req.getType(), result));
+        this.sendEvent(ap.getId(), result);
 
         return analysis;
     }
 
     @Override
-    public List<Analysis> getAnalysisList(){
-        UUID uid = UUID.fromString("45dd282a-1922-4104-a3bd-44c8afbbd0d0");
-        return analysisRepository.findAllByUserId(uid);
+    public List<Analysis> getAnalysisList(AccessTokenPayload ap){
+//        UUID uid = UUID.fromString("45dd282a-1922-4104-a3bd-44c8afbbd0d0");
+        return analysisRepository.findAllByUserId(ap.getId());
     }
 
     @Override
