@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {AnalysisDataModal} from "./AnalysisDataModal";
 import {getApi} from "../../../axiosIntercepter";
 
-export function AnalysisList(){
+export function AnalysisList({data}){
     // const data = [
     //     {
     //         "id": 1,
@@ -28,29 +28,19 @@ export function AnalysisList(){
     //     }
     //
     // ]
-    const [data, setData] = useState();
     const [modalView, setModalView] = useState(false);
     const [modalData, setModalData] = useState("");
     const closeModalHandler = ()=>{
         setModalView(!modalView);
     }
     const clickListHandler = (e)=>{
-        // console.log(data.filter(d=>{
-        //     return d.id === Number(e.currentTarget.getAttribute('id'));
-        // })[0])
         setModalData(data.filter(d=>{
             return d.id === Number(e.currentTarget.getAttribute('id'));
         })[0]);
         setModalView(!modalView);
     }
-    useEffect(async () => {
-        const d = await getApi(`${process.env.REACT_APP_API_URL}/ai`)
-        setData(d);
 
-    }, []);
-
-
-    const list = data ? data.map(x=>{
+    const list =  data.map(x=>{
         const start =`${x.start_date[0]}.${String(x.start_date[1]).padStart(2, '0')}.${String(x.start_date[2]).padStart(2, '0')}`;
         const end =`${x.end_date[0]}.${String(x.end_date[1]).padStart(2, '0')}.${String(x.end_date[2]).padStart(2, '0')}`;
         return <RowWrapper id={x.id} onClick={clickListHandler}>
@@ -58,7 +48,7 @@ export function AnalysisList(){
             <DynamicSpan width="150px" side="center" className="ExtraBold18">{end}</DynamicSpan>
             <DynamicSpan width="150px" side="center" className="ExtraBold18">{x.type}</DynamicSpan>
         </RowWrapper>
-    }) : [];
+    });
     return(
         <>
             <ListWrapper>

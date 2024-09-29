@@ -2,14 +2,14 @@ import {ListBlock, ListHeader} from "../../../common/commonStyle";
 import {AiListHeader} from "./AiListHeader";
 import {AnalysisList} from "./AnalysisList";
 
-export function AiViewer(){
+export function AiViewer({data}){
 
     return (
         <>
 
             <ListBlock>
                 <AiListHeader></AiListHeader>
-                <AnalysisList></AnalysisList>
+                <AnalysisList data={data}></AnalysisList>
             </ListBlock>
 
         </>

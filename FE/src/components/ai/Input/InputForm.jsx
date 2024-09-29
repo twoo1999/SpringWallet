@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import {IconButton, InputTable} from "../../../common/commonStyle";
 import {ReactComponent as Analyze} from "../../../assets/Analyze.svg";
+import {ReactComponent as Loading} from "../../../assets/loading.svg";
 import {TypeInput} from "./TypeInput";
 import {DateInput} from "./DateInput";
 import {useEffect, useState} from "react";
 import {postApi} from "../../../axiosIntercepter";
+import {findByAltText} from "@testing-library/react";
 
 
-export function InputForm() {
+export function InputForm({renewAnalysis}) {
     const initValue = {
         start: null,
         end: null,
@@ -15,6 +17,7 @@ export function InputForm() {
     };
     const [data, setData] = useState(initValue);
     const [btnAble, setBtnAble] = useState(true);
+    const [sse, setSse] = useState();
     const setDataHandler = (key, val)=>{
         setData((prevState)=>{
             return {...prevState, [key]: val}
@@ -25,7 +28,6 @@ export function InputForm() {
         const flag = Object.values(data).every(val => val != null);
         if(flag) setBtnAble(false)
         else setBtnAble(true);
-        console.log(data)
     }, [data]);
 
     const clickPostBtnHandler = ()=>{
@@ -34,6 +36,16 @@ export function InputForm() {
             return;
         }
 
+        const s= new EventSource(`${process.env.REACT_APP_API_URL}/ai/emitter`, { withCredentials: true });
+        s.addEventListener('data', (e)=>{
+            // const {data: receivedConnectData} = e;
+            alert("분석이 끝났습니다.");
+            renewAnalysis();
+            s.close();
+            setSse();
+        })
+
+        setSse(s);
         postApi(`${process.env.REACT_APP_API_URL}/ai/gemini`, data); //
         setData(initValue);
 
@@ -51,8 +63,12 @@ export function InputForm() {
                 <DateInput type='Start' value={data.start} setDataHandler={setDataHandler}></DateInput>
                 <DateInput type='End' value={data.end} setDataHandler={setDataHandler}></DateInput>
                 <TypeInput value={data.type} setDataHandler={setDataHandler}></TypeInput>
-                <IconButton onClick={clickPostBtnHandler} disabled={btnAble}>
-                    <Analyze fill={btnAble ? "lightgray" : "black"}></Analyze>
+                <IconButton disabled={btnAble}>
+                    {
+                        !sse ? <Analyze onClick={clickPostBtnHandler}  fill={btnAble ? "lightgray" : "black"}></Analyze>
+                            : <Loading></Loading>
+                    }
+
                 </IconButton>
             </InputTable>
         </>
