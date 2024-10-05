@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import kimtaewoo.springwallet.domain.enumClass.ActiveStatus;
-import kimtaewoo.springwallet.domain.enumClass.CategoryType;
 import lombok.*;
 
 import java.time.LocalDate;

@@ -5,20 +5,16 @@ import kimtaewoo.springwallet.Service.AiService;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Analysis;
 import kimtaewoo.springwallet.dto.ai.AiAnalysisReqDto;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import reactor.core.publisher.Flux;
 
-import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -34,7 +30,6 @@ public class AiController {
     @PostMapping("/api/ai/gemini")
     @ResponseBody
     public Analysis gemini(AccessTokenPayload ap, @RequestBody AiAnalysisReqDto req) {
-        System.out.println("분석 시작");
         Analysis re = aiService.analysis(ap, req);
         return re;
     }
@@ -47,33 +42,21 @@ public class AiController {
 
 
     @GetMapping(value = "/api/ai/emitter", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter create() {
-        System.out.println("sse 생성");
-        return aiService.createEmitter();
+    public SseEmitter create(AccessTokenPayload ap) {
+        return aiService.createEmitter(ap);
     }
-//
-//    @PostMapping(value = "/api/ai/emitter", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-//    public SseEmitter getEmitter() {
-////        return aiService.getEmitter(uid);
-//    }
 
-//    private final VertexAiGeminiChatModel chatModel;
-//
-//    @Autowired
-//    public AiController(VertexAiGeminiChatModel chatModel){
-//        this.chatModel = chatModel;
-//    }
-//
-//
-//    @GetMapping("/api/ai/generateStream")
-//    @ResponseBody
-//    public Flux<String> generateStream(@RequestParam(value = "message", defaultValue = "한국에 사는 김태우씨에 대해서 설명해줘?") String message) {
-////        System.out.println("분석");
-//        Prompt prompt = new Prompt(new UserMessage(message));
-////        Prompt prompt = getPr
-//        return chatModel.stream("Who are you")
-//                .filter(chatReponse->chatReponse);
-////        return chatModel.stream(prompt);
-//    }
+    @GetMapping(value = "/api/ai/emitter/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter isExist(@PathVariable("id") UUID id, AccessTokenPayload ap) {
+        Optional<SseEmitter> e = aiService.getEmitter(id);
+        if (e.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found");
+        } else{
+            return aiService.createEmitter(ap);
+        }
+
+    }
+
+
 
 }
