@@ -18,7 +18,7 @@ api.interceptors.response.use(
         }
         if(response){
             const data= response.data;
-            if(data.code === "AUTH-002"){
+            if(!data && data.code === "AUTH-002"){
                 await axios({
                     method: "GET",
                     url: `${process.env.REACT_APP_API_URL}/auth/accessToken`,

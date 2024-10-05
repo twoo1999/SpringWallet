@@ -40,6 +40,7 @@ export function Ai(){
         setAnalysis(d);
     }
 
+
     useEffect( () => {
         getAnalysis();
     }, []);
