@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kimtaewoo.springwallet.Service.OauthService;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
-import kimtaewoo.springwallet.dto.LoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.UUID;
 
 @Controller
 public class OauthController {
@@ -35,24 +36,9 @@ public class OauthController {
     }
     @GetMapping("/api/auth/google")
     @ResponseBody
-    public LoginDto login(HttpServletResponse res, @RequestParam("code") String code) throws JsonProcessingException {
-        String[] tokens = oauthService.login(code);
-        ResponseCookie acc = ResponseCookie.from("AccessToken", tokens[0])
-                .path("/")
-                .httpOnly(true)
-                .secure(true)
-                .maxAge(60*60)
-                .build();
-        ResponseCookie ref = ResponseCookie.from("RefreshToken", tokens[1])
-                .path("/")
-                .httpOnly(true)
-                .secure(true)
-                .maxAge(60*60*24)
-                .build();
-        res.addHeader("Set-Cookie", acc.toString());
-        res.addHeader("Set-Cookie", ref.toString());
-        LoginDto response = new LoginDto();
-        return response;
+    public UUID login(HttpServletResponse res, @RequestParam("code") String code) throws JsonProcessingException {
+        UUID uid = oauthService.login(res, code);
+        return uid;
     }
 
 
