@@ -19,8 +19,9 @@ export function Loading(){
     useEffect(() => {
         const GoogleLogin = async () => {
             try{
-                await getApi(`${process.env.REACT_APP_API_URL}/auth/google?code=${code}`);
+                const uid = await getApi(`${process.env.REACT_APP_API_URL}/auth/google?code=${code}`);
                 window.sessionStorage.setItem("jwt", "Google");
+                window.sessionStorage.setItem("uid", uid);
             } catch (err){
                 alert("로그인 실패");
             }
