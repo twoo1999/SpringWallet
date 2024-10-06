@@ -3,6 +3,7 @@ import {AiListHeader} from "./AiListHeader";
 import {AnalysisList} from "./AnalysisList";
 import styled from "styled-components";
 import {TypeSelector} from "./TypeSelector";
+import {useState} from "react";
 
 const FilteringWrapper = styled.div`
     display: flex;
@@ -10,11 +11,14 @@ const FilteringWrapper = styled.div`
     justify-content: space-between;
 `;
 export function AiViewer({data}){
-
+    const [type, setType] = useState("All");
+    const typeBtnClickHandler = (type)=>{
+        setType(type);
+    }
     return (
         <>
             <FilteringWrapper>
-                <TypeSelector></TypeSelector>
+                <TypeSelector type={type} clickHandler={typeBtnClickHandler}></TypeSelector>
                 <>asd</>
             </FilteringWrapper>
             <ListBlock>

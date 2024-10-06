@@ -164,6 +164,6 @@ export const StyledBtn = styled.button`
 
 export const SpanBtn = styled.span`
     border: none;
-    color: ${props=>props.color};
+    color: ${props=>props.color || "black"};
     cursor: pointer;
 `;
