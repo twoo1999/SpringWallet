@@ -87,6 +87,7 @@ export const FlexRowDiv = styled.div`
 
 export const FlexRowDivByGap = styled(FlexRowDiv)`
     gap: ${props=>props.gap};
+    align-items: ${props=>props.align?props.align : "center"};
 `;
 export const ListBlock = styled(FlexColumnDiv)`
     background-color: white;

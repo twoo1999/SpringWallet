@@ -4,6 +4,7 @@ import {AnalysisList} from "./AnalysisList";
 import styled from "styled-components";
 import {TypeSelector} from "./TypeSelector";
 import {useState} from "react";
+import {DateSelector} from "./DateSelector";
 
 const FilteringWrapper = styled.div`
     display: flex;
@@ -12,6 +13,7 @@ const FilteringWrapper = styled.div`
 `;
 export function AiViewer({data}){
     const [type, setType] = useState("All");
+    const [date, setDate] = useState(new Date());
     const typeBtnClickHandler = (type)=>{
         setType(type);
     }
@@ -19,7 +21,7 @@ export function AiViewer({data}){
         <>
             <FilteringWrapper>
                 <TypeSelector type={type} clickHandler={typeBtnClickHandler}></TypeSelector>
-                <>asd</>
+                <DateSelector date={date}></DateSelector>
             </FilteringWrapper>
             <ListBlock>
                 <AiListHeader></AiListHeader>

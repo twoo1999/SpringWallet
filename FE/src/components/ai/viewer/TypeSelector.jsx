@@ -1,4 +1,4 @@
-import {FlexRowDiv, FlexRowDivByGap, SpanBtn} from "../../../common/commonStyle";
+import {FlexRowDivByGap, SpanBtn} from "../../../common/commonStyle";
 
 export function TypeSelector({type, clickHandler}){
     const types = ["All", "Revenue", "Expense"];
