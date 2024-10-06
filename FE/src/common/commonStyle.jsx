@@ -84,6 +84,10 @@ export const FlexRowDiv = styled.div`
     display: flex;
     flex-direction: row;
 `;
+
+export const FlexRowDivByGap = styled(FlexRowDiv)`
+    gap: ${props=>props.gap};
+`;
 export const ListBlock = styled(FlexColumnDiv)`
     background-color: white;
     border-radius: 16px;
@@ -155,5 +159,11 @@ export const StyledBtn = styled.button`
     border: none;
     border-radius: 4px;
     color: white;
+    cursor: pointer;
+`;
+
+export const SpanBtn = styled.span`
+    border: none;
+    color: ${props=>props.color};
     cursor: pointer;
 `;
