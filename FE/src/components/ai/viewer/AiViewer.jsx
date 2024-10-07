@@ -20,14 +20,23 @@ export function AiViewer({data}){
     const prevBtnClickHandler = ()=>{
         setDate(date - 1);
     }
+    const dateSelectorChangeHandler = (d)=>{
+        console.log(d)
+        setDate(d);
+    }
     const typeBtnClickHandler = (type)=>{
         setType(type);
+    }
+    const dateHandler = {
+        prev : prevBtnClickHandler,
+        next : nextBtnClickHandler,
+        detail : dateSelectorChangeHandler
     }
     return (
         <>
             <FilteringWrapper>
                 <TypeSelector type={type} clickHandler={typeBtnClickHandler}></TypeSelector>
-                <DateSelector date={date} clickNextHandler={nextBtnClickHandler} clickPrevHandler={prevBtnClickHandler}></DateSelector>
+                <DateSelector date={date} dateHandler={dateHandler}></DateSelector>
             </FilteringWrapper>
             <ListBlock>
                 <AiListHeader></AiListHeader>
