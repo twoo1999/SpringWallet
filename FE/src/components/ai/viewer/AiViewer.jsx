@@ -13,7 +13,13 @@ const FilteringWrapper = styled.div`
 `;
 export function AiViewer({data}){
     const [type, setType] = useState("All");
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date().getFullYear()*12 + new Date().getMonth());
+    const nextBtnClickHandler = ()=>{
+        setDate(date + 1);
+    }
+    const prevBtnClickHandler = ()=>{
+        setDate(date - 1);
+    }
     const typeBtnClickHandler = (type)=>{
         setType(type);
     }
@@ -21,7 +27,7 @@ export function AiViewer({data}){
         <>
             <FilteringWrapper>
                 <TypeSelector type={type} clickHandler={typeBtnClickHandler}></TypeSelector>
-                <DateSelector date={date}></DateSelector>
+                <DateSelector date={date} clickNextHandler={nextBtnClickHandler} clickPrevHandler={prevBtnClickHandler}></DateSelector>
             </FilteringWrapper>
             <ListBlock>
                 <AiListHeader></AiListHeader>
