@@ -6,7 +6,6 @@ export function DateSelectorModal({onChangeDetail}){
     const onChangeDate = (e)=>{
         const d = e.target.value;
         const sd = d.split("-");
-        console.log(sd)
         setDate(Number(sd[0]) * 12 + Number(sd[1])-1);
     }
 

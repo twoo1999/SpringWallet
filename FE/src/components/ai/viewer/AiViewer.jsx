@@ -3,7 +3,7 @@ import {AiListHeader} from "./AiListHeader";
 import {AnalysisList} from "./AnalysisList";
 import styled from "styled-components";
 import {TypeSelector} from "./TypeSelector";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {DateSelector} from "./DateSelector";
 
 const FilteringWrapper = styled.div`
@@ -14,6 +14,7 @@ const FilteringWrapper = styled.div`
 export function AiViewer({data}){
     const [type, setType] = useState("All");
     const [date, setDate] = useState(new Date().getFullYear()*12 + new Date().getMonth());
+    const [analysis, setAnalysis] = useState(data);
     const nextBtnClickHandler = ()=>{
         setDate(date + 1);
     }
@@ -21,7 +22,6 @@ export function AiViewer({data}){
         setDate(date - 1);
     }
     const dateSelectorChangeHandler = (d)=>{
-        console.log(d)
         setDate(d);
     }
     const typeBtnClickHandler = (type)=>{
@@ -32,6 +32,24 @@ export function AiViewer({data}){
         next : nextBtnClickHandler,
         detail : dateSelectorChangeHandler
     }
+
+    useEffect(() => {
+        const filteredData = data.filter(d=>{
+            const start =  d.start_date[0] * 12 + d.start_date[1] -1;
+            const end = d.end_date[0] * 12 + d.end_date[1] - 1;
+            if(end === start){
+                if(start === date){
+                    return true;
+                }
+            } else{
+                if(start <= date && end >= date){
+                    return true;
+                }
+            }
+            return false;
+        })
+        setAnalysis(filteredData);
+    }, [date]);
     return (
         <>
             <FilteringWrapper>
@@ -40,7 +58,7 @@ export function AiViewer({data}){
             </FilteringWrapper>
             <ListBlock>
                 <AiListHeader></AiListHeader>
-                <AnalysisList data={data}></AnalysisList>
+                <AnalysisList data={analysis}></AnalysisList>
             </ListBlock>
 
         </>
