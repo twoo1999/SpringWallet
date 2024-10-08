@@ -16,16 +16,22 @@ api.interceptors.response.use(
         if(code === "ERR_NETWORK"){
             window.location.href = "/error";
         }
+
         if(response){
             const data= response.data;
-            if(!data && data.code === "AUTH-002"){
-                await axios({
-                    method: "GET",
-                    url: `${process.env.REACT_APP_API_URL}/auth/accessToken`,
-                    withCredentials:true,
-                })
+            if(data){
+                if (data.code === "AUTH-002") {
+                    await axios({
+                        method: "GET",
+                        url: `${process.env.REACT_APP_API_URL}/auth/accessToken`,
+                        withCredentials:true,
+                    })
+                    return axios(config);
+                } else if (data.code === "AUTH-003") {
 
-                return axios(config);
+                    alert("로그인 세션이 만료됐습니다. 다시 로그인해주세요.")
+                    window.location.href = "/login";
+                }
             }
         }
 
