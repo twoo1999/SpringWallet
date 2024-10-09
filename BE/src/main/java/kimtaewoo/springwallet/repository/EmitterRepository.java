@@ -9,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class EmitterRepository {
     static Map<UUID, SseEmitter> emitterMap = new ConcurrentHashMap<>();
-
     public SseEmitter save(UUID uid, SseEmitter emitter) {
         emitterMap.put(uid, emitter);
         return emitter;
