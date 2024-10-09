@@ -30,5 +30,6 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private SocialType socialtype;
 
+    private int analysis_count;
 
 }
