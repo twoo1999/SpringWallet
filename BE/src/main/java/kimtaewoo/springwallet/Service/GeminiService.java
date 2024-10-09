@@ -3,10 +3,12 @@ package kimtaewoo.springwallet.Service;
 import jakarta.transaction.Transactional;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Analysis;
+import kimtaewoo.springwallet.domain.Member;
 import kimtaewoo.springwallet.dto.ai.AiAnalysisReqDto;
 import kimtaewoo.springwallet.dto.ai.AnalysisRecordDto;
 import kimtaewoo.springwallet.repository.AnalysisRepository;
 import kimtaewoo.springwallet.repository.EmitterRepository;
+import kimtaewoo.springwallet.repository.MemberRepository;
 import kimtaewoo.springwallet.repository.RecordRepository;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +29,14 @@ public class GeminiService implements AiService {
     private final RecordRepository recordRepository;
     private final AnalysisRepository analysisRepository;
     private final EmitterRepository emitterRepository;
+    private final MemberRepository memberRepository;
     @Autowired
-    public GeminiService(VertexAiGeminiChatModel chatModel, RecordRepository recordRepository, AnalysisRepository analysisRepository, EmitterRepository emitterRepository) {
+    public GeminiService(VertexAiGeminiChatModel chatModel, RecordRepository recordRepository, AnalysisRepository analysisRepository, EmitterRepository emitterRepository, MemberRepository memberRepository) {
         this.chatModel = chatModel;
         this.recordRepository = recordRepository;
         this.analysisRepository = analysisRepository;
         this.emitterRepository = emitterRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -43,7 +47,8 @@ public class GeminiService implements AiService {
         Analysis analysis = analysisRepository.save(Analysis.toEntity(ap.getId(), req.getStart(), req.getEnd(), req.getType(), result));
         this.sendEvent(ap.getId());
         this.completeEmitter(ap.getId());
-
+        Member member = memberRepository.findById(ap.getId()).get();
+        member.setAnalysis_count(member.getAnalysis_count()-1);
 
         return analysis;
     }
