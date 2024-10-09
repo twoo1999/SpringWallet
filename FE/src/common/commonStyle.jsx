@@ -26,7 +26,7 @@ export const BorderlessInput = styled.input`
 export const IconButton = styled.button`
     border: none;
     cursor: pointer;
-    background-color: white;
+    background-color: ${props=>props.bgColor ? props.bgColor : "inherit"};
 `;
 
 export const DropdownBlock = styled.div`
@@ -37,7 +37,7 @@ export const DropdownBlock = styled.div`
     transform: translateY(46px);
     padding: 16px 18px;
     border-radius: 8px;
-    width: 120px;
+    width: ${props=>props.width ? props.width : "120px"};
     gap: 16px;
     box-sizing: border-box;
     color: black;
@@ -83,6 +83,11 @@ export const FlexColumnDiv = styled.div`
 export const FlexRowDiv = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: ${props=>props.align?props.align : "center"};
+`;
+
+export const FlexRowDivByGap = styled(FlexRowDiv)`
+    gap: ${props=>props.gap};
 `;
 export const ListBlock = styled(FlexColumnDiv)`
     background-color: white;
@@ -155,5 +160,11 @@ export const StyledBtn = styled.button`
     border: none;
     border-radius: 4px;
     color: white;
+    cursor: pointer;
+`;
+
+export const SpanBtn = styled.span`
+    border: none;
+    color: ${props=>props.color || "black"};
     cursor: pointer;
 `;
