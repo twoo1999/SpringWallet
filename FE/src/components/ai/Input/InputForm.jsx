@@ -1,4 +1,4 @@
-import {IconButton, InputTable} from "../../../common/commonStyle";
+import {FlexRowDivByGap, IconButton, InputTable} from "../../../common/commonStyle";
 import {ReactComponent as Analyze} from "../../../assets/Analyze.svg";
 import {ReactComponent as Loading} from "../../../assets/loading.svg";
 import {TypeInput} from "./TypeInput";
@@ -77,13 +77,17 @@ export function InputForm({renewAnalysis}) {
                 <DateInput type='Start' value={data.start} setDataHandler={setDataHandler}></DateInput>
                 <DateInput type='End' value={data.end} setDataHandler={setDataHandler}></DateInput>
                 <TypeInput value={data.type} setDataHandler={setDataHandler}></TypeInput>
-                <IconButton disabled={btnAble}>
-                    {
+                <FlexRowDivByGap gap="2rem">
+                    <IconButton disabled={btnAble}>
+                        {
                             !sse ? <Analyze onClick={clickPostBtnHandler}  fill={btnAble ? "lightgray" : "black"}></Analyze>
-                            : <Loading></Loading>
-                    }
+                                : <Loading></Loading>
+                        }
 
-                </IconButton>
+                    </IconButton>
+                    <span className="Bold16">(1/5)</span>
+                </FlexRowDivByGap>
+
             </InputTable>
         </>
     )
