@@ -48,4 +48,15 @@ public class MemberRepository {
         }
     }
 
+    public Optional<Integer> findTokenByUserId(UUID uid){
+        try {
+            int remainToken = em.createQuery("select m.analysis_token from Member m where m.id = :uid", Integer.class)
+                    .setParameter("uid", uid)
+                    .getSingleResult();
+            return Optional.ofNullable(remainToken);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+
 }

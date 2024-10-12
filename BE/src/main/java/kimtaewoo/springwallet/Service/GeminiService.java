@@ -48,7 +48,7 @@ public class GeminiService implements AiService {
         this.sendEvent(ap.getId());
         this.completeEmitter(ap.getId());
         Member member = memberRepository.findById(ap.getId()).get();
-        member.setAnalysis_count(member.getAnalysis_count()-1);
+        member.setAnalysis_token(member.getAnalysis_token()-1);
 
         return analysis;
     }
@@ -117,6 +117,11 @@ public class GeminiService implements AiService {
         } else{
             System.out.println("Emitter 없음");
         }
+    }
+
+    @Override
+    public Optional<Integer> getToken(UUID uid){
+        return memberRepository.findTokenByUserId(uid);
     }
 
 
