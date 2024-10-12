@@ -76,7 +76,7 @@ public class OauthService {
                     .name(name)
                     .role(Role.USER)
                     .socialtype(SocialType.GOOGLE)
-                    .analysis_count(5)
+                    .analysis_token(5)
                     .build();
 
             Member newMember = memberRepository.save(member);

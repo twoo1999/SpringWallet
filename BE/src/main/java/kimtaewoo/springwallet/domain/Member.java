@@ -31,6 +31,6 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private SocialType socialtype;
 
-    private int analysis_count;
+    private int analysis_token;
 
 }
