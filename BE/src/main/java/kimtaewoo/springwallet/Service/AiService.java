@@ -19,4 +19,6 @@ public interface AiService {
     SseEmitter createEmitter(AccessTokenPayload ap);
 
     void sendEvent(UUID uuid);
+
+    Optional<Integer> getToken(UUID uid);
 }

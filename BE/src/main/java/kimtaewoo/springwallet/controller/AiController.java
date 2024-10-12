@@ -8,6 +8,7 @@ import kimtaewoo.springwallet.dto.ai.AiAnalysisReqDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -55,6 +56,12 @@ public class AiController {
             return aiService.createEmitter(ap);
         }
 
+    }
+
+    @GetMapping("/api/member/token")
+    public ResponseEntity<Integer> getAnalysisToken(AccessTokenPayload ap){
+        int remainToken = aiService.getToken(ap.getId()).get();
+        return ResponseEntity.ok(remainToken);
     }
 
 
