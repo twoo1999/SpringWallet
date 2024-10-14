@@ -20,5 +20,5 @@ public interface AiService {
 
     void sendEvent(UUID uuid);
 
-    Optional<Integer> getToken(UUID uid);
+    Integer getToken(UUID uid);
 }
