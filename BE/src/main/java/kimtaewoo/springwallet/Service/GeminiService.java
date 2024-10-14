@@ -6,6 +6,8 @@ import kimtaewoo.springwallet.domain.Analysis;
 import kimtaewoo.springwallet.domain.Member;
 import kimtaewoo.springwallet.dto.ai.AiAnalysisReqDto;
 import kimtaewoo.springwallet.dto.ai.AnalysisRecordDto;
+import kimtaewoo.springwallet.exception.CustomException;
+import kimtaewoo.springwallet.exception.ErrorCode;
 import kimtaewoo.springwallet.repository.AnalysisRepository;
 import kimtaewoo.springwallet.repository.EmitterRepository;
 import kimtaewoo.springwallet.repository.MemberRepository;
@@ -45,9 +47,13 @@ public class GeminiService implements AiService {
         String recordData = records.stream().map(x -> x.toString()).collect(Collectors.joining(","));
         String result = chatModel.call(recordData + "분석해줘");
         Analysis analysis = analysisRepository.save(Analysis.toEntity(ap.getId(), req.getStart(), req.getEnd(), req.getType(), result));
-        this.sendEvent(ap.getId());
-        this.completeEmitter(ap.getId());
         Member member = memberRepository.findById(ap.getId()).get();
+        if(member.getAnalysis_token() == 0){
+            emitterRepository.deleteById(ap.getId());
+            throw new CustomException(ErrorCode.NO_REMAIN_TOKEN);
+        }
+        this.sendEvent(ap.getId());
+        emitterRepository.deleteById(ap.getId());
         member.setAnalysis_token(member.getAnalysis_token()-1);
 
         return analysis;
