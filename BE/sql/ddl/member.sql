@@ -4,5 +4,6 @@ create table member(
     name varchar(25),
     role varchar(10),
     socialtype varchar(45),
-    analysis_count int
+    analysis_count int,
+    last_analysis_date date
 );
