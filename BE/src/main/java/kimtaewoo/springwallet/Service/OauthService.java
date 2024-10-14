@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -77,6 +78,7 @@ public class OauthService {
                     .role(Role.USER)
                     .socialtype(SocialType.GOOGLE)
                     .analysis_token(5)
+                    .last_analysis_date(LocalDate.now())
                     .build();
 
             Member newMember = memberRepository.save(member);
