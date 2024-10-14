@@ -4,7 +4,7 @@ import {ReactComponent as Loading} from "../../../assets/loading.svg";
 import {TypeInput} from "./TypeInput";
 import {DateInput} from "./DateInput";
 import {useEffect, useState} from "react";
-import {getApi, postApi} from "../../../axiosIntercepter";
+import {api, getApi, postApi} from "../../../axiosIntercepter";
 
 
 export function InputForm({renewAnalysis}) {
@@ -27,7 +27,6 @@ export function InputForm({renewAnalysis}) {
         const remainToken = await getApi(`${process.env.REACT_APP_API_URL}/member/token`);
         setToken(remainToken);
     }
-
 
     useEffect(() => {
         const flag = Object.values(data).every(val => val != null);
@@ -54,9 +53,6 @@ export function InputForm({renewAnalysis}) {
         }
 
         await renewToken();
-
-
-
     }, []);
     const clickPostBtnHandler = async ()=>{
         if(new Date(data.start) > new Date(data.end)){
@@ -73,17 +69,15 @@ export function InputForm({renewAnalysis}) {
             setSse(false);
             await renewToken();
         })
-
-        postApi(`${process.env.REACT_APP_API_URL}/ai/gemini`, data); //
+        try{
+            await api.post(`${process.env.REACT_APP_API_URL}/ai/gemini`, data); //
+        } catch (err){
+            if(err.code === 'AI-001'){
+                alert("남은 토큰이 없습니다.")
+            }
+        }
         setData(initValue);
-
-
-
     }
-
-
-
-
     return (
         <>
             <InputTable>
@@ -96,7 +90,6 @@ export function InputForm({renewAnalysis}) {
                             !sse ? <Analyze onClick={clickPostBtnHandler}  fill={btnAble||token===0 ? "lightgray" : "black"}></Analyze>
                                 : <Loading></Loading>
                         }
-
                     </IconButton>
                     <span className="Bold16">{token}/5</span>
                 </FlexRowDivByGap>
