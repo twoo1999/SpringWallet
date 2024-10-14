@@ -19,7 +19,7 @@ api.interceptors.response.use(
 
         if(response){
             const data= response.data;
-            if(data){
+            if(data.code){
                 if (data.code === "AUTH-002") {
                     await axios({
                         method: "GET",
@@ -31,6 +31,8 @@ api.interceptors.response.use(
 
                     alert("로그인 세션이 만료됐습니다. 다시 로그인해주세요.")
                     window.location.href = "/login";
+                } else {
+                    return Promise.reject(data);
                 }
             }
         }
@@ -46,12 +48,20 @@ const getApi = async (url)=>{
 
 const postApi = async (url, body)=>{
 
-    const res = await api.post(url, body);
-    const data = res.data;
-    if (data !== undefined) {
-        return data;
+    try{
+        const res = await api.post(url, body);
+        console.log(res)
+        return res;
+    } catch (err){
+        throw new Error(err)
     }
-    return null;
+
+    // if (data !== undefined) {
+    //     return data;
+    // }
+    // return null;
+
+
 }
 
 
