@@ -47,7 +47,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                 return;
             } else{
                 ErrorCode e = ErrorCode.NOT_VALID_TOKEN;
-                ResponseEntity<ErrorResponseEntity> err = ErrorResponseEntity.toResposeEntity(e);
+                //ResponseEntity<ErrorResponseEntity> err = ErrorResponseEntity.toResposeEntity(e);
                 setResponse(res, e);
                 return;
             }
