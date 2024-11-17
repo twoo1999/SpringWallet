@@ -5,6 +5,7 @@ import kimtaewoo.springwallet.Service.AiService;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Analysis;
 import kimtaewoo.springwallet.dto.ai.AiAnalysisReqDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 public class AiController {
     private final AiService aiService;
 
@@ -31,6 +33,7 @@ public class AiController {
     @PostMapping("/api/ai/gemini")
     @ResponseBody
     public Analysis gemini(AccessTokenPayload ap, @RequestBody AiAnalysisReqDto req) {
+        log.info("Info : 분석 요청 ");
         Analysis re = aiService.analysis(ap, req);
         return re;
     }
