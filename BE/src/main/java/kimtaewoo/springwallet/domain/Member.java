@@ -6,12 +6,14 @@ import kimtaewoo.springwallet.domain.enumClass.SocialType;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 
 @Entity
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor()
 @AllArgsConstructor
 public class Member {
@@ -30,5 +32,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private SocialType socialtype;
 
+    private int analysis_token;
+    private LocalDate last_analysis_date;
 
 }

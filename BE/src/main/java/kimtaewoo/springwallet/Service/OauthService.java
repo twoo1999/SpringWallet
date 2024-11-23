@@ -16,10 +16,12 @@ import kimtaewoo.springwallet.repository.RefreshTokenRepository;
 import kimtaewoo.springwallet.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -52,19 +54,18 @@ public class OauthService {
     public void reissueAccessToken(HttpServletRequest req, HttpServletResponse res){
         Cookie[] cookies = req.getCookies();
         String ref = authUtil.getCookie(cookies, "RefreshToken");
-        System.out.println(ref);
         RefreshToken newRef = refreshTokenRepository.findByToken(ref).get();
         UUID id = newRef.getId();
         Member m = memberRepository.findById(id).get();
         authUtil.setAccessTokenToCookie(res, authUtil.getAccessToken(id, m.getEmail(), m.getName()));
     }
-    public String[] login(String code) throws JsonProcessingException {
+    public UUID login(HttpServletResponse res, String code) throws JsonProcessingException {
         String response = this.getAccessTokenFromGoogle(code);
 
         GoogleOauthAccessToken at = this.getToken(response);
         String idToken = at.getId_token();
         String encodedPayload = idToken.split("\\.")[1];
-        String idTokenPayload = this.decodePayload(encodedPayload);
+        String idTokenPayload = authUtil.decodePayload(encodedPayload);
         GoogleOauthUserInfo userInfo = this.getUserInfo(idTokenPayload);
         String email = userInfo.getEmail();
         String name = userInfo.getName();
@@ -76,45 +77,28 @@ public class OauthService {
                     .name(name)
                     .role(Role.USER)
                     .socialtype(SocialType.GOOGLE)
+                    .analysis_token(5)
+                    .last_analysis_date(LocalDate.now())
                     .build();
 
-//            Member member = new Member();
-//            member.setEmail(email);
-//            member.setName(name);
             Member newMember = memberRepository.save(member);
             id = newMember.getId();
         } else{
             id = m.get().getId();
         }
-        String accessToken = this.getAccessToken(email, name, id);
-        String refreshToken = this.getRefreshToken();
+        String accessToken = authUtil.getAccessToken(id, email, name);
+        String refreshToken = authUtil.getRefreshToken();
         RefreshToken ref = new RefreshToken(refreshToken, id);
         refreshTokenRepository.save(ref);
-        String[] tokens = {accessToken, refreshToken};
-        return tokens;
+        setHeaderCookie(res, accessToken, refreshToken);
+        return id;
     }
 
-    public String getAccessToken(String email, String name, UUID id){
-        Claims claims = Jwts.claims();
-        claims.put("email", email);
-        claims.put("name", name);
-        claims.put("id", id);
-        String token = Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .signWith(SignatureAlgorithm.HS256, SECRET_ACCESS)
-                .compact();
-
-        return token;
+    public void setHeaderCookie(HttpServletResponse res, String access, String refresh) {
+        authUtil.setCookie(res, "AccessToken", access, "/", true, true, 60*60);
+        authUtil.setCookie(res, "RefreshToken", refresh, "/", true, true, 60*60);
     }
-    public String getRefreshToken(){
-        String token = Jwts.builder()
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .signWith(SignatureAlgorithm.HS256, SECRET_REFRESH)
-                .compact();
 
-        return token;
-    }
     public String getAccessTokenFromGoogle(String code) {
         try {
             RestTemplate rt = new RestTemplate();
@@ -139,10 +123,6 @@ public class OauthService {
 
     }
 
-    public String decodePayload(String encodedPayload){
-        Base64.Decoder decoder = Base64.getDecoder();
-        return new String(decoder.decode(encodedPayload));
-    }
 
     public GoogleOauthUserInfo getUserInfo(String jsonString) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();

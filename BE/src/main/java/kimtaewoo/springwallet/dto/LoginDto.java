@@ -1,27 +1,15 @@
 package kimtaewoo.springwallet.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
+@Setter
 public class LoginDto {
+    private UUID uid;
     private String accessToken;
     private String refreshToken;
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
+    
 }

@@ -4,10 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import kimtaewoo.springwallet.domain.Member;
-import kimtaewoo.springwallet.domain.Record;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,6 +43,17 @@ public class MemberRepository {
             return Optional.ofNullable(member);
         } catch (NoResultException e) {
             return Optional.empty();
+        }
+    }
+
+    public Integer findTokenByUserId(UUID uid){
+        try {
+            int remainToken = em.createQuery("select m.analysis_token from Member m where m.id = :uid", Integer.class)
+                    .setParameter("uid", uid)
+                    .getSingleResult();
+            return remainToken;
+        } catch (NoResultException e) {
+            return null;
         }
     }
 

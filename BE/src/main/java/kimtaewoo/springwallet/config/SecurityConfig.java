@@ -3,6 +3,7 @@ package kimtaewoo.springwallet.config;
 
 import kimtaewoo.springwallet.filter.JwtAuthFilter;
 import kimtaewoo.springwallet.filter.JwtAuthenticationProcessingFilter;
+import kimtaewoo.springwallet.filter.LoggingFilter;
 import kimtaewoo.springwallet.oauth.CustomOAuth2UserService;
 import kimtaewoo.springwallet.repository.MemberRepository;
 import kimtaewoo.springwallet.repository.RefreshTokenRepository;
@@ -57,8 +58,8 @@ public class SecurityConfig {
 //                        .failureHandler(oAuth2LoginFaliHandler)
 //                        .userInfoEndpoint(userInfo->userInfo.userService(customOAuth2UserService))
 //                );
-
         http.addFilterAfter(jwtAuthenticationProcessingFilter(), LogoutFilter.class);
+        http.addFilterAfter(loggingFilter(), JwtAuthenticationProcessingFilter.class);
 
 
 //                .csrf(csrf->csrf.disable())
@@ -75,6 +76,12 @@ public class SecurityConfig {
     public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter(){
         JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter = new JwtAuthenticationProcessingFilter(authUtil, memberRepository, refreshTokenRepository);
         return jwtAuthenticationProcessingFilter;
+    }
+
+    @Bean
+    public LoggingFilter loggingFilter(){
+        LoggingFilter loggingFilter = new LoggingFilter();
+        return loggingFilter;
     }
 
 }

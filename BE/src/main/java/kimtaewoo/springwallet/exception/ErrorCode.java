@@ -12,7 +12,8 @@ public enum ErrorCode {
 
     NOT_VALID_TOKEN(HttpStatus.BAD_REQUEST, "AUTH-001", "no valid token."),
     EXPIRED_ACCEESS_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH-002", "expired access token."),
-    EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH-003", "expired refresh token.");
+    EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH-003", "expired refresh token."),
+    NO_REMAIN_TOKEN(HttpStatus.BAD_REQUEST, "AI-001", "there is no remain token.");
 //    NOT_EXIST_COOKIE(HttpStatus.BAD_REQUEST, "AUTH-003", "no matching cookie value"),
 
 
