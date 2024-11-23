@@ -1,6 +1,5 @@
 package kimtaewoo.springwallet.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
 import kimtaewoo.springwallet.Service.AiService;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Analysis;
@@ -63,7 +62,7 @@ public class AiController {
 
     @GetMapping("/api/member/token")
     public ResponseEntity<Integer> getAnalysisToken(AccessTokenPayload ap){
-        int remainToken = aiService.getToken(ap.getId()).get();
+        int remainToken = aiService.getToken(ap.getId());
         return ResponseEntity.ok(remainToken);
     }
 

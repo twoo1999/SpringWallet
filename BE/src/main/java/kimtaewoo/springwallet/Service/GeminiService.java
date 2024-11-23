@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -126,7 +127,23 @@ public class GeminiService implements AiService {
     }
 
     @Override
-    public Optional<Integer> getToken(UUID uid){
+    public Integer getToken(UUID uid){
+        Member m = memberRepository.findById(uid).get();
+        int remainToken = m.getAnalysis_token();
+        if(remainToken == 5){
+            return remainToken;
+        }
+
+
+        LocalDate lastDate = m.getLast_analysis_date();
+        int lastTime = lastDate.getYear() * 12 + lastDate.getMonthValue();
+        LocalDate now = LocalDate.now();
+        int nowTime = now.getYear() * 12 + now.getMonthValue();
+        if(nowTime > lastTime){
+            m.setLast_analysis_date(now);
+            m.setAnalysis_token(5);
+            return 5;
+        }
         return memberRepository.findTokenByUserId(uid);
     }
 
