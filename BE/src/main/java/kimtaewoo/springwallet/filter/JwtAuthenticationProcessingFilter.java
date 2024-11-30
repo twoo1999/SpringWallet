@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Member;
 import kimtaewoo.springwallet.domain.RefreshToken;
 import kimtaewoo.springwallet.exception.ErrorCode;

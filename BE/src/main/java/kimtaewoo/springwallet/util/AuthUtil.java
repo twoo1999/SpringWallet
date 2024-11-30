@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Member;
+import kimtaewoo.springwallet.domain.enumClass.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -40,11 +41,12 @@ public class AuthUtil {
         return null;
     }
 
-    public String getAccessToken(UUID id, String email, String name){
+    public String getAccessToken(UUID id, String email, String name, Role role){
         Claims claims = Jwts.claims();
         claims.put("id", id);
         claims.put("email", email);
         claims.put("name", name);
+        claims.put("role", role);
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
