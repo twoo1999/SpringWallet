@@ -1,6 +1,7 @@
 package kimtaewoo.springwallet.domain;
 
 
+import kimtaewoo.springwallet.domain.enumClass.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class AccessTokenPayload {
     private UUID id;
     private String email;
     private String name;
+    private Role role;
     private int iat;
 
 //    public AccessTokenPayload(){}

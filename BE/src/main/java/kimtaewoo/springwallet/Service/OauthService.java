@@ -57,7 +57,7 @@ public class OauthService {
         RefreshToken newRef = refreshTokenRepository.findByToken(ref).get();
         UUID id = newRef.getId();
         Member m = memberRepository.findById(id).get();
-        authUtil.setAccessTokenToCookie(res, authUtil.getAccessToken(id, m.getEmail(), m.getName()));
+        authUtil.setAccessTokenToCookie(res, authUtil.getAccessToken(id, m.getEmail(), m.getName(), m.getRole()));
     }
     public UUID login(HttpServletResponse res, String code) throws JsonProcessingException {
         String response = this.getAccessTokenFromGoogle(code);
@@ -70,6 +70,7 @@ public class OauthService {
         String email = userInfo.getEmail();
         String name = userInfo.getName();
         UUID id;
+        Role role;
         Optional<Member> m = memberRepository.findByEmail(email);
         if (m.isEmpty()) {
             Member member = Member.builder()
@@ -83,10 +84,13 @@ public class OauthService {
 
             Member newMember = memberRepository.save(member);
             id = newMember.getId();
+            role = newMember.getRole();
+
         } else{
             id = m.get().getId();
+            role = m.get().getRole();
         }
-        String accessToken = authUtil.getAccessToken(id, email, name);
+        String accessToken = authUtil.getAccessToken(id, email, name, role);
         String refreshToken = authUtil.getRefreshToken();
         RefreshToken ref = new RefreshToken(refreshToken, id);
         refreshTokenRepository.save(ref);
