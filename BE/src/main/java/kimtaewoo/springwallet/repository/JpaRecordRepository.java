@@ -87,7 +87,7 @@ public class JpaRecordRepository implements RecordRepository {
 
     @Override
     public List<Record> findByEmail(String email) {
-        return em.createQuery("select r from Record r where r.email = :email", Record.class)
+        return em.createQuery("select r from Record r join Member m on r.user_id = m.id where m.email = :email", Record.class)
                 .setParameter("email", email)
                 .getResultList();
     }
