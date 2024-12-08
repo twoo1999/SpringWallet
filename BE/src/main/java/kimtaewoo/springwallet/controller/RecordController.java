@@ -35,6 +35,12 @@ public class RecordController {
         return recordService.findByUserId(acp);
     }
 
+    @GetMapping("test/api/record")
+    @ResponseBody
+    public List<Record> findRecordTest(AccessTokenPayload acp) {
+        return recordService.findByUserEmail(acp);
+    }
+
     @PostMapping("/api/record/{id}")
     @ResponseBody
     public ResponseEntity updateRecord(@RequestBody CreateRecordReqDto record, @PathVariable("id") Long id){

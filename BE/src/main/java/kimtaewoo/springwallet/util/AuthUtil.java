@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kimtaewoo.springwallet.domain.AccessTokenPayload;
 import kimtaewoo.springwallet.domain.Member;
 import kimtaewoo.springwallet.domain.enumClass.Role;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class AuthUtil {
 
 
@@ -71,10 +73,11 @@ public class AuthUtil {
             if(type.equals("RefreshToken")){
                 Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_REFRESH).parseClaimsJws(token);
             } else if(type.equals("AccessToken")){
-                Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_ACCESS).parseClaimsJws(token);
+                Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_ACCESS.getBytes()).parseClaimsJws(token);
             }
             return true;
         } catch (Exception e){
+            log.error("jwt 토큰 에러");
             return false;
         }
     }
