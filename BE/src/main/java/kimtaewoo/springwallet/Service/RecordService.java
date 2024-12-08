@@ -45,6 +45,11 @@ public class RecordService {
     }
 
 
+    public List<Record> findByUserEmail(AccessTokenPayload ap){
+        String email = ap.getEmail();
+        return recordRepository.findByEmail(email);
+    }
+
     public CreateRecordResDto updateRecord(CreateRecordReqDto record, Long id){
         Record re = recordRepository.findById(id).get();
 
