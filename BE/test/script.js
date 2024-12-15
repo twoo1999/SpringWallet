@@ -4,12 +4,12 @@ import {encode} from './util.js'
 import { uuidv4 } from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
 
 export const options = {
-  vus: 10,
-  duration: '5s',
+  vus: 1000,
+  duration: '10s',
 };
 
 export function setup(){
-  const tokens = Array(10).fill().map((v, i)=>{
+  const tokens = Array(1000).fill().map((v, i)=>{
     const data = {
       "id": `${uuidv4()}`,
       "email" : `test${i}@test.com`,
@@ -35,5 +35,5 @@ export default function({tokens}) {
   check(response, {
     "is status 200" :(r) => r.status === 200,
   })
-  sleep(1);
+
 }
