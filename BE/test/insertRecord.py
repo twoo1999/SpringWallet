@@ -17,7 +17,7 @@ end_date = datetime(2024, 11, 25)
 date_range = (end_date - start_date).days
 
 
-for i in range(0, 100):
+for i in range(0, 1000):
 
     name = 'test' + str(i)
 

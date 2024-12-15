@@ -29,7 +29,7 @@ def select(dbname, row, where):
     return cur.fetchone()[0]
 
 names = []
-for i in range(0, 100):
+for i in range(0, 1000):
     names.append('test'+str(i))
     
 
@@ -43,7 +43,7 @@ rcategories =['월급', '용돈']
 ecategories =['식비', '뷰티', '패션', '교통비', '취미', '공부']
 methods = ['현금', '카드']
 
-for i in range(0, 100):
+for i in range(0, 1000):
     uid = select('member', ['id'], ['name', 'test'+str(i)])
     for rcategory in rcategories:
         insert('category', crows, [uid, rcategory, rtype, status])

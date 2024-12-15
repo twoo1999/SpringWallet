@@ -15,12 +15,13 @@ def insert(dbname, row, value):
 
     sql += ','.join(['%s']*len(value))
     sql += ')'
+    cur.execute(sql, value)
 
 
 names = []
 emails = []
 rows = ['id', 'email', 'name', 'role', 'socialtype', 'analysis_token', 'last_analysis_date']
-for i in range(0, 100):
+for i in range(0, 1000):
     names.append('test'+str(i))
     
 for name in names:
