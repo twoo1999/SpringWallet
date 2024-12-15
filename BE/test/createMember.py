@@ -16,8 +16,6 @@ def insert(dbname, row, value):
     sql += ','.join(['%s']*len(value))
     sql += ')'
 
-    print(sql)
-    print(cur.execute(sql, value))
 
 names = []
 emails = []
