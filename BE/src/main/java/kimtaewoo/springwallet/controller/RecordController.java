@@ -31,8 +31,8 @@ public class RecordController {
 
     @GetMapping("/api/record")
     @ResponseBody
-    public List<Record> findRecordByUserId(AccessTokenPayload acp){
-        return recordService.findByUserId(acp);
+    public List<Record> findRecordByUserId(AccessTokenPayload acp, @RequestParam int year, @RequestParam int month){
+        return recordService.findByUserId(acp, year, month);
     }
 
     @GetMapping("test/api/record")

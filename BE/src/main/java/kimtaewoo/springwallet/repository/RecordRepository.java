@@ -13,7 +13,7 @@ public interface RecordRepository {
 
     Optional<Record> findById(Long id);
 
-    List<Record> findByUserId(UUID id);
+    List<Record> findByUserIdFilteredByDate(UUID id, int year, int month);
 
     List<Record> findAll();
 

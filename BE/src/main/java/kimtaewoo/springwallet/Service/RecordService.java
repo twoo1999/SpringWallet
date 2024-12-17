@@ -39,9 +39,9 @@ public class RecordService {
         return CreateRecordResDto.build(re);
     }
 
-    public List<Record> findByUserId(AccessTokenPayload ap){
+    public List<Record> findByUserId(AccessTokenPayload ap, int year, int month){
         UUID id = ap.getId();
-        return recordRepository.findByUserId(id);
+        return recordRepository.findByUserIdFilteredByDate(id, year, month);
     }
 
 

@@ -73,7 +73,7 @@ public class AuthUtil {
             if(type.equals("RefreshToken")){
                 Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_REFRESH).parseClaimsJws(token);
             } else if(type.equals("AccessToken")){
-                Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_ACCESS.getBytes()).parseClaimsJws(token);
+                Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_ACCESS).parseClaimsJws(token);
             }
             return true;
         } catch (Exception e){
