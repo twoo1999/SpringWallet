@@ -15,7 +15,7 @@ public class Method {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private UUID user_id;
+    private UUID member_id;
     private String method_name;
 
     @Enumerated(EnumType.STRING)

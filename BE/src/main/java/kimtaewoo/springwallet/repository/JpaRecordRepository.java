@@ -33,20 +33,20 @@ public class JpaRecordRepository implements RecordRepository {
     @Override
     public List<AnalysisRecordDto> findByTimestampRangeAndType(UUID id, LocalDate start, LocalDate end, String type) {
         if (type.equals("revenue")) {
-            return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.user_id = :id and r.timestamp >= :start and r.timestamp <= :end and r.amount > 0", AnalysisRecordDto.class
+            return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.member_id = :id and r.timestamp >= :start and r.timestamp <= :end and r.amount > 0", AnalysisRecordDto.class
                     )
                     .setParameter("id", id)
                     .setParameter("start", start)
                     .setParameter("end", end)
                     .getResultList();
         } else if (type.equals("expense")) {
-            return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.user_id = :id and r.timestamp >= :start and r.timestamp <= :end and r.amount < 0", AnalysisRecordDto.class)
+            return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.member_id = :id and r.timestamp >= :start and r.timestamp <= :end and r.amount < 0", AnalysisRecordDto.class)
                     .setParameter("id", id)
                     .setParameter("start", start)
                     .setParameter("end", end)
                     .getResultList();
         }
-        return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.user_id = :id and r.timestamp >= :start and r.timestamp <= :end", AnalysisRecordDto.class)
+        return em.createQuery("select r.category, r.method, r.item, r.timestamp, r.amount from Record r where r.member_id = :id and r.timestamp >= :start and r.timestamp <= :end", AnalysisRecordDto.class)
                 .setParameter("id", id)
                 .setParameter("start", start)
                 .setParameter("end", end)
@@ -75,10 +75,10 @@ public class JpaRecordRepository implements RecordRepository {
     }
 
     @Override
-    public List<Record> findByUserIdFilteredByDate(UUID id, int year, int month) {
+    public List<Record> findByMemberIdFilteredByDate(UUID id, int year, int month) {
         LocalDate startDate = LocalDate.of(year, month, 1);
         LocalDate endDate = LocalDate.of(year, month, 1).plusMonths(1);
-        return em.createQuery("select r from Record r where r.user_id = :id and r.timestamp >= :startDate and r.timestamp < :endDate ", Record.class)
+        return em.createQuery("select r from Record r where r.member_id = :id and r.timestamp >= :startDate and r.timestamp < :endDate ", Record.class)
                 .setParameter("id", id)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
@@ -90,8 +90,12 @@ public class JpaRecordRepository implements RecordRepository {
     }
 
     @Override
-    public List<Record> findByEmail(String email) {
-        return em.createQuery("select r from Record r join Member m on r.user_id = m.id where m.email = :email", Record.class)
+    public List<Record> findByEmail(String email, int year, int month) {
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = LocalDate.of(year, month, 1).plusMonths(1);
+        return em.createQuery("select r from Record r join Member m on r.member_id = m.id where r.timestamp between :startDate and :endDate and m.email = :email ", Record.class)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
                 .setParameter("email", email)
                 .getResultList();
     }

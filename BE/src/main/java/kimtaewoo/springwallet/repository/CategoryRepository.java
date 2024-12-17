@@ -62,14 +62,14 @@ public class CategoryRepository {
         Category re = em.find(Category.class, id);
         return Optional.ofNullable(re);
     }
-    public List<Category> findByUserId(UUID id) {
-        return em.createQuery("select c from Category c where c.user_id = :id", Category.class)
+    public List<Category> findByMemberId(UUID id) {
+        return em.createQuery("select c from Category c where c.member_id = :id", Category.class)
                 .setParameter("id", id)
                 .getResultList();
     }
 
-    public Optional<Category> findByUserIdAndCategory(UUID id, String name) {
-        List<Category> re = em.createQuery("select c from Category c where c.user_id = :id and c.category_name = :name and c.status = :status", Category.class)
+    public Optional<Category> findByMemberIdAndCategory(UUID id, String name) {
+        List<Category> re = em.createQuery("select c from Category c where c.member_id = :id and c.category_name = :name and c.status = :status", Category.class)
                 .setParameter("id", id)
                 .setParameter("name", name)
                 .setParameter("status", ActiveStatus.INACTIVE)
@@ -78,16 +78,16 @@ public class CategoryRepository {
         return re.stream().findAny();
     }
 
-    public List<Category> findByUserIdActive(UUID id) {
-        return em.createQuery("select c from Category c where c.user_id = :id and c.status = :status", Category.class)
+    public List<Category> findByMemberIdActive(UUID id) {
+        return em.createQuery("select c from Category c where c.member_id = :id and c.status = :status", Category.class)
                 .setParameter("id", id)
                 .setParameter("status", ActiveStatus.ACTIVE)
                 .getResultList();
     }
 
 
-    public void deleteByUserIdAndName(String name, UUID id) {
-        em.createQuery("delete from Category c where c.user_id = :id and c.category_name = :name")
+    public void deleteByMemberIdAndName(String name, UUID id) {
+        em.createQuery("delete from Category c where c.member_id = :id and c.category_name = :name")
                 .setParameter("id", id)
                 .setParameter("name", name)
                 .executeUpdate();
@@ -114,7 +114,7 @@ public class CategoryRepository {
 
     public List<Long> softDeleteAll(Long[] ids, UUID uid) {
         List<Long> res = new ArrayList<>();
-        List<Category> categories = em.createQuery("select c from Category c where c.user_id = :id", Category.class)
+        List<Category> categories = em.createQuery("select c from Category c where c.member_id = :id", Category.class)
                 .setParameter("id", uid)
                 .getResultList();
 

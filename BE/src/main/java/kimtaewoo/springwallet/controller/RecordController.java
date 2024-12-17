@@ -31,14 +31,14 @@ public class RecordController {
 
     @GetMapping("/api/record")
     @ResponseBody
-    public List<Record> findRecordByUserId(AccessTokenPayload acp, @RequestParam int year, @RequestParam int month){
-        return recordService.findByUserId(acp, year, month);
+    public List<Record> findRecordByMemberId(AccessTokenPayload acp, @RequestParam int year, @RequestParam int month){
+        return recordService.findByMemberId(acp, year, month);
     }
 
     @GetMapping("test/api/record")
     @ResponseBody
-    public List<Record> findRecordTest(AccessTokenPayload acp) {
-        return recordService.findByUserEmail(acp);
+    public List<Record> findRecordTest(AccessTokenPayload acp, @RequestParam int year, @RequestParam int month) {
+        return recordService.findByMemberEmail(acp, year, month);
     }
 
     @PostMapping("/api/record/{id}")

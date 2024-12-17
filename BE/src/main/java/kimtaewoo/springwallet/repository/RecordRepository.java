@@ -13,12 +13,12 @@ public interface RecordRepository {
 
     Optional<Record> findById(Long id);
 
-    List<Record> findByUserIdFilteredByDate(UUID id, int year, int month);
+    List<Record> findByMemberIdFilteredByDate(UUID id, int year, int month);
 
     List<Record> findAll();
 
 
-    List<Record> findByEmail(String email);
+    List<Record> findByEmail(String email, int year, int month);
 
     List<AnalysisRecordDto> findByTimestampRangeAndType(UUID id, LocalDate start, LocalDate end, String types);
     void deleteById(Long id);

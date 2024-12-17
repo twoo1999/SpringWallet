@@ -32,9 +32,9 @@ public class AnalysisRepository {
         return analysis;
     }
 
-    public List<Analysis> findAllByUserId(UUID uid) {
-        return em.createQuery("select a from Analysis a where user_id = :uid", Analysis.class)
-                .setParameter("uid", uid)
+    public List<Analysis> findAllByMemberId(UUID mid) {
+        return em.createQuery("select a from Analysis a where member_id = :mid", Analysis.class)
+                .setParameter("mid", mid)
                 .getResultList();
     }
 

@@ -17,7 +17,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private UUID user_id;
+    private UUID member_id;
     private String category_name;
 
     @Enumerated(EnumType.STRING)
@@ -30,7 +30,7 @@ public class Category {
         return Category.builder()
                 .category_name(name)
                 .type(type)
-                .user_id(uid)
+                .member_id(uid)
                 .status(ActiveStatus.ACTIVE)
                 .build();
     }

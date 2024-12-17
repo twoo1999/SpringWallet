@@ -61,19 +61,19 @@ public class GeminiService implements AiService {
     }
 
     public void completeEmitter(UUID uid) {
-        SseEmitter e = emitterRepository.getEmitterByUserId(uid);
+        SseEmitter e = emitterRepository.getEmitterByMemberId(uid);
         e.complete();
 
     }
     @Override
     public List<Analysis> getAnalysisList(AccessTokenPayload ap){
 //        UUID uid = UUID.fromString("45dd282a-192-4104-a3bd-44c8afbbd0d0");
-        return analysisRepository.findAllByUserId(ap.getId());
+        return analysisRepository.findAllByMemberId(ap.getId());
     }
 
     @Override
     public Optional<SseEmitter> getEmitter(UUID uid){
-        SseEmitter e = emitterRepository.getEmitterByUserId(uid);
+        SseEmitter e = emitterRepository.getEmitterByMemberId(uid);
         if (e == null) {
             return Optional.empty();
         }
@@ -108,7 +108,7 @@ public class GeminiService implements AiService {
 
     @Override
     public void sendEvent(UUID uid) {
-        SseEmitter emitter = emitterRepository.getEmitterByUserId(uid);
+        SseEmitter emitter = emitterRepository.getEmitterByMemberId(uid);
 
         if (emitter != null) {
             try {
@@ -144,7 +144,7 @@ public class GeminiService implements AiService {
             m.setAnalysis_token(5);
             return 5;
         }
-        return memberRepository.findTokenByUserId(uid);
+        return memberRepository.findTokenByMemberId(uid);
     }
 
 

@@ -39,15 +39,15 @@ public class RecordService {
         return CreateRecordResDto.build(re);
     }
 
-    public List<Record> findByUserId(AccessTokenPayload ap, int year, int month){
+    public List<Record> findByMemberId(AccessTokenPayload ap, int year, int month){
         UUID id = ap.getId();
-        return recordRepository.findByUserIdFilteredByDate(id, year, month);
+        return recordRepository.findByMemberIdFilteredByDate(id, year, month);
     }
 
 
-    public List<Record> findByUserEmail(AccessTokenPayload ap){
+    public List<Record> findByMemberEmail(AccessTokenPayload ap, int year, int month){
         String email = ap.getEmail();
-        return recordRepository.findByEmail(email);
+        return recordRepository.findByEmail(email, year, month);
     }
 
     public CreateRecordResDto updateRecord(CreateRecordReqDto record, Long id){

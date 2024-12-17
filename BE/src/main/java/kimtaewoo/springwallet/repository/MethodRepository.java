@@ -54,14 +54,14 @@ public class MethodRepository {
         return Optional.ofNullable(re);
     }
 
-    public List<Method> findByUserId(UUID id) {
-        return em.createQuery("select m from Method m where m.user_id = :id", Method.class)
+    public List<Method> findByMemberId(UUID id) {
+        return em.createQuery("select m from Method m where m.member_id = :id", Method.class)
                 .setParameter("id", id)
                 .getResultList();
     }
 
-    public void deleteByUserIdAndName(String name, UUID id) {
-        em.createQuery("delete from Method m where m.user_id = :id and m.method_name = :name")
+    public void deleteByMemberIdAndName(String name, UUID id) {
+        em.createQuery("delete from Method m where m.member_id = :id and m.method_name = :name")
                 .setParameter("id", id)
                 .setParameter("name", name)
                 .executeUpdate();

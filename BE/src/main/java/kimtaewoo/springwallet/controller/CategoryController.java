@@ -26,13 +26,13 @@ public class CategoryController {
     @GetMapping("/api/category")
     @ResponseBody
     public List<Category> getCategory(AccessTokenPayload atp) {
-        return categoryService.getCategoryByUserId(atp);
+        return categoryService.getCategoryByMemberId(atp);
     }
 
     @GetMapping("/api/category/active")
     @ResponseBody
     public List<Category> getCategoryActive(AccessTokenPayload atp) {
-        return categoryService.getCategoryByUserIdActive(atp);
+        return categoryService.getCategoryByMemberIdActive(atp);
     }
 
 //    @PostMapping("/category")

@@ -46,7 +46,7 @@ public class MemberRepository {
         }
     }
 
-    public Integer findTokenByUserId(UUID uid){
+    public Integer findTokenByMemberId(UUID uid){
         try {
             int remainToken = em.createQuery("select m.analysis_token from Member m where m.id = :uid", Integer.class)
                     .setParameter("uid", uid)

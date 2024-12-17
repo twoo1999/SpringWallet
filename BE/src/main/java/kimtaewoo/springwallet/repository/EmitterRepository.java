@@ -18,7 +18,7 @@ public class EmitterRepository {
         emitterMap.remove(uuid);
     }
 
-    public SseEmitter getEmitterByUserId(UUID uid) {
+    public SseEmitter getEmitterByMemberId(UUID uid) {
         return emitterMap.get(uid);
     }
 }
