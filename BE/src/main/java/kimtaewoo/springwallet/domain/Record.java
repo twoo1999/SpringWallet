@@ -17,7 +17,7 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private UUID user_id;
+    private UUID member_id;
 
     private String item;
     private LocalDate timestamp;
@@ -38,7 +38,7 @@ public class Record {
 
     public static Record toEntity(AccessTokenPayload atp, CreateRecordReqDto record, Category category, Method method){
         Record newR = Record.builder()
-                .user_id(atp.getId())
+                .member_id(atp.getId())
                 .item(record.getItem())
                 .timestamp(record.getTimestamp())
                 .amount(record.getAmount())

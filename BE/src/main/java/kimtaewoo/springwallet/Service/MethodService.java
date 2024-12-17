@@ -23,16 +23,16 @@ public class MethodService {
     public MethodService(MethodRepository methodRepository) {
         this.methodRepository = methodRepository;
     }
-    public List<Method> getCategoryByUserId(AccessTokenPayload atp){
+    public List<Method> getCategoryByMemberId(AccessTokenPayload atp){
         UUID id = atp.getId();
-        return methodRepository.findByUserId(id);
+        return methodRepository.findByMemberId(id);
     }
 
     public Method save(AccessTokenPayload atp, String name){
         UUID id = atp.getId();
         Method newMethod = Method.builder()
                 .method_name(name)
-                .user_id(id)
+                .member_id(id)
                 .build();
 
         return methodRepository.save(newMethod);
@@ -45,7 +45,7 @@ public class MethodService {
         for (String n : names) {
             Method newMethod = Method.builder()
                     .method_name(n)
-                    .user_id(id)
+                    .member_id(id)
                     .status(ActiveStatus.ACTIVE)
                     .build();
 

@@ -20,23 +20,23 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> getCategoryByUserId(AccessTokenPayload atp){
+    public List<Category> getCategoryByMemberId(AccessTokenPayload atp){
         System.out.println("카테고리 조회");
         UUID id = atp.getId();
-        return categoryRepository.findByUserId(id);
+        return categoryRepository.findByMemberId(id);
     }
 
-    public List<Category> getCategoryByUserIdActive(AccessTokenPayload atp) {
+    public List<Category> getCategoryByMemberIdActive(AccessTokenPayload atp) {
         System.out.println("카테고리 조회(활성)");
         UUID id = atp.getId();
-        return categoryRepository.findByUserIdActive(id);
+        return categoryRepository.findByMemberIdActive(id);
     }
 
     public Category save(AccessTokenPayload atp, String name){
         UUID id = atp.getId();
         Category newCategory = Category.builder()
                 .category_name(name)
-                .user_id(id)
+                .member_id(id)
                 .build();
 
         return categoryRepository.save(newCategory);
@@ -54,7 +54,7 @@ public class CategoryService {
             Category newCategory = Category.builder()
                     .category_name(n)
                     .type(type)
-                    .user_id(id)
+                    .member_id(id)
                     .status(ActiveStatus.ACTIVE)
                     .build();
 
@@ -63,8 +63,8 @@ public class CategoryService {
         return categoryRepository.saveAll(categories);
     }
 
-    public Optional<Category> getCategoryByUserIdAndCategory(UUID uid, String name){
-        return categoryRepository.findByUserIdAndCategory(uid, name);
+    public Optional<Category> getCategoryByMemberIdAndCategory(UUID uid, String name){
+        return categoryRepository.findByMemberIdAndCategory(uid, name);
     }
 
     public List<Category> createCategoryList(String[] name, UUID uid, CategoryType type){
@@ -74,7 +74,7 @@ public class CategoryService {
             Category newCategory = Category.builder()
                     .category_name(n)
                     .type(type)
-                    .user_id(uid)
+                    .member_id(uid)
                     .status(ActiveStatus.ACTIVE)
                     .build();
 
@@ -94,7 +94,7 @@ public class CategoryService {
 
         // 없는 데이터
         for (String cname : categoryReqDto.getName()) {
-            Optional<Category> category = getCategoryByUserIdAndCategory(uid, cname);
+            Optional<Category> category = getCategoryByMemberIdAndCategory(uid, cname);
             if(category.isEmpty()){
                 newC.add(Category.toEntity(uid, cname, type, ActiveStatus.ACTIVE));
             } else{

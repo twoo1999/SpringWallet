@@ -25,7 +25,7 @@ public class MethodController {
     @GetMapping("/api/method")
     @ResponseBody
     public List<Method> getMethod(AccessTokenPayload atp) {
-        return methodService.getCategoryByUserId(atp);
+        return methodService.getCategoryByMemberId(atp);
     }
 
     @PostMapping("/api/method")

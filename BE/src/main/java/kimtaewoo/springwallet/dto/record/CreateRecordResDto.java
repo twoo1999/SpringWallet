@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 public class CreateRecordResDto {
     private Long id;
-    private UUID user_id;
+    private UUID member_id;
     private String item;
     private LocalDate timestamp;
     private Integer amount;
@@ -27,7 +27,7 @@ public class CreateRecordResDto {
     public static CreateRecordResDto build(Record r) {
         CreateRecordResDto res = CreateRecordResDto.builder()
                 .id(r.getId())
-                .user_id(r.getUser_id())
+                .member_id(r.getMember_id())
                 .item(r.getItem())
                 .timestamp(r.getTimestamp())
                 .amount(r.getAmount())
