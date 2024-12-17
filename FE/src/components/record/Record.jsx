@@ -6,7 +6,7 @@ import {InputForm} from "./input/InputForm";
 import {getApi} from "../../axiosIntercepter";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-
+import {useCookies} from "react-cookie";
 
 const Wrapper = styled.div`
     display: flex;
@@ -40,6 +40,7 @@ export function Record(){
     const [record, setRecord] = useState();
     const [category, setCategory] = useState();
     const [method, setMethod] = useState();
+    const [cookies, setCookie, removeCookie] = useCookies(["year", "month"]);
     const getCategory = async ()=>{
         try {
             return await getApi(`${process.env.REACT_APP_API_URL}/category`);
@@ -61,9 +62,9 @@ export function Record(){
 
     }
 
-    const getRecord = async ()=>{
+    const getRecord = async (year, month)=>{
         try {
-            return await getApi(`${process.env.REACT_APP_API_URL}/record`);
+            return await getApi(`${process.env.REACT_APP_API_URL}/record?year=${year}&month=${month}`);
         } catch (e){
             return [];
             // navigate("/error");
@@ -79,14 +80,14 @@ export function Record(){
         setMethod(await getMethod());
     }
 
-    const renewRecord = async ()=>{
-        setRecord(await getRecord());
+    const renewRecord = async (year, month)=>{
+        setRecord(await getRecord(year, month));
     }
 
     useEffect(() => {
         renewCategory();
         renewMethod();
-        renewRecord();
+        // renewRecord();
     }, []);
 
     const CM = {
