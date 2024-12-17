@@ -75,9 +75,13 @@ public class JpaRecordRepository implements RecordRepository {
     }
 
     @Override
-    public List<Record> findByUserId(UUID id) {
-        return em.createQuery("select r from Record r where r.user_id = :id", Record.class)
+    public List<Record> findByUserIdFilteredByDate(UUID id, int year, int month) {
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = LocalDate.of(year, month, 1).plusMonths(1);
+        return em.createQuery("select r from Record r where r.user_id = :id and r.timestamp >= :startDate and r.timestamp < :endDate ", Record.class)
                 .setParameter("id", id)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
                 .getResultList();
     }
     @Override
