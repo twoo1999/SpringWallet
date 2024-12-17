@@ -96,15 +96,24 @@ export function RecordViewer({CM, R}){
 
     const filterData = () => {
         if (list !== undefined) {
+            // const ll = list.filter(l => {
+            //     if (l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month) {
+            //         if (selected === "All") {
+            //             return true;
+            //         } else if (selected === "Revenue") {
+            //             return l.amount > 0;
+            //         } else if (selected === "Expenses") {
+            //             return l.amount < 0;
+            //         }
+            //     }
+            // });
             const ll = list.filter(l => {
-                if (l.timestamp[0] == cookies.year && l.timestamp[1] == cookies.month) {
-                    if (selected === "All") {
-                        return true;
-                    } else if (selected === "Revenue") {
-                        return l.amount > 0;
-                    } else if (selected === "Expenses") {
-                        return l.amount < 0;
-                    }
+                if (selected === "All") {
+                    return true;
+                } else if (selected === "Revenue") {
+                    return l.amount > 0;
+                } else if (selected === "Expenses") {
+                    return l.amount < 0;
                 }
             });
 
@@ -161,7 +170,7 @@ export function RecordViewer({CM, R}){
                     {btns}
                 </TypeBtns>
 
-                <DateSelector></DateSelector>
+                <DateSelector R={R}></DateSelector>
             </FilteringWrapper>
 
             <ListWrapper>

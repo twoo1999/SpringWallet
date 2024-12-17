@@ -34,6 +34,9 @@ api.interceptors.response.use(
 
 const getApi = async (url)=>{
     const res = await api.get(url);
+    if(!res){
+        return null;
+    }
     const data = res.data;
     return data;
 }
@@ -41,7 +44,10 @@ const getApi = async (url)=>{
 const postApi = async (url, body)=>{
 
     const res = await api.post(url, body);
-    const data = res.data;
+    if(!res){
+        return null;
+    }
+    const {data} = res;
     if (data !== undefined) {
         return data;
     }
@@ -51,6 +57,9 @@ const postApi = async (url, body)=>{
 
 const deleteApi = async (url, body)=>{
     const res = await api.delete(url, {data: body});
+    if(!res){
+        return null;
+    }
     const data = res.data;
     if (data !== undefined) {
         return data;
