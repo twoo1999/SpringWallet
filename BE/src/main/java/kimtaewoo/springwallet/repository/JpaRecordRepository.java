@@ -93,7 +93,7 @@ public class JpaRecordRepository implements RecordRepository {
     public List<Record> findByEmail(String email, int year, int month) {
         LocalDate startDate = LocalDate.of(year, month, 1);
         LocalDate endDate = LocalDate.of(year, month, 1).plusMonths(1);
-        return em.createQuery("select r from Record r join Member m on r.member_id = m.id where r.timestamp between :startDate and :endDate and m.email = :email ", Record.class)
+        return em.createQuery("select r from Record r join Member m on r.member_id = m.id where m.email = :email and r.timestamp between :startDate and :endDate", Record.class)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
                 .setParameter("email", email)
