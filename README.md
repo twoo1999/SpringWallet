@@ -61,19 +61,17 @@
 ### Frontend
 | 키워드 | 링크 | 
 | :-: | :-: |
-| `SSE`, `gemini`, `spring`, `react`| [SSE 적용 배경(AI 분석이 너무 오래걸려요)](https://velog.io/@twoo1999/SSE-%EC%A0%81%EC%9A%A9AI-%EB%B6%84%EC%84%9D%EC%9D%B4-%EB%84%88%EB%AC%B4-%EC%98%A4%EB%9E%98%EA%B1%B8%EB%A0%A4%EC%9A%94) |
-| `SSE`, `gemini`, `spring`, `react`| [Spring-React SSE 적용 1](https://velog.io/@twoo1999/Spring-SSE-%EC%82%AC%EC%9A%A91) |
-| `SSE`, `gemini`, `spring`, `react`| [Spring-React SSE 적용 2](https://velog.io/@twoo1999/Spring-React-SSE-%EC%A0%81%EC%9A%A9-2-frvtmwjy) |
+| `SSE`, `gemini`, `spring`, `react`| [SSE 적용 배경(AI 분석이 너무 오래 걸려요)](https://velog.io/@twoo1999/SSE-%EC%A0%81%EC%9A%A9AI-%EB%B6%84%EC%84%9D%EC%9D%B4-%EB%84%88%EB%AC%B4-%EC%98%A4%EB%9E%98%EA%B1%B8%EB%A0%A4%EC%9A%94) |
+| `SSE`, `gemini`, `spring`, `react`| [Spring - React SSE 적용](https://velog.io/@twoo1999/Spring-SSE-%EC%82%AC%EC%9A%A91) |
+| `SSE`, `gemini`, `spring`, `react`| [Spring - React SSE 적용(새로고침 해도 알림 받기)](https://velog.io/@twoo1999/Spring-React-SSE-%EC%A0%81%EC%9A%A9-2-frvtmwjy) |
 
 ### Backend
 | 키워드 | 링크 | 
 | :-: | :-: |
-| `배포`, `Raspberry pi`, `github action` | [Raspberry pi로 github actions를 통해 배포하기(ARM과 AMD는 손잡고 화해하자)](https://velog.io/@twoo1999/Raspberry-pi%EB%A1%9C-github-actions%EB%A5%BC-%ED%86%B5%ED%95%B4-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0ARM%EA%B3%BC-AMD%EB%8A%94-%EC%86%90%EC%9E%A1%EA%B3%A0-%ED%99%94%ED%95%B4%ED%95%98%EC%9E%90) |
-| `영속성`, `JPA`, `junit` | [영속성에 관하여(JPA 사용기)](https://velog.io/@twoo1999/%EC%98%81%EC%86%8D%EC%84%B1%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC) |
+| `Index`, `K6`| [인덱싱 적용(이러다 SELECT 하면 하루가 지나겠네요.)](https://velog.io/@twoo1999/%EC%9D%B8%EB%8D%B1%EC%8B%B1-%EC%A0%81%EC%9A%A9%EC%9D%B4%EB%9F%AC%EB%8B%A4-SELECT-%ED%95%98%EB%A9%B4-%ED%95%98%EB%A3%A8%EA%B0%80-%EC%A7%80%EB%82%98%EA%B2%A0%EB%84%A4%EC%9A%94) |
+| `K6` | [부하 테스트 K6](https://velog.io/@twoo1999/%EB%B6%80%ED%95%98%ED%85%8C%EC%8A%A4%ED%8A%B8-K6) |
 | `junit`,`beforeAll`, `beforeEach` | [junit BeforeAll 적용기(적용 안함)](https://velog.io/@twoo1999/Transcation%EA%B3%BC-EntityManager)|
-| `SSE`, `gemini`, `spring`, `react`| [SSE 적용 배경(AI 분석이 너무 오래걸려요)](https://velog.io/@twoo1999/SSE-%EC%A0%81%EC%9A%A9AI-%EB%B6%84%EC%84%9D%EC%9D%B4-%EB%84%88%EB%AC%B4-%EC%98%A4%EB%9E%98%EA%B1%B8%EB%A0%A4%EC%9A%94) |
-| `SSE`, `gemini`, `spring`, `react`| [Spring-React SSE 적용 1](https://velog.io/@twoo1999/Spring-SSE-%EC%82%AC%EC%9A%A91) |
-| `SSE`, `gemini`, `spring`, `react`| [Spring-React SSE 적용 2](https://velog.io/@twoo1999/Spring-React-SSE-%EC%A0%81%EC%9A%A9-2-frvtmwjy) |
+| `SSE`, `gemini`, `spring`, `react`| [Spring - React SSE 적용(새로고침 해도 알림 받기)](https://velog.io/@twoo1999/Spring-React-SSE-%EC%A0%81%EC%9A%A9-2-frvtmwjy) |
 | `Excel`, `csv`, `mysql` | [Excel을 활용한 mysql 데이터 삽입](https://velog.io/@twoo1999/%EC%95%A1%EC%85%80%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-mysql-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%82%BD%EC%9E%85) |
 
 
